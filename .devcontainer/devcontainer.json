@@ -1,0 +1,32 @@
+{
+	"name": "TSA-Webmaster-22-23",
+	"hostRequirements": {
+		"cpus": 4
+	},
+	// "waitFor": "onCreateCommand",
+	"updateContentCommand": "npm install",
+	"postCreateCommand": ". ${NVM_DIR}/nvm.sh && nvm install --lts",
+	"postAttachCommand": {
+		"server": "npm run dev"
+	},
+	"customizations": {
+		"codespaces": {
+			"openFiles": ["pages/index.jsx"]
+		}
+	},
+	"portsAttributes": {
+		"3000": {
+			"label": "Application",
+			"onAutoForward": "openPreview"
+		}
+	},
+	"forwardPorts": [3000],
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/git-lfs:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/shyim/devcontainers-features/php:0": {},
+		"ghcr.io/devcontainers/features/docker-from-docker:1": {}
+	}
+}

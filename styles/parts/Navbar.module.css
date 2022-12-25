@@ -1,0 +1,8 @@
+.NavWrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	height: 64px;
+	width: 100%;
+	overflow: hidden;
+}
