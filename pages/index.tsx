@@ -5,7 +5,7 @@ import Image from "next/image";
 import Script from "next/script";
 
 // CSS imports
-import styles from "../../styles/pages/Home.module.css";
+import styles from "../styles/pages/Home.module.css";
 
 // Component imports
 
@@ -16,12 +16,15 @@ export default function Home() {
 		<>
 			{/* Meta tags */}
 			<Head>
-				<title>test</title>
-				<link rel="icon" href="/favicon.ico" />
+				<title>Lyman NHS</title>s
 			</Head>
 
 			{/* ! Main homepage content */}
-			<main>balls</main>
+			<main>
+				<div id={`${styles.HomeTitle}`}>
+					<h1>Lyman NHS</h1>
+				</div>
+			</main>
 		</>
 	);
 }
