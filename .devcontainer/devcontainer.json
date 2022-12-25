@@ -1,5 +1,5 @@
 {
-	"name": "TSA-Webmaster-22-23",
+	"name": "Lyman-NHS-Website",
 	"hostRequirements": {
 		"cpus": 4
 	},
@@ -11,7 +11,7 @@
 	},
 	"customizations": {
 		"codespaces": {
-			"openFiles": ["pages/index.jsx"]
+			"openFiles": ["pages/index.tsx"]
 		}
 	},
 	"portsAttributes": {
