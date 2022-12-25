@@ -20,7 +20,12 @@ export default function Footer({}: Props) {
 
 	return (
 		<footer>
-			<div className={`${styles.FtrWrapper}`}></div>
+			<div className={`${styles.FtrWrapper}`}>
+				<p>
+					Made by
+					<a href="https://tachanks.xyz">Josh</a>
+				</p>
+			</div>
 		</footer>
 	);
 }

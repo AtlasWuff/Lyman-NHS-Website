@@ -17,10 +17,21 @@ interface Props {}
 // Page
 export default function Navbar({}: Props) {
 	const logoRef = useRef<HTMLImageElement>(null);
+	const navbarRef = useRef<HTMLDivElement>();
+
+	useEffect(() => {
+		window.addEventListener("scroll", () => {
+			if (navbarRef.current !== null) {
+				document.body.getBoundingClientRect().top <= -1
+					? navbarRef.current.classList.add(`${styles.scrolledNav}`)
+					: navbarRef.current.classList.remove(`${styles.scrolledNav}`);
+			}
+		});
+	}, []);
 
 	return (
 		<nav>
-			<div className={`${styles.NavWrapper}`}>
+			<div className={`${styles.NavWrapper}`} ref={navbarRef}>
 				<ul className="d-flex flex-row justify-content-around align-items-center">
 					<li className="col-2">
 						<Link href="/">

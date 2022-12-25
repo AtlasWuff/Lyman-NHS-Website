@@ -8,9 +8,9 @@ import Script from "next/script";
 import styles from "../styles/pages/Home.module.css";
 
 // Component imports
+import ReactTypingEffect from "react-typing-effect";
 
 // Page
-
 export default function Home() {
 	return (
 		<>
@@ -22,7 +22,26 @@ export default function Home() {
 			{/* ! Main homepage content */}
 			<main>
 				<div id={`${styles.HomeTitle}`}>
-					<h1>Lyman NHS</h1>
+					<h1 className="pb-3">
+						<ReactTypingEffect
+							text={["Lyman NHS"]}
+							eraseSpeed={70}
+							typingDelay={500}
+							speed={180}
+							eraseDelay={99999999999999}
+							cursor=" "
+						/>
+					</h1>
+					<p id={`${styles.motto}`}>
+						<ReactTypingEffect
+							text={["Character", "Scholarship", "Leadership", "Service"]}
+							eraseSpeed={70}
+							typingDelay={1000}
+							speed={180}
+							eraseDelay={2000}
+							cursor="_"
+						/>
+					</p>
 				</div>
 			</main>
 		</>

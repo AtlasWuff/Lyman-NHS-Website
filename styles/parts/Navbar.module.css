@@ -5,8 +5,9 @@
 	align-items: center;
 	height: 64px;
 	width: 100%;
-	background-color: #f6c901;
+	background-color: transparent;
 	position: fixed;
+	transition: background-color 0.25s ease;
 }
 
 .NavWrapper ul {
@@ -20,6 +21,10 @@
 	width: 50px;
 	height: 50px;
 	transition: width 0.5s ease, height 0.5s ease;
+}
+
+.scrolledNav {
+	background-color: #f6c901;
 }
 
 #NavLogo:hover,

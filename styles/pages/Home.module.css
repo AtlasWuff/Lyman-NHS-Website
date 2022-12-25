@@ -1,7 +1,12 @@
 #HomeTitle {
-	height: 100vh;
+	height: 60vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+
+#motto {
+	font-size: 1.5rem;
+	font-weight: 400;
 }
