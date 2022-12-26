@@ -17,7 +17,7 @@ interface Props {}
 // Page
 export default function Navbar({}: Props) {
 	const logoRef = useRef<HTMLImageElement>(null);
-	const navbarRef = useRef<HTMLDivElement>();
+	const navbarRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		window.addEventListener("scroll", () => {
