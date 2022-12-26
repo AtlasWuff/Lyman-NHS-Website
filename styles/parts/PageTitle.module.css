@@ -36,6 +36,7 @@
 }
 
 #titleWrapper {
+	/* background-color: rebeccapurple; */
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -82,11 +83,4 @@
 	object-fit: contain;
 	z-index: 2;
 	transform: scale(2, 1);
-}
-
-#UpcomingEvents {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 }

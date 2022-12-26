@@ -28,22 +28,18 @@
 	background-color: var(--nav-color);
 }
 
-:not(.scrolledNav) #NavLogo {
-	width: 55px;
-	height: 55px;
-	background-color: var(--nav-color);
-}
-
-#NavLogo:hover,
-#NavLogo:focus,
-#NavLogo:active {
+#NavLogo:hover {
 	cursor: pointer;
-	animation: NavLogoBark 2s infinite backwards;
+
 	width: 55px;
 	height: 55px;
 	transition: width 0.5s ease, height 0.5s ease;
 	display: flex;
 	flex-direction: row;
+}
+
+#NavTitle:hover #NavLogo {
+	animation: NavLogoBark 2s infinite backwards;
 }
 
 @keyframes NavLogoBark {

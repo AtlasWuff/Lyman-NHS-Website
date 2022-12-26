@@ -11,6 +11,7 @@ import styles from "../styles/pages/Home.module.css";
 
 // Component imports
 import ReactTypingEffect from "react-typing-effect";
+import PageTitle from "../components/parts/PageTitle";
 
 // Page
 export default function Home() {
@@ -23,29 +24,18 @@ export default function Home() {
 
 			{/* ! Main homepage content */}
 			<main>
-				<section id={`${styles.MainTitle}`}>
-					<div id={`${styles.titleBg}`}>
-						<Image src={"/img/campus.jpg"} fill alt="" />
-					</div>
-					<div id={`${styles.titleWrapper}`}>
-						<h1 className="pb-3">Lyman NHS</h1>
-						<p id={`${styles.motto}`}>
-							<ReactTypingEffect
-								text={["Character", "Scholarship", "Leadership", "Service"]}
-								eraseSpeed={70}
-								typingDelay={1000}
-								speed={180}
-								eraseDelay={2000}
-								cursor="_"
-							/>
-						</p>
-					</div>
-				</section>
-				<div className={`${styles.waveWrap}`}>
-					<div className={`${styles.wave}`}>
-						<Image src={`/img/wave2.svg`} fill alt="" />
-					</div>
-				</div>
+				<PageTitle title="Lyman NHS">
+					<p id={`${styles.motto}`}>
+						<ReactTypingEffect
+							text={["Character", "Scholarship", "Leadership", "Service"]}
+							eraseSpeed={70}
+							typingDelay={1000}
+							speed={180}
+							eraseDelay={2000}
+							cursor="_"
+						/>
+					</p>
+				</PageTitle>
 				<div id={`${styles.notTitle}`}>
 					<section id={`${styles.UpcomingEvents}`}>
 						<h1>Upcoming Events</h1>

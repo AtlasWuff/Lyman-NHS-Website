@@ -13,25 +13,49 @@ import { collection, addDoc } from "firebase/firestore";
 import styles from "../styles/pages/Admin.module.css";
 
 // Component imports
+import PageTitle from "../components/parts/PageTitle";
 
 // Interface for addMember function
 interface addMemberProps {
 	name: String;
 	grade: String | Number;
+	email: String;
 }
 
 // Page
 export default function Home() {
 	const [name, setName] = useState("");
 	const [grade, setGrade] = useState("");
+	const [email, setEmail] = useState("");
 
 	const dbInstance = collection(db, "Members");
-	const addMember = async ({ name, grade }: addMemberProps) => {
+	const addMember = async ({ name, grade, email }: addMemberProps) => {
+		if (
+			name == "" ||
+			grade == "" ||
+			email == "" ||
+			name == null ||
+			grade == null ||
+			email == null
+		) {
+			alert("Please fill out all fields.");
+			return;
+		} else if (grade > 12 || grade < 9) {
+			alert("Please enter a valid grade.");
+			return;
+		} else if (!email.includes("@")) {
+			alert("Please enter a valid email.");
+			return;
+		}
+
 		const docRef = await addDoc(dbInstance, {
 			name: name,
 			grade: grade,
+			email: email,
+		}).then((r) => {
+			console.log("Document written with ID: ", r.id);
+			alert(`Success!\nName: ${name}\nGrade: ${grade}\nEmail: ${email}`);
 		});
-		console.log("Document written with ID: ", docRef.id);
 	};
 
 	return (
@@ -43,19 +67,7 @@ export default function Home() {
 
 			{/* ! Main homepage content */}
 			<main>
-				<section id={`${styles.MainTitle}`}>
-					<div id={`${styles.titleBg}`}>
-						<Image src={"/img/campus.jpg"} fill alt="" />
-					</div>
-					<div id={`${styles.titleWrapper}`}>
-						<h1 className="pb-3">NHS Admin</h1>
-					</div>
-				</section>
-				<div className={`${styles.waveWrap}`}>
-					<div className={`${styles.wave}`}>
-						<Image src={`/img/wave2.svg`} fill alt="" />
-					</div>
-				</div>
+				<PageTitle title="NHS Admin" />
 				<div id={`${styles.notTitle}`}>
 					<section>
 						<input
@@ -68,12 +80,20 @@ export default function Home() {
 							placeholder="Grade"
 							onChange={(e) => setGrade(e.target.value)}
 						/>
+						<input
+							type="text"
+							placeholder="Email"
+							onChange={(e) => setEmail(e.target.value)}
+						/>
 						<button
+							className="LoadButton-pushable GameRequest"
 							onClick={() => {
-								addMember({ name: name, grade: grade });
+								addMember({ name: name, grade: grade, email: email });
 							}}
 						>
-							Add Member
+							<span className="LoadButton-shadow"></span>
+							<span className="LoadButton-edge"></span>
+							<span className="LoadButton-front text">Add Member</span>
 						</button>
 					</section>
 				</div>

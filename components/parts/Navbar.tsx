@@ -33,16 +33,21 @@ export default function Navbar({}: Props) {
 		<nav>
 			<div className={`${styles.NavWrapper}`} ref={navbarRef}>
 				<ul className="d-flex flex-row justify-content-around align-items-center">
-					<li className="col-2">
-						<Link href="/">
+					<li className="col-2" id={`${styles.NavTitle}`}>
+						<Link
+							href="/"
+							className="d-flex flex-row justify-content-center align-items-center"
+						>
 							<Image
-								src={"/img/lymannhs.svg"}
+								src={"/img/lymannhsborder.png"}
 								width={50}
 								height={50}
 								alt="Logo"
 								id={styles.NavLogo}
 								ref={logoRef}
+								className="pe-2 rounded-circle border-dark"
 							/>
+							<p>NHS</p>
 						</Link>
 					</li>
 					<li className="col-6">
