@@ -79,3 +79,12 @@
 	z-index: 2;
 	transform: scale(2, 1);
 }
+
+.memberInput {
+	text-align: center;
+	border-radius: 16px;
+	background-color: var(--cyber-yellow);
+	margin: 8px 0px;
+	width: 50%;
+	border: 3px solid black;
+}

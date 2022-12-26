@@ -69,32 +69,54 @@ export default function Home() {
 			<main>
 				<PageTitle title="NHS Admin" />
 				<div id={`${styles.notTitle}`}>
-					<section>
-						<input
-							type="text"
-							placeholder="Name"
-							onChange={(e) => setName(e.target.value)}
-						/>
-						<input
-							type="text"
-							placeholder="Grade"
-							onChange={(e) => setGrade(e.target.value)}
-						/>
-						<input
-							type="text"
-							placeholder="Email"
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-						<button
-							className="LoadButton-pushable GameRequest"
-							onClick={() => {
-								addMember({ name: name, grade: grade, email: email });
-							}}
-						>
-							<span className="LoadButton-shadow"></span>
-							<span className="LoadButton-edge"></span>
-							<span className="LoadButton-front text">Add Member</span>
-						</button>
+					<section className="container-sm text-center">
+						<div className="row">
+							<div className="col-md-6 d-flex align-items-center justify-content-center">
+								<h2>Pending Member Requests</h2>
+							</div>
+							<div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
+								<h2>Add Members</h2>
+								<div className="row">
+									<div className="col-md-6 flex-column d-flex w-100 align-items-center justify-content-center">
+										<input
+											type="text"
+											placeholder="Name"
+											onChange={(e) => setName(e.target.value)}
+											className={`${styles.memberInput}`}
+										/>
+										<input
+											type="text"
+											placeholder="Grade"
+											onChange={(e) => setGrade(e.target.value)}
+											className={`${styles.memberInput}`}
+										/>
+										<input
+											type="text"
+											placeholder="Email"
+											onChange={(e) => setEmail(e.target.value)}
+											className={`${styles.memberInput}`}
+										/>
+									</div>
+									<div className="col-md-6 flex-column d-flex w-100 align-items-center justify-content-center">
+										<button
+											className="LoadButton-pushable GameRequest"
+											onClick={() => {
+												addMember({
+													name: name,
+													grade: grade,
+													email: email,
+												});
+											}}
+										>
+											<span className="LoadButton-shadow"></span>
+											<span className="LoadButton-edge"></span>
+
+											<span className="LoadButton-front text">Add Member</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</section>
 				</div>
 			</main>

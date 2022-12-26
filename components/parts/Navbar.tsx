@@ -45,7 +45,7 @@ export default function Navbar({}: Props) {
 								alt="Logo"
 								id={styles.NavLogo}
 								ref={logoRef}
-								className="pe-2 rounded-circle border-dark"
+								className="pe-2"
 							/>
 							<p>NHS</p>
 						</Link>
