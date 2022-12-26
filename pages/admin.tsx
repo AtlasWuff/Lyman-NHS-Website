@@ -23,7 +23,7 @@ interface addMemberProps {
 }
 
 // Page
-export default function Home() {
+export default function Admin() {
 	const [name, setName] = useState("");
 	const [grade, setGrade] = useState("");
 	const [email, setEmail] = useState("");
@@ -58,6 +58,8 @@ export default function Home() {
 		});
 	};
 
+	let enteredPassword = prompt("Please enter the password.");
+
 	return (
 		<>
 			{/* Meta tags */}
@@ -67,58 +69,68 @@ export default function Home() {
 
 			{/* ! Main homepage content */}
 			<main>
-				<PageTitle title="NHS Admin" />
-				<div id={`${styles.notTitle}`}>
-					<section className="container-sm text-center">
-						<div className="row">
-							<div className="col-md-6 d-flex align-items-center justify-content-center">
-								<h2>Pending Member Requests</h2>
-							</div>
-							<div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
-								<h2>Add Members</h2>
+				{enteredPassword == "password" ? (
+					<>
+						<PageTitle title="NHS Admin" />
+						<div id={`${styles.notTitle}`}>
+							<section className="container-sm text-center">
 								<div className="row">
-									<div className="col-md-6 flex-column d-flex w-100 align-items-center justify-content-center">
-										<input
-											type="text"
-											placeholder="Name"
-											onChange={(e) => setName(e.target.value)}
-											className={`${styles.memberInput}`}
-										/>
-										<input
-											type="text"
-											placeholder="Grade"
-											onChange={(e) => setGrade(e.target.value)}
-											className={`${styles.memberInput}`}
-										/>
-										<input
-											type="text"
-											placeholder="Email"
-											onChange={(e) => setEmail(e.target.value)}
-											className={`${styles.memberInput}`}
-										/>
+									<div className="col-md-6 d-flex align-items-center justify-content-center">
+										<h2>Pending Member Requests</h2>
 									</div>
-									<div className="col-md-6 flex-column d-flex w-100 align-items-center justify-content-center">
-										<button
-											className="LoadButton-pushable GameRequest"
-											onClick={() => {
-												addMember({
-													name: name,
-													grade: grade,
-													email: email,
-												});
-											}}
-										>
-											<span className="LoadButton-shadow"></span>
-											<span className="LoadButton-edge"></span>
+									<div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
+										<h2>Add Members</h2>
+										<div className="row">
+											<div className="col-md-6 flex-column d-flex align-items-center justify-content-center">
+												<input
+													type="text"
+													placeholder="Name"
+													onChange={(e) => setName(e.target.value)}
+													className={`${styles.memberInput}`}
+												/>
+												<input
+													type="text"
+													placeholder="Grade"
+													onChange={(e) => setGrade(e.target.value)}
+													className={`${styles.memberInput}`}
+												/>
+												<input
+													type="text"
+													placeholder="Email"
+													onChange={(e) => setEmail(e.target.value)}
+													className={`${styles.memberInput}`}
+												/>
+											</div>
+											<div className="col-md-6 flex-column d-flex align-items-center justify-content-center">
+												<button
+													className="LoadButton-pushable my-3"
+													onClick={() => {
+														addMember({
+															name: name,
+															grade: grade,
+															email: email,
+														});
+													}}
+												>
+													<span className="LoadButton-shadow"></span>
+													<span className="LoadButton-edge"></span>
 
-											<span className="LoadButton-front text">Add Member</span>
-										</button>
+													<span className="LoadButton-front text">
+														Add Member
+													</span>
+												</button>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
+							</section>
 						</div>
-					</section>
-				</div>
+					</>
+				) : (
+					<div className="vw-100 vh-100 d-flex align-items-center justify-content-center">
+						<h1>Incorrect password.</h1>
+					</div>
+				)}
 			</main>
 		</>
 	);

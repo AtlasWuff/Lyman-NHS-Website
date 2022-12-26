@@ -28,7 +28,7 @@ export default function PageTitle({ title, children }: Props) {
 		<>
 			<section id={`${styles.MainTitle}`}>
 				<div id={`${styles.titleBg}`}>
-					<Image src={"/img/campus.jpg"} fill alt="" />
+					<Image src={"/img/campus.jpg"} fill alt="" draggable={false} />
 				</div>
 				<div id={`${styles.titleWrapper}`}>
 					<h1 className="pb-3">{title}</h1>
@@ -37,7 +37,7 @@ export default function PageTitle({ title, children }: Props) {
 			</section>
 			<div className={`${styles.waveWrap}`}>
 				<div className={`${styles.wave}`}>
-					<Image src={`/img/wave2.svg`} fill alt="" />
+					<Image src={`/img/wave2.svg`} fill alt="" draggable={false} />
 				</div>
 			</div>
 		</>
