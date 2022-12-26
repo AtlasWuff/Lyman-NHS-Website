@@ -47,7 +47,7 @@ export default function Navbar({}: Props) {
 								ref={logoRef}
 								className="pe-2 hoverUnderlineAnim"
 							/>
-							<p className={`hoverUnderlineAnim`}>NHS</p>
+							<p className={`${styles.hoverUnderlineAnim}`}>NHS</p>
 						</Link>
 					</li>
 					<li className="col-6">

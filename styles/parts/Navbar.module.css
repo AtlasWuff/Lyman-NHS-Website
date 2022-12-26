@@ -80,5 +80,4 @@
 #NavTitle:hover p.hoverUnderlineAnim::after {
 	transform: scaleX(1);
 	transform-origin: bottom left;
-	background-color: rebeccapurple;
 }
