@@ -6,7 +6,7 @@ import Script from "next/script";
 import type { AppProps } from "next/app";
 import $ from "jquery";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 // CSS imports
 import styles from "../../styles/parts/Navbar.module.css";
@@ -46,7 +46,10 @@ export default function Navbar({}: Props) {
 						</Link>
 					</li>
 					<li className="col-6">
-						<Link href="/about">About</Link>
+						<div className="d-flex flex-row justify-content-around align-items-center">
+							<Link href="/about">About</Link>
+							<Link href="/admin">Admin</Link>
+						</div>
 					</li>
 					<li className="col-4">
 						<Link href="/about">Abou2t</Link>

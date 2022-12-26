@@ -14,13 +14,11 @@ import ReactTypingEffect from "react-typing-effect";
 
 // Page
 export default function Home() {
-	const waveRef = useRef<HTMLDivElement>(null);
-
 	return (
 		<>
 			{/* Meta tags */}
 			<Head>
-				<title>Lyman NHS</title>s
+				<title>Lyman NHS</title>
 			</Head>
 
 			{/* ! Main homepage content */}
