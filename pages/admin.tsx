@@ -147,7 +147,6 @@ export default function Admin() {
 							className="LoadButton-pushable my-3"
 							onClick={() => {
 								login(password);
-								console.log(password);
 							}}
 						>
 							<span className="LoadButton-shadow"></span>
