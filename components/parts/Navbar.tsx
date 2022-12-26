@@ -56,8 +56,9 @@ export default function Navbar({}: Props) {
 							<Link href="/admin">Admin</Link>
 						</div>
 					</li>
-					<li className="col-4">
-						<Link href="/about">Abou2t</Link>
+					<li className="col-4 d-flex align-items-center bg-black justify-content-evenly px-5">
+						<Link href="/createaccount">Create Account</Link>
+						<Link href="/login">Login</Link>
 					</li>
 				</ul>
 			</div>

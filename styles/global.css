@@ -161,20 +161,20 @@ p {
 	font-family: var(--font-family-normal);
 	color: var(--font-color-normal);
 
-	margin-bottom: 0;
+	margin-bottom: 0 !important;
 }
 
 a {
 	font-size: var(--font-color-normal);
-	font-weight: var(--font-weight-link);
-	font-family: var(--font-family-link);
-	color: var(--font-color-link);
-	text-decoration: none;
+	font-weight: var(--font-weight-link) !important;
+	font-family: var(--font-family-link) !important;
+	color: var(--font-color-link) !important;
+	text-decoration: none !important;
 }
 
 a:hover {
-	color: var(--font-color-link-hover);
-	text-decoration: underline;
+	color: var(--font-color-link-hover) !important;
+	text-decoration: underline !important;
 }
 
 /* NOT STOLEN BUTTON */
