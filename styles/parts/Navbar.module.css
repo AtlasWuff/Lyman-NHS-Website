@@ -8,6 +8,7 @@
 	background-color: transparent;
 	position: fixed;
 	transition: background-color 0.25s ease;
+	z-index: 6;
 }
 
 .NavWrapper ul {
@@ -24,6 +25,12 @@
 }
 
 .scrolledNav {
+	background-color: var(--nav-color);
+}
+
+:not(.scrolledNav) #NavLogo {
+	width: 55px;
+	height: 55px;
 	background-color: var(--nav-color);
 }
 

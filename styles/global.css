@@ -2,11 +2,11 @@
 
 /* Variables */
 :root {
-	--bg-color-primary: #0f084c;
+	--bg-color-primary: #277ba5;
 
 	--border-color: #ababab;
 
-	--nav-color: #fff01d;
+	--nav-color: #ffe15c;
 	--nav-color-hover: #7045f1;
 	--nav-border-color: #7045f1;
 
@@ -16,8 +16,8 @@
 	--font-color-subtitle: white;
 	--font-color-normal: white;
 	--font-color-heavy: #ff4444;
-	--font-color-link: #fff01d;
-	--font-color-link-hover: #ffaa00;
+	--font-color-link: #ffd20a;
+	--font-color-link-hover: #e0b700;
 
 	--font-size-title: 2.5rem;
 	--font-size-subtitle: 1.5rem;

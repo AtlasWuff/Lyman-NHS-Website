@@ -28,7 +28,6 @@ export default function Layout({ children }: Props) {
 				src="https://kit.fontawesome.com/8ee8b8ceb7.js"
 				crossOrigin="anonymous"
 			></Script>
-			<Script src="https://coolors.co/palette-widget/widget.js"></Script>
 
 			<Script src="/scripts/LoadEffect.js" />
 

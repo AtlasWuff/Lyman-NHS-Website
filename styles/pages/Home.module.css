@@ -4,6 +4,45 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	position: relative;
+	z-index: 1;
+}
+
+#titleBg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+}
+
+#titleBg img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	z-index: -2;
+}
+
+#titleBg::after {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: "";
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: -1;
+}
+
+#titleWrapper {
+	/* background-color: rebeccapurple; */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	z-index: 1;
 }
 
 #motto {
@@ -11,8 +50,41 @@
 	font-weight: 400;
 }
 
-#titleWrapper {
-	background-color: rebeccapurple;
+.waveWrap {
+	position: relative;
+	top: 0px;
+	left: 0;
+	width: 100%;
+	height: 100px;
+}
+
+.wave {
+	position: absolute;
+	top: -50px;
+	left: 0;
+	width: 100%;
+	height: 100px;
+	z-index: 2;
+	/* background-color: rgba(188, 37, 37, 0.5); */
+}
+
+#notTitle {
+	position: relative;
+	z-index: 3;
+}
+
+.wave img {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 100%;
+	object-fit: contain;
+	z-index: 2;
+	transform: scale(2, 1);
+}
+
+#UpcomingEvents {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
