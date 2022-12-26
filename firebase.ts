@@ -34,6 +34,7 @@ interface newAccountProps {
 	firstName: string;
 	lastName: string;
 	grade: string | number;
+	isAdmin: boolean;
 	db: any;
 }
 
@@ -43,6 +44,7 @@ export const newAccount = async ({
 	firstName,
 	lastName,
 	grade,
+	isAdmin,
 	db,
 }: newAccountProps) => {
 	if (
@@ -119,6 +121,7 @@ export const newAccount = async ({
 		firstName: firstName,
 		lastName: lastName,
 		grade: grade,
+		isAdmin: isAdmin,
 	}).then((res) => {
 		console.log("Document written with ID: ", res.id);
 		alert(

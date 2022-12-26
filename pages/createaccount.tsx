@@ -104,6 +104,7 @@ export default function CreateAccount() {
 											firstName: firstName,
 											lastName: lastName,
 											grade: grade,
+											isAdmin: false,
 											db: accountsDb,
 										});
 									}}
