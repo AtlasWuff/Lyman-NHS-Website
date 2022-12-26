@@ -25,39 +25,45 @@ export const db = getFirestore(app);
 // All DBs
 export const membersDb = collection(db, "Members");
 export const eventsDb = collection(db, "Events");
+export const announcementsDb = collection(db, "Announcements");
+export const accountsDb = collection(db, "Accounts");
 
-interface addMemberProps {
-	name: String;
-	grade: String | Number;
-	email: String;
-	db: any;
-}
+interface newAccountProps {
+	username: string;
+	password: string;
 
-export const addMember = async ({ name, grade, email, db }: addMemberProps) => {
-	if (
-		name == "" ||
-		grade == "" ||
-		email == "" ||
-		name == null ||
-		grade == null ||
-		email == null
-	) {
-		alert("Please fill out all fields.");
-		return;
-	} else if (grade > 12 || grade < 9) {
-		alert("Please enter a valid grade.");
-		return;
-	} else if (!email.includes("@")) {
-		alert("Please enter a valid email.");
-		return;
-	}
+// interface addMemberProps {
+// 	name: String;
+// 	grade: String | Number;
+// 	email: String;
+// 	db: any;
+// }
 
-	const docRef = await addDoc(db, {
-		name: name,
-		grade: grade,
-		email: email,
-	}).then((res) => {
-		console.log("Document written with ID: ", res.id);
-		alert(`Success!\nName: ${name}\nGrade: ${grade}\nEmail: ${email}`);
-	});
-};
+// export const addMember = async ({ name, grade, email, db }: addMemberProps) => {
+// 	if (
+// 		name == "" ||
+// 		grade == "" ||
+// 		email == "" ||
+// 		name == null ||
+// 		grade == null ||
+// 		email == null
+// 	) {
+// 		alert("Please fill out all fields.");
+// 		return;
+// 	} else if (grade > 12 || grade < 9) {
+// 		alert("Please enter a valid grade.");
+// 		return;
+// 	} else if (!email.includes("@")) {
+// 		alert("Please enter a valid email.");
+// 		return;
+// 	}
+
+// 	const docRef = await addDoc(db, {
+// 		name: name,
+// 		grade: grade,
+// 		email: email,
+// 	}).then((res) => {
+// 		console.log("Document written with ID: ", res.id);
+// 		alert(`Success!\nName: ${name}\nGrade: ${grade}\nEmail: ${email}`);
+// 	});
+// };

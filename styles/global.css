@@ -4,7 +4,7 @@
 :root {
 	--bg-color-primary: var(--celadon-blue);
 
-	--border-color: #ababab;
+	--border-color: black;
 
 	--nav-color: #ffe15c;
 	--nav-color-hover: #7045f1;
@@ -166,7 +166,7 @@ p {
 
 a {
 	font-size: var(--font-color-normal);
-	font-weight: var(--font-weight-link) !important;
+	font-weight: var(--font-weight-link);
 	font-family: var(--font-family-link) !important;
 	color: var(--font-color-link) !important;
 	text-decoration: none !important;

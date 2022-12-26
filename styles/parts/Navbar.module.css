@@ -31,9 +31,9 @@
 #NavLogo:hover {
 	cursor: pointer;
 
-	width: 55px;
+	/* width: 55px;
 	height: 55px;
-	transition: width 0.5s ease, height 0.5s ease;
+	transition: width 0.5s ease, height 0.5s ease; */
 	display: flex;
 	flex-direction: row;
 }
@@ -46,7 +46,7 @@
 	0% {
 		transform: rotate(0deg);
 	}
-	35% {
+	25% {
 		transform: rotate(-20deg);
 	}
 	70% {

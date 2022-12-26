@@ -19,11 +19,20 @@ import PageTitle from "../components/parts/PageTitle";
 
 // Page
 export default function CreateAccount() {
-	const [name, setName] = useState("");
-	const [grade, setGrade] = useState("");
 	const [email, setEmail] = useState("");
-	const [loggedIn, setLoggedIn] = useState(false);
 	const [password, setPassword] = useState("");
+
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [grade, setGrade] = useState("");
+
+	let allInputs: Array<string | number> = [
+		email,
+		password,
+		firstName,
+		lastName,
+		grade,
+	];
 
 	const login = (password: String) => {
 		if (password == "password") {
@@ -32,37 +41,6 @@ export default function CreateAccount() {
 			alert("Incorrect password.");
 		}
 	};
-
-	const dbInstance = collection(db, "Members");
-	const addMember = async ({ name, grade, email }: addMemberProps) => {
-		if (
-			name == "" ||
-			grade == "" ||
-			email == "" ||
-			name == null ||
-			grade == null ||
-			email == null
-		) {
-			alert("Please fill out all fields.");
-			return;
-		} else if (grade > 12 || grade < 9) {
-			alert("Please enter a valid grade.");
-			return;
-		} else if (!email.includes("@")) {
-			alert("Please enter a valid email.");
-			return;
-		}
-
-		const docRef = await addDoc(dbInstance, {
-			name: name,
-			grade: grade,
-			email: email,
-		}).then((r) => {
-			console.log("Document written with ID: ", r.id);
-			alert(`Success!\nName: ${name}\nGrade: ${grade}\nEmail: ${email}`);
-		});
-	};
-
 	return (
 		<>
 			{/* Meta tags */}
@@ -72,84 +50,77 @@ export default function CreateAccount() {
 
 			{/* ! Main homepage content */}
 			<main>
-				{loggedIn ? (
-					<>
-						<PageTitle title="NHS Admin" />
-						<div id={`${styles.notTitle}`}>
-							<section className="container-sm text-center">
-								<div className="row">
-									<div className="col-md-6 d-flex align-items-center justify-content-center">
-										<h2>Pending Member Requests</h2>
-									</div>
-									<div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
-										<h2>Add Members</h2>
-										<div className="row">
-											<div className="col-md-6 flex-column d-flex align-items-center justify-content-center">
-												<input
-													type="text"
-													placeholder="Name"
-													onChange={(e) => setName(e.target.value)}
-													className={`${styles.memberInput}`}
-												/>
-												<input
-													type="text"
-													placeholder="Grade"
-													onChange={(e) => setGrade(e.target.value)}
-													className={`${styles.memberInput}`}
-												/>
-												<input
-													type="text"
-													placeholder="Email"
-													onChange={(e) => setEmail(e.target.value)}
-													className={`${styles.memberInput}`}
-												/>
-											</div>
-											<div className="col-md-6 flex-column d-flex align-items-center justify-content-center">
-												<button
-													className="LoadButton-pushable my-3"
-													onClick={() => {
-														addMember({
-															name: name,
-															grade: grade,
-															email: email,
-														});
-													}}
-												>
-													<span className="LoadButton-shadow"></span>
-													<span className="LoadButton-edge"></span>
-
-													<span className="LoadButton-front text">
-														Add Member
-													</span>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</section>
-						</div>
-					</>
-				) : (
-					<div className="vw-100 vh-100 d-flex align-items-center justify-content-center flex-column">
-						<h1>Enter the password</h1>
-						<input
-							type="password"
-							placeholder="Password"
-							className={`${styles.passInput}`}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-						<button
-							className="LoadButton-pushable my-3"
-							onClick={() => {
-								login(password);
-							}}
-						>
-							<span className="LoadButton-shadow"></span>
-							<span className="LoadButton-edge"></span>
-							<span className="LoadButton-front text">Login</span>
-						</button>
+				{/* <PageTitle title="Create Account"></PageTitle> */}
+				<div id={`${styles.notTitle}`}>
+					<div id={`${styles.loginBg}`}>
+						<Image src={"/img/campus.jpg"} fill alt="" />
 					</div>
-				)}
+					<section id={`${styles.loginModal}`}>
+						<h1>Create Account</h1>
+						<div id={`${styles.loginForm}`}>
+							<h2>Account info</h2>
+							<div className={`${styles.loginInput}`}>
+								<p>Email</p>
+								<input
+									type="text"
+									onChange={(e) => setEmail(e.target.value)}
+									value={email}
+								/>
+							</div>
+							<div className={`${styles.loginInput}`}>
+								<p>Password</p>
+								<input
+									type="text"
+									onChange={(e) => setPassword(e.target.value)}
+									value={password}
+								/>
+							</div>
+
+							<h2>Other</h2>
+							<div className={`${styles.loginInput}`}>
+								<p>First Name</p>
+								<input
+									type="text"
+									value={firstName}
+									onChange={(e) => setFirstName(e.target.value)}
+								/>
+							</div>
+							<div className={`${styles.loginInput}`}>
+								<p>Last Name</p>
+								<input
+									type="text"
+									value={lastName}
+									onChange={(e) => setLastName(e.target.value)}
+								/>
+							</div>
+							<div className={`${styles.loginInput}`}>
+								<p>Grade</p>
+								<input
+									type="number"
+									value={grade}
+									onChange={(e) => setGrade(e.target.value)}
+								/>
+							</div>
+							<div className={`${styles.loginButton}`}>
+								<button
+									className="LoadButton-pushable my-3"
+									onClick={() => {
+										addMember({
+											name: name,
+											grade: grade,
+											email: email,
+										});
+									}}
+								>
+									<span className="LoadButton-shadow"></span>
+									<span className="LoadButton-edge"></span>
+
+									<span className="LoadButton-front text">Create Account</span>
+								</button>
+							</div>
+						</div>
+					</section>
+				</div>
 			</main>
 		</>
 	);
