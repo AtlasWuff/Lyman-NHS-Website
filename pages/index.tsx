@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
 
+import { useRef } from "react";
+
 // CSS imports
 import styles from "../styles/pages/Home.module.css";
 
@@ -12,6 +14,8 @@ import ReactTypingEffect from "react-typing-effect";
 
 // Page
 export default function Home() {
+	const waveRef = useRef<HTMLDivElement>(null);
+
 	return (
 		<>
 			{/* Meta tags */}
@@ -41,7 +45,7 @@ export default function Home() {
 				</section>
 				<div className={`${styles.waveWrap}`}>
 					<div className={`${styles.wave}`}>
-						<Image src={`/img/wave.svg`} fill alt="" />
+						<Image src={`/img/wave2.svg`} fill alt="" />
 					</div>
 				</div>
 				<div id={`${styles.notTitle}`}>
