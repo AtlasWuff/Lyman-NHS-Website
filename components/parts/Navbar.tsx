@@ -45,20 +45,25 @@ export default function Navbar({}: Props) {
 								alt="Logo"
 								id={styles.NavLogo}
 								ref={logoRef}
-								className="pe-2"
+								className="pe-2 hoverUnderlineAnim"
 							/>
-							<p>NHS</p>
+							<p className={`hoverUnderlineAnim`}>NHS</p>
 						</Link>
 					</li>
 					<li className="col-6">
 						<div className="d-flex flex-row justify-content-around align-items-center">
-							<Link href="/about">About</Link>
-							<Link href="/admin">Admin</Link>
+							<Link href="/about" className="hoverUnderlineAnim">
+								About
+							</Link>
+							<Link href="/admin" className="hoverUnderlineAnim">
+								Admin
+							</Link>
 						</div>
 					</li>
-					<li className="col-4 d-flex align-items-center bg-black justify-content-evenly px-5">
-						<Link href="/createaccount">Create Account</Link>
-						<Link href="/login">Login</Link>
+					<li className="col-4 d-flex align-items-center justify-content-evenly px-5">
+						<Link href="/createaccount" className="hoverUnderlineAnim">
+							Create Account
+						</Link>
 					</li>
 				</ul>
 			</div>

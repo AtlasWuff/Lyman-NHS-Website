@@ -174,7 +174,32 @@ a {
 
 a:hover {
 	color: var(--font-color-link-hover) !important;
-	text-decoration: underline !important;
+	/* text-decoration: underline !important; */
+}
+
+.hoverUnderlineAnim {
+	display: inline-block;
+	position: relative;
+	color: var(--font-color-link);
+	font-weight: var(--font-weight-link);
+}
+
+.hoverUnderlineAnim::after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	transform: scaleX(0);
+	height: 2px;
+	bottom: 0;
+	left: 0;
+	background-color: var(--font-color-link);
+	transform-origin: bottom right;
+	transition: transform 0.25s ease-out;
+}
+
+.hoverUnderlineAnim:hover::after {
+	transform: scaleX(1);
+	transform-origin: bottom left;
 }
 
 /* NOT STOLEN BUTTON */

@@ -56,3 +56,29 @@
 		transform: rotate(0deg);
 	}
 }
+
+#NavTitle p.hoverUnderlineAnim {
+	display: inline-block;
+	position: relative;
+	color: var(--font-color-link);
+	font-weight: var(--font-weight-link);
+}
+
+#NavTitle p.hoverUnderlineAnim::after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	transform: scaleX(0);
+	height: 2px;
+	bottom: 0;
+	left: 0;
+	background-color: var(--font-color-link);
+	transform-origin: bottom right;
+	transition: transform 0.25s ease-out;
+}
+
+#NavTitle:hover p.hoverUnderlineAnim::after {
+	transform: scaleX(1);
+	transform-origin: bottom left;
+	background-color: rebeccapurple;
+}
