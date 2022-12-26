@@ -88,3 +88,13 @@
 	width: 80%;
 	border: 3px solid black;
 }
+
+.passInput {
+	text-align: center;
+	border-radius: 8px;
+	background-color: white;
+	margin: 8px 0px;
+	width: 30%;
+	border: 3px solid black;
+	font-size: 24px;
+}

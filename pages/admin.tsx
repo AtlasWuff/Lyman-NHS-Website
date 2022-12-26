@@ -27,6 +27,18 @@ export default function Admin() {
 	const [name, setName] = useState("");
 	const [grade, setGrade] = useState("");
 	const [email, setEmail] = useState("");
+	const [loggedIn, setLoggedIn] = useState(false);
+	const [password, setPassword] = useState("");
+
+	const pasRef = useRef<HTMLInputElement>(null);
+
+	const login = (password: String) => {
+		if (password == "password") {
+			setLoggedIn(true);
+		} else {
+			alert("Incorrect password.");
+		}
+	};
 
 	const dbInstance = collection(db, "Members");
 	const addMember = async ({ name, grade, email }: addMemberProps) => {
@@ -58,8 +70,6 @@ export default function Admin() {
 		});
 	};
 
-	let enteredPassword = prompt("Please enter the password.");
-
 	return (
 		<>
 			{/* Meta tags */}
@@ -69,7 +79,7 @@ export default function Admin() {
 
 			{/* ! Main homepage content */}
 			<main>
-				{enteredPassword == "password" ? (
+				{loggedIn ? (
 					<>
 						<PageTitle title="NHS Admin" />
 						<div id={`${styles.notTitle}`}>
@@ -127,8 +137,25 @@ export default function Admin() {
 						</div>
 					</>
 				) : (
-					<div className="vw-100 vh-100 d-flex align-items-center justify-content-center">
-						<h1>Incorrect password.</h1>
+					<div className="vw-100 vh-100 d-flex align-items-center justify-content-center flex-column">
+						<h1>Enter the password</h1>
+						<input
+							type="password"
+							placeholder="Password"
+							className={`${styles.passInput}`}
+							ref={pasRef}
+						/>
+						<button
+							className="LoadButton-pushable my-3"
+							onClick={() => {
+								login(pasRef.current.value);
+								console.log(pasRef.current.value);
+							}}
+						>
+							<span className="LoadButton-shadow"></span>
+							<span className="LoadButton-edge"></span>
+							<span className="LoadButton-front text">Login</span>
+						</button>
 					</div>
 				)}
 			</main>
