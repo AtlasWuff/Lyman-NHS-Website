@@ -22,7 +22,10 @@ export default function Footer({}: Props) {
 		<footer>
 			<div className={`${styles.FtrWrapper}`}>
 				<p>
-					Made by <a href="https://tachanks.xyz">Josh</a>
+					Made by{" "}
+					<a href="https://tachanks.xyz" target="_blank" rel="noreferrer">
+						Josh
+					</a>
 				</p>
 			</div>
 		</footer>

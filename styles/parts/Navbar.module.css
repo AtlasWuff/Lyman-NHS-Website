@@ -24,7 +24,7 @@
 }
 
 .scrolledNav {
-	background-color: #f6c901;
+	background-color: var(--nav-color);
 }
 
 #NavLogo:hover,
@@ -35,16 +35,18 @@
 	width: 55px;
 	height: 55px;
 	transition: width 0.5s ease, height 0.5s ease;
+	display: flex;
+	flex-direction: row;
 }
 
 @keyframes NavLogoBark {
 	0% {
 		transform: rotate(0deg);
 	}
-	25% {
+	35% {
 		transform: rotate(-20deg);
 	}
-	50% {
+	70% {
 		transform: rotate(0deg);
 	}
 	100% {

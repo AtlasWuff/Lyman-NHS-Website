@@ -4,19 +4,19 @@
 :root {
 	--bg-color-primary: #0f084c;
 
-	--border-color: #6100bb;
+	--border-color: #ababab;
 
-	--nav-color: #856dcb;
+	--nav-color: #fff01d;
 	--nav-color-hover: #7045f1;
 	--nav-border-color: #7045f1;
 
-	/* Not as important, no touchy below usually */
+	/* ! Not as important, no touchy below usually */
 
 	--font-color-title: white;
 	--font-color-subtitle: white;
 	--font-color-normal: white;
 	--font-color-heavy: #ff4444;
-	--font-color-link: #ff8400;
+	--font-color-link: #fff01d;
 	--font-color-link-hover: #ffaa00;
 
 	--font-size-title: 2.5rem;
