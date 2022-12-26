@@ -30,8 +30,6 @@ export default function Admin() {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [password, setPassword] = useState("");
 
-	const pasRef = useRef<HTMLInputElement>(null);
-
 	const login = (password: String) => {
 		if (password == "password") {
 			setLoggedIn(true);
@@ -143,13 +141,13 @@ export default function Admin() {
 							type="password"
 							placeholder="Password"
 							className={`${styles.passInput}`}
-							ref={pasRef}
+							onChange={(e) => setPassword(e.target.value)}
 						/>
 						<button
 							className="LoadButton-pushable my-3"
 							onClick={() => {
-								login(pasRef.current.value);
-								console.log(pasRef.current.value);
+								login(password);
+								console.log(password);
 							}}
 						>
 							<span className="LoadButton-shadow"></span>
