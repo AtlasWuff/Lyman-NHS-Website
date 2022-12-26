@@ -1,5 +1,5 @@
 #MainTitle {
-	height: 60vh;
+	height: 80vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -52,7 +52,7 @@
 
 .waveWrap {
 	position: absolute;
-	top: 60vh;
+	top: 80vh;
 	left: 0;
 	width: 100%;
 	height: 100px;
