@@ -6,7 +6,7 @@ import Script from "next/script";
 
 import { useRef, useState } from "react";
 
-import { app, db } from "../firebase";
+import { app, db, newAccount, accountsDb } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 
 // CSS imports
@@ -34,13 +34,6 @@ export default function CreateAccount() {
 		grade,
 	];
 
-	const login = (password: String) => {
-		if (password == "password") {
-			setLoggedIn(true);
-		} else {
-			alert("Incorrect password.");
-		}
-	};
 	return (
 		<>
 			{/* Meta tags */}
@@ -105,10 +98,13 @@ export default function CreateAccount() {
 								<button
 									className="LoadButton-pushable my-3"
 									onClick={() => {
-										addMember({
-											name: name,
-											grade: grade,
+										newAccount({
 											email: email,
+											password: password,
+											firstName: firstName,
+											lastName: lastName,
+											grade: grade,
+											db: accountsDb,
 										});
 									}}
 								>

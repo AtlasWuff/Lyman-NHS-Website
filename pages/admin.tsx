@@ -33,35 +33,35 @@ export default function Admin() {
 	// 	}
 	// };
 
-	const dbInstance = collection(db, "Members");
-	const addMember = async ({ name, grade, email }: addMemberProps) => {
-		if (
-			name == "" ||
-			grade == "" ||
-			email == "" ||
-			name == null ||
-			grade == null ||
-			email == null
-		) {
-			alert("Please fill out all fields.");
-			return;
-		} else if (grade > 12 || grade < 9) {
-			alert("Please enter a valid grade.");
-			return;
-		} else if (!email.includes("@")) {
-			alert("Please enter a valid email.");
-			return;
-		}
+	// const dbInstance = collection(db, "Members");
+	// const addMember = async ({ name, grade, email }: addMemberProps) => {
+	// 	if (
+	// 		name == "" ||
+	// 		grade == "" ||
+	// 		email == "" ||
+	// 		name == null ||
+	// 		grade == null ||
+	// 		email == null
+	// 	) {
+	// 		alert("Please fill out all fields.");
+	// 		return;
+	// 	} else if (grade > 12 || grade < 9) {
+	// 		alert("Please enter a valid grade.");
+	// 		return;
+	// 	} else if (!email.includes("@")) {
+	// 		alert("Please enter a valid email.");
+	// 		return;
+	// 	}
 
-		const docRef = await addDoc(dbInstance, {
-			name: name,
-			grade: grade,
-			email: email,
-		}).then((r) => {
-			console.log("Document written with ID: ", r.id);
-			alert(`Success!\nName: ${name}\nGrade: ${grade}\nEmail: ${email}`);
-		});
-	};
+	// 	const docRef = await addDoc(dbInstance, {
+	// 		name: name,
+	// 		grade: grade,
+	// 		email: email,
+	// 	}).then((r) => {
+	// 		console.log("Document written with ID: ", r.id);
+	// 		alert(`Success!\nName: ${name}\nGrade: ${grade}\nEmail: ${email}`);
+	// 	});
+	// };
 
 	return (
 		<>
@@ -107,13 +107,13 @@ export default function Admin() {
 										<div className="col-md-6 flex-column d-flex align-items-center justify-content-center">
 											<button
 												className="LoadButton-pushable my-3"
-												onClick={() => {
-													addMember({
-														name: name,
-														grade: grade,
-														email: email,
-													});
-												}}
+												// onClick={() => {
+												// 	addMember({
+												// 		name: name,
+												// 		grade: grade,
+												// 		email: email,
+												// 	});
+												// }}
 											>
 												<span className="LoadButton-shadow"></span>
 												<span className="LoadButton-edge"></span>

@@ -29,8 +29,104 @@ export const announcementsDb = collection(db, "Announcements");
 export const accountsDb = collection(db, "Accounts");
 
 interface newAccountProps {
-	username: string;
+	email: string;
 	password: string;
+	firstName: string;
+	lastName: string;
+	grade: string | number;
+	db: any;
+}
+
+export const newAccount = async ({
+	email,
+	password,
+	firstName,
+	lastName,
+	grade,
+	db,
+}: newAccountProps) => {
+	if (
+		email == "" ||
+		password == "" ||
+		firstName == "" ||
+		lastName == "" ||
+		grade == "" ||
+		email == null ||
+		password == null ||
+		firstName == null ||
+		lastName == null ||
+		grade == null
+	) {
+		alert("Please fill out all fields.");
+		return;
+	} else if (grade > 12 || grade < 9) {
+		alert("Please enter a valid grade.");
+		return;
+	} else if (!email.includes("@")) {
+		alert("Please enter a valid email.");
+		return;
+	} else if (password.length < 8) {
+		alert("Please enter a password with at least 8 characters.");
+		return;
+	}
+	// give me what is said above but all in one if statement and a alert saying "Please enter a password without any special characters."
+	const specialChars = [
+		" ",
+		"\t",
+		"\n",
+		"\r",
+		"\v",
+		"\f",
+		"\0",
+		"\x1a",
+		"\\",
+		"'",
+		'"',
+		"`",
+		"$",
+		"&",
+		"(",
+		")",
+		"*",
+		"+",
+		",",
+		"/",
+		":",
+		";",
+		"<",
+		"=",
+		">",
+		"?",
+		"@",
+		"[",
+		"]",
+		"^",
+		"{",
+		"|",
+		"}",
+		"~",
+	];
+	for (let i = 0; i < specialChars.length; i++) {
+		if (password.includes(specialChars[i])) {
+			alert("Please enter a password without any special characters.");
+			return;
+		}
+	}
+
+	const docRef = await addDoc(db, {
+		email: email,
+		password: password,
+		firstName: firstName,
+		lastName: lastName,
+		grade: grade,
+	}).then((res) => {
+		console.log("Document written with ID: ", res.id);
+		alert(
+			`Success!\nEmail: ${email}\nPassword: ${password}
+			\nNote: All passwords are encrypted and cannot be seen by anyone.`
+		);
+	});
+};
 
 // interface addMemberProps {
 // 	name: String;
