@@ -117,7 +117,7 @@ export default function Admin() {
 									<span className="ApproveButton-shadow"></span>
 									<span className="ApproveButton-edge"></span>
 
-									<span className="ApproveButton-front text">Approve</span>
+									<span className="ApproveButton-front text">Refresh</span>
 								</button>
 								<div className="row">
 									<div
@@ -176,7 +176,7 @@ export default function Admin() {
 																			<button
 																				className="DenyButton-pushable"
 																				onClick={(e) => {
-																					approvePendingMember(
+																					denyPendingMember(
 																						accounts.accounts.indexOf(account)
 																					);
 																				}}
