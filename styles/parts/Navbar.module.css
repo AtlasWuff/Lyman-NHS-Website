@@ -7,9 +7,9 @@
 	width: 100%;
 	background-color: transparent;
 	position: fixed;
-	transition: background-color 0.25s ease;
 	z-index: 6;
 	transition: box-shadow 0.25s ease;
+	transition: background-color 0.25s ease;
 }
 
 .NavWrapper ul {
@@ -26,7 +26,8 @@
 }
 
 .scrolledNav {
-	background-color: transparent;
+	/* background-color: transparent; */
+	background-color: var(--bg-color-primary);
 	/* bottom shadow */
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
