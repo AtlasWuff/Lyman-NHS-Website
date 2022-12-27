@@ -38,16 +38,18 @@ export default function Navbar({}: Props) {
 							href="/"
 							className="d-flex flex-row justify-content-center align-items-center"
 						>
-							<Image
-								src={"/img/lymannhsborder.png"}
-								width={50}
-								height={50}
-								alt="Logo"
-								id={styles.NavLogo}
-								ref={logoRef}
-								className="pe-2 hoverUnderlineAnim"
-							/>
-							<p className={`${styles.hoverUnderlineAnim}`}>NHS</p>
+							<div id={`${styles.NavTitleDiv}`}>
+								<Image
+									src={"/img/lymannhsborder.png"}
+									width={50}
+									height={50}
+									alt="Logo"
+									id={styles.NavLogo}
+									ref={logoRef}
+									className="pe-2 hoverUnderlineAnim"
+								/>
+								<p className={`${styles.hoverUnderlineAnim}`}>NHS</p>
+							</div>
 						</Link>
 					</li>
 					<li className="col-6">

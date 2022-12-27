@@ -25,46 +25,21 @@
 }
 
 .scrolledNav {
-	/* background-color: var(--nav-color); */
+	background-color: transparent;
 }
 
 #NavLogo:hover {
 	cursor: pointer;
-
-	/* width: 55px;
-	height: 55px;
-	transition: width 0.5s ease, height 0.5s ease; */
-	display: flex;
-	flex-direction: row;
 }
 
-#NavTitle:hover #NavLogo {
-	animation: NavLogoBark 2s infinite backwards;
-}
-
-@keyframes NavLogoBark {
-	0% {
-		transform: rotate(0deg);
-	}
-	25% {
-		transform: rotate(-20deg);
-	}
-	70% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(0deg);
-	}
-}
-
-#NavTitle p.hoverUnderlineAnim {
+#NavTitleDiv p.hoverUnderlineAnim {
 	display: inline-block;
 	position: relative;
 	color: var(--font-color-link);
 	font-weight: var(--font-weight-link);
 }
 
-#NavTitle p.hoverUnderlineAnim::after {
+#NavTitleDiv p.hoverUnderlineAnim::after {
 	content: "";
 	position: absolute;
 	width: 100%;
@@ -77,7 +52,7 @@
 	transition: transform 0.25s ease-out;
 }
 
-#NavTitle:hover p.hoverUnderlineAnim::after {
+#NavTitleDiv:hover p.hoverUnderlineAnim::after {
 	transform: scaleX(1);
 	transform-origin: bottom left;
 }
