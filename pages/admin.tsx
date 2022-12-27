@@ -110,13 +110,21 @@ export default function Admin() {
 						<div id={`${styles.notTitle}`}>
 							<section className="container-sm text-center">
 								<h1>Profile Managment</h1>
+								<button
+									className="ApproveButton-pushable me-2"
+									onClick={() => refreshAccounts()}
+								>
+									<span className="ApproveButton-shadow"></span>
+									<span className="ApproveButton-edge"></span>
+
+									<span className="ApproveButton-front text">Approve</span>
+								</button>
 								<div className="row">
 									<div
 										className="col-md-6 d-flex align-items-center flex-column"
 										id={`${styles.pendingMembers}`}
 									>
 										<h2>Pending Members</h2>
-										<button onClick={() => refreshAccounts()}>Refresh</button>
 										<p>
 											New profiles show below here and require approval before
 											being added to the member list
