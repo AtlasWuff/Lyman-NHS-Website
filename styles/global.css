@@ -287,3 +287,393 @@ a:hover {
 .LoadButton-pushable:focus:not(:focus-visible) {
 	outline: none;
 }
+
+.snake:after {
+	-webkit-animation: snake 2s infinite both ease;
+	animation: snake 2s infinite both ease;
+	border-radius: 100%;
+	content: "";
+	height: 10px;
+	left: 50%;
+	margin-left: -32.5px;
+	margin-top: -5px;
+	position: absolute;
+	top: 50%;
+	width: 10px;
+}
+
+@-webkit-keyframes snake {
+	0%,
+	5% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+	}
+	10% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+	}
+	15% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+	}
+	20% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 -10px white, 45px -15px 0 -10px white, 30px -15px 0 -10px white,
+			15px -15px 0 -10px white, 15px 0 0 -10px white, 30px 0 0 -10px white;
+	}
+	25% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 0 white, 45px -15px 0 -10px white, 30px -15px 0 -10px white,
+			15px -15px 0 -10px white, 15px 0 0 -10px white, 30px 0 0 -10px white;
+	}
+	30% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 0 white, 45px -15px 0 0 white, 30px -15px 0 -10px white,
+			15px -15px 0 -10px white, 15px 0 0 -10px white, 30px 0 0 -10px white;
+	}
+	35% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 0 white, 45px -15px 0 0 white, 30px -15px 0 0 white,
+			15px -15px 0 -10px white, 15px 0 0 -10px white, 30px 0 0 -10px white;
+	}
+	40% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 0 white, 45px -15px 0 0 white, 30px -15px 0 0 white,
+			15px -15px 0 0 white, 15px 0 0 -10px white, 30px 0 0 -10px white;
+	}
+	45% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 0 white, 45px -15px 0 0 white, 30px -15px 0 0 white,
+			15px -15px 0 0 white, 15px 0 0 0 white, 30px 0 0 -10px white;
+	}
+	50% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 0 white, 45px -15px 0 0 white, 30px -15px 0 0 white,
+			15px -15px 0 0 white, 15px 0 0 0 white, 30px 0 0 0 white;
+	}
+	55% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	60% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	65% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	70% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	75% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	80% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -a15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	85% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	90% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 0 white;
+	}
+	95%,
+	100% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+	}
+}
+
+@keyframes snake {
+	0%,
+	5% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+	}
+	10% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+	}
+	15% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+	}
+	20% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 -10px white, 45px -15px 0 -10px white, 30px -15px 0 -10px white,
+			15px -15px 0 -10px white, 15px 0 0 -10px white, 30px 0 0 -10px white;
+	}
+	25% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 0 white, 45px -15px 0 -10px white, 30px -15px 0 -10px white,
+			15px -15px 0 -10px white, 15px 0 0 -10px white, 30px 0 0 -10px white;
+	}
+	30% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 0 white, 45px -15px 0 0 white, 30px -15px 0 -10px white,
+			15px -15px 0 -10px white, 15px 0 0 -10px white, 30px 0 0 -10px white;
+	}
+	35% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 0 white, 45px -15px 0 0 white, 30px -15px 0 0 white,
+			15px -15px 0 -10px white, 15px 0 0 -10px white, 30px 0 0 -10px white;
+	}
+	40% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 0 white, 45px -15px 0 0 white, 30px -15px 0 0 white,
+			15px -15px 0 0 white, 15px 0 0 -10px white, 30px 0 0 -10px white;
+	}
+	45% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 0 white, 45px -15px 0 0 white, 30px -15px 0 0 white,
+			15px -15px 0 0 white, 15px 0 0 0 white, 30px 0 0 -10px white;
+	}
+	50% {
+		-webkit-box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 0 white, 30px 15px 0 0 white, 45px 15px 0 0 white,
+			45px 0 0 0 white, 45px -15px 0 0 white, 30px -15px 0 0 white,
+			15px -15px 0 0 white, 15px 0 0 0 white, 30px 0 0 0 white;
+	}
+	55% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 0 white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	60% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 0 white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	65% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 0 white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	70% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 0 white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	75% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 0 white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	80% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 0 white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	85% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 0 white,
+			30px 0 0 0 white;
+	}
+	90% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 0 white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 0 white;
+	}
+	95%,
+	100% {
+		-webkit-box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+		box-shadow: 15px 15px 0 -10px white, 30px 15px 0 -10px white,
+			45px 15px 0 -10px white, 45px 0 0 -10px white, 45px -15px 0 -10px white,
+			30px -15px 0 -10px white, 15px -15px 0 -10px white, 15px 0 0 -10px white,
+			30px 0 0 -10px white;
+	}
+}

@@ -168,6 +168,7 @@ export const checkAdmin = ({ email, password }: checkAdminProps) => {
 		});
 		if (!foundAccount) {
 			alert("Incorrect email or password.");
+			resolve(false);
 		}
 	});
 };

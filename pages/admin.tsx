@@ -26,12 +26,15 @@ export default function Admin() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isUserAdmin, setIsUserAdmin] = useState(false);
+	const [showLoading, setShowLoading] = useState(false);
 
 	const adminButtonClicked = async ({ email, password }: AdminProps) => {
-		console.log("clicked");
+		await setShowLoading(true);
 		let res = await checkAdmin({ email, password });
-		console.log("resssss: " + res);
+		console.log("Res: " + res);
 		setIsUserAdmin(res);
+		setShowLoading(false);
+		console.log("showLoading: " + showLoading);
 	};
 
 	const logAdmin = async () => {
@@ -74,32 +77,43 @@ export default function Admin() {
 						</div>
 					</>
 				) : (
-					<div className="w-100 vh-100 d-flex align-items-center justify-content-center flex-column">
-						<h1>Sign in</h1>
-						<input
-							type="email"
-							placeholder="Email"
-							className={`${styles.passInput}`}
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-						<input
-							type="password"
-							placeholder="Password"
-							className={`${styles.passInput}`}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
+					<>
+						{showLoading ? (
+							<div className="w-100 vh-100 d-flex justify-content-center align-items-center flex-column">
+								<div
+									className="snake position-relative"
+									id={styles.snake}
+								></div>
+							</div>
+						) : (
+							<div className="w-100 vh-100 d-flex align-items-center justify-content-center flex-column">
+								<h1>Sign in</h1>
+								<input
+									type="email"
+									placeholder="Email"
+									className={`${styles.passInput}`}
+									onChange={(e) => setEmail(e.target.value)}
+								/>
+								<input
+									type="password"
+									placeholder="Password"
+									className={`${styles.passInput}`}
+									onChange={(e) => setPassword(e.target.value)}
+								/>
 
-						<button
-							className="LoadButton-pushable my-2"
-							onClick={() => {
-								adminButtonClicked({ email, password });
-							}}
-						>
-							<span className="LoadButton-shadow"></span>
-							<span className="LoadButton-edge"></span>
-							<span className="LoadButton-front text">Login</span>
-						</button>
-					</div>
+								<button
+									className="LoadButton-pushable my-2"
+									onClick={() => {
+										adminButtonClicked({ email, password });
+									}}
+								>
+									<span className="LoadButton-shadow"></span>
+									<span className="LoadButton-edge"></span>
+									<span className="LoadButton-front text">Login</span>
+								</button>
+							</div>
+						)}
+					</>
 				)}
 			</main>
 		</>
