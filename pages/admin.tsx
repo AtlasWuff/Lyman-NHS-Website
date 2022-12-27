@@ -76,11 +76,22 @@ export default function Admin() {
 	};
 
 	const denyPendingMember = async (index: number) => {
+		const accs: any = accounts.accounts;
 		await deleteMember(
 			accounts.accounts[index].firstName +
 				" " +
 				accounts.accounts[index].lastName
 		);
+
+		let thing = accs.filter(
+			(item: any) =>
+				item.firstName + " " + item.lastName !=
+				accs[index].firstName + " " + accs[index].lastName
+		) as any;
+
+		setAccounts({
+			accounts: thing,
+		});
 	};
 
 	const refreshAccounts = async () => {
