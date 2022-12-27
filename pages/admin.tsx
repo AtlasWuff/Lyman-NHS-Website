@@ -32,6 +32,9 @@ export default function Admin() {
 		let res = await checkAdmin({ email, password });
 		console.log("resssss: " + res);
 		setIsUserAdmin(res);
+	};
+
+	const logAdmin = async () => {
 		console.log("isUserAdmin: " + isUserAdmin);
 	};
 
@@ -55,6 +58,16 @@ export default function Admin() {
 									</div>
 									<div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
 										<h2>Member List</h2>
+										<button
+											className="LoadButton-pushable my-2"
+											onClick={() => {
+												logAdmin();
+											}}
+										>
+											<span className="LoadButton-shadow"></span>
+											<span className="LoadButton-edge"></span>
+											<span className="LoadButton-front text">Log</span>
+										</button>
 									</div>
 								</div>
 							</section>

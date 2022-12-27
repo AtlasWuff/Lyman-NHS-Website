@@ -21,12 +21,63 @@ export default function Footer({}: Props) {
 	return (
 		<footer>
 			<div className={`${styles.FtrWrapper}`}>
-				<p>
+				<p className="">
 					Made by{" "}
-					<a href="https://tachanks.xyz" target="_blank" rel="noreferrer">
+					<a
+						href="https://tachanks.xyz"
+						target="_blank"
+						rel="noreferrer"
+						className="hoverUnderlineAnim"
+					>
 						Josh
 					</a>
 				</p>
+				<div className={`${styles.Socials}`}>
+					<a href="https://tachanks.xyz" target="_blank" rel="noreferrer">
+						<Image
+							src="/img/socials/website.svg"
+							width={30}
+							height={30}
+							alt=""
+						/>
+					</a>
+					<a
+						href="https://github.com/Its-Tachanks"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<Image
+							src="/img/socials/github.svg"
+							width={30}
+							height={30}
+							alt=""
+						/>
+					</a>
+					<a
+						href="https://linkedin.com/in/Joshua-EW"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<Image
+							src="/img/socials/linkedin.svg"
+							width={30}
+							height={30}
+							alt=""
+						/>
+					</a>
+					<a
+						href="https://www.instagram.com/tachanks_/"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<Image
+							src="/img/socials/instagram.svg"
+							width={30}
+							height={30}
+							alt=""
+						/>
+					</a>
+				</div>
 			</div>
 		</footer>
 	);

@@ -81,13 +81,14 @@
 	margin: 8px 0px;
 	border: 3px solid black;
 
-	width: auto;
+	width: 100%;
 }
 
 .loginInput p {
 	padding-right: 0.5rem;
 
 	width: auto;
+	white-space: nowrap;
 }
 
 #loginForm {
@@ -100,5 +101,5 @@
 
 #loginForm h2 {
 	margin-bottom: 0rem;
-	margin-top: 0.5rem;
+	margin-top: 0.3rem;
 }

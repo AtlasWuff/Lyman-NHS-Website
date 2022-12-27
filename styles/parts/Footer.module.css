@@ -1,4 +1,30 @@
 .FtrWrapper {
 	height: 48px;
-	background-color: aqua;
+	background-color: var(--bg-color-primary);
+	border-top: 2px solid var(--border-color);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 2px 48px;
+	z-index: 3;
+	position: relative;
+}
+
+@media screen and (max-width: 640px) {
+	.FtrWrapper {
+		padding: 2px 12px;
+	}
+}
+
+.Socials a {
+	margin: 0 0.2rem;
+}
+
+.Socials a img {
+	transition: transform 0s ease-in-out;
+	transform-origin: center;
+}
+
+.Socials a:hover img {
+	transform: scale(1.1);
 }
