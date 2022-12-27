@@ -5,6 +5,7 @@
 	--bg-color-primary: var(--celadon-blue);
 
 	--border-color: black;
+	--shadow-color: rgba(0, 0, 0, 0.5);
 
 	--nav-color: #ffe15c;
 	--nav-color-hover: #7045f1;
@@ -239,10 +240,10 @@ a:hover {
 	border-radius: 6px;
 	background: linear-gradient(
 		to left,
-		rgb(32, 144, 184) 0%,
-		rgb(22, 111, 220) 8%,
-		rgb(22, 111, 220) 92%,
-		rgb(32, 144, 184) 100%
+		rgb(22, 111, 220) 0%,
+		rgb(18, 104, 175) 8%,
+		rgb(18, 104, 175) 92%,
+		rgb(22, 111, 220) 100%
 	);
 }
 

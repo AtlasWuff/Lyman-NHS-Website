@@ -1,0 +1,71 @@
+.CollapsableWrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	background-color: red;
+	overflow-wrap: break-word;
+	border-radius: 8px;
+	background-color: rgb(255, 255, 255);
+	border: 2px solid black;
+	padding: 0.25rem 0.25rem;
+}
+
+.Collapsable {
+	display: block;
+	transition: height 0.5s ease-in-out;
+	overflow-wrap: anywhere;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+div.CollapsableContent {
+	max-height: 0px;
+	transition: max-height 0.5s ease-in-out;
+	overflow-wrap: anywhere;
+	/* overflow: hidden; */
+	width: 100%;
+	text-align: left;
+
+	margin-top: 0.2rem;
+}
+
+div.CollapsableContent > div {
+	margin-top: 0.25rem;
+}
+
+.CollapsableExpanded div.CollapsableContent {
+	max-height: 12rem;
+	border-top: 2px solid black;
+	overflow: scroll;
+	overflow-x: hidden;
+	scrollbar-width: thin;
+}
+
+.Collapsable:not(.CollapsableExpanded) .CollapsableContent {
+	margin-top: 0rem;
+	overflow: hidden;
+}
+
+div.CollapsableContent::-webkit-scrollbar {
+	width: 1rem;
+}
+
+.CollapsableExpanded div.CollapsableContent::-webkit-scrollbar-track {
+	background: var(--bg-color-primary);
+	color: gray;
+}
+
+.Collapsable img {
+	transition: transform 0.5s ease-in-out;
+}
+
+.Collapsable:not(.CollapsableExpanded) img {
+	transform: rotate(360deg);
+}
+
+.Collapsable.CollapsableExpanded img {
+	transform: rotate(180deg);
+}

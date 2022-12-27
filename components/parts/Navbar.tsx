@@ -1,12 +1,7 @@
 // Imports
-import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import Script from "next/script";
-import type { AppProps } from "next/app";
-import $ from "jquery";
-
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 
 // CSS imports
 import styles from "../../styles/parts/Navbar.module.css";

@@ -8,7 +8,7 @@
 	padding: 2px 48px;
 	z-index: 3;
 	position: relative;
-	margin-top: 1.25rem;
+	/* margin-top: 1.25rem; */
 }
 
 @media screen and (max-width: 640px) {
@@ -30,5 +30,5 @@
 
 .Socials a:hover img {
 	transform: scale(1.1);
-	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 10px 0 var(--shadow-color);
 }
