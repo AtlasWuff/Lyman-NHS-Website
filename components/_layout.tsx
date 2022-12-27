@@ -29,8 +29,6 @@ export default function Layout({ children }: Props) {
 				crossOrigin="anonymous"
 			></Script>
 
-			<Script src="/scripts/LoadEffect.js" />
-
 			<Navbar />
 			{children}
 			<Footer />

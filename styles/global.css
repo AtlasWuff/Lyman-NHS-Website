@@ -239,10 +239,10 @@ a:hover {
 	border-radius: 6px;
 	background: linear-gradient(
 		to left,
-		hsl(340deg 100% 16%) 0%,
-		hsl(340deg 100% 32%) 8%,
-		hsl(340deg 100% 32%) 92%,
-		hsl(340deg 100% 16%) 100%
+		rgb(32, 144, 184) 0%,
+		rgb(22, 111, 220) 8%,
+		rgb(22, 111, 220) 92%,
+		rgb(32, 144, 184) 100%
 	);
 }
 
@@ -253,7 +253,7 @@ a:hover {
 	border-radius: 6px;
 	font-size: 1.1rem;
 	color: white;
-	background: hsl(345deg 100% 47%);
+	background: rgb(0, 132, 255);
 	will-change: transform;
 	transform: translateY(-4px);
 	transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
@@ -285,6 +285,176 @@ a:hover {
 }
 
 .LoadButton-pushable:focus:not(:focus-visible) {
+	outline: none;
+}
+
+/* ** Approve button */
+.ApproveButton-pushable {
+	position: relative;
+	border: none;
+	background: transparent;
+	padding: 0;
+	cursor: pointer;
+	outline-offset: 4px;
+	transition: filter 250ms;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+}
+
+.ApproveButton-shadow {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 6px;
+	background: hsl(0deg 0% 0% / 0.25);
+	will-change: transform;
+	transform: translateY(2px);
+	transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.ApproveButton-edge {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 6px;
+	background: linear-gradient(
+		to left,
+		#1a7c4e 0%,
+		#1d9c61 8%,
+		#1d9c61 92%,
+		#1a7c4e 100%
+	);
+}
+
+.ApproveButton-front {
+	display: block;
+	position: relative;
+	padding: 4px 16px;
+	border-radius: 6px;
+	font-size: 1.1rem;
+	color: white;
+	background: #1fa667;
+	will-change: transform;
+	transform: translateY(-4px);
+	transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.ApproveButton-pushable:hover {
+	filter: brightness(110%);
+	-webkit-filter: brightness(110%);
+}
+
+.ApproveButton-pushable:hover .ApproveButton-front {
+	transform: translateY(-6px);
+	transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.ApproveButton-pushable:active .ApproveButton-front {
+	transform: translateY(-2px);
+	transition: transform 34ms;
+}
+
+.ApproveButton-pushable:hover .ApproveButton-shadow {
+	transform: translateY(4px);
+	transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.ApproveButton-pushable:active .ApproveButton-shadow {
+	transform: translateY(1px);
+	transition: transform 34ms;
+}
+
+.ApproveButton-pushable:focus:not(:focus-visible) {
+	outline: none;
+}
+
+/* ! Deny button */
+.DenyButton-pushable {
+	position: relative;
+	border: none;
+	background: transparent;
+	padding: 0;
+	cursor: pointer;
+	outline-offset: 4px;
+	transition: filter 250ms;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+}
+
+.DenyButton-shadow {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 6px;
+	background: hsl(0deg 0% 0% / 0.25);
+	will-change: transform;
+	transform: translateY(2px);
+	transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.DenyButton-edge {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 6px;
+	background: linear-gradient(
+		to left,
+		#98222e 0%,
+		#bb2c3a 8%,
+		#bb2c3a 92%,
+		#98222e 100%
+	);
+}
+
+.DenyButton-front {
+	display: block;
+	position: relative;
+	padding: 4px 16px;
+	border-radius: 6px;
+	font-size: 1.1rem;
+	color: white;
+	background: #dc3545;
+	will-change: transform;
+	transform: translateY(-4px);
+	transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.DenyButton-pushable:hover {
+	filter: brightness(110%);
+	-webkit-filter: brightness(110%);
+}
+
+.DenyButton-pushable:hover .DenyButton-front {
+	transform: translateY(-6px);
+	transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.DenyButton-pushable:active .DenyButton-front {
+	transform: translateY(-2px);
+	transition: transform 34ms;
+}
+
+.DenyButton-pushable:hover .DenyButton-shadow {
+	transform: translateY(4px);
+	transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.DenyButton-pushable:active .DenyButton-shadow {
+	transform: translateY(1px);
+	transition: transform 34ms;
+}
+
+.DenyButton-pushable:focus:not(:focus-visible) {
 	outline: none;
 }
 

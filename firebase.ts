@@ -1,7 +1,14 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, setDoc, doc, getDocs } from "firebase/firestore";
+import { getFirestore, deleteDoc } from "firebase/firestore";
+import {
+	collection,
+	addDoc,
+	setDoc,
+	doc,
+	getDocs,
+	updateDoc,
+} from "firebase/firestore";
 import * as EmailValidator from "email-validator";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -29,7 +36,55 @@ const eventsDb = collection(db, "Events");
 const announcementsDb = collection(db, "Announcements");
 const accountsDb = collection(db, "Accounts");
 
-// All docs
+export const updateMember = async (name: string, modifiedField: object) => {
+	return new Promise<void>(async (resolve, reject) => {
+		try {
+			await updateDoc(doc(db, "Accounts", name), modifiedField);
+			resolve();
+		} catch (err) {
+			console.log(err);
+		}
+	});
+};
+
+export const deleteMember = async (name: string) => {
+	return new Promise<void>(async (resolve, reject) => {
+		try {
+			await deleteDoc(doc(db, "Accounts", name));
+			resolve();
+		} catch (err) {
+			console.log(err);
+		}
+	});
+};
+
+export interface AccInterface {
+	email: string;
+	firstName: string;
+	lastName: string;
+	grade: string | number;
+	isAdmin: boolean;
+	isVerified: boolean;
+	password: string;
+}
+
+export const getAccounts = async () => {
+	return new Promise<AccInterface[]>(async (resolve, reject) => {
+		let querySnapshot: any;
+		try {
+			querySnapshot = await getDocs(accountsDb);
+		} catch (err) {
+			reject(err);
+		}
+		let ret: AccInterface[] = [];
+		querySnapshot.forEach((doc: any) => {
+			ret.push(doc.data() as AccInterface);
+			if (ret.length == querySnapshot.size) {
+				resolve(ret);
+			}
+		});
+	});
+};
 
 interface newAccountProps {
 	email: string;
@@ -38,6 +93,7 @@ interface newAccountProps {
 	lastName: string;
 	grade: string | number;
 	isAdmin: boolean;
+	isVerified: boolean;
 }
 
 export const newAccount = async ({
@@ -47,6 +103,7 @@ export const newAccount = async ({
 	lastName,
 	grade,
 	isAdmin,
+	isVerified,
 }: newAccountProps) => {
 	if (
 		email == "" ||
@@ -128,6 +185,7 @@ export const newAccount = async ({
 		lastName: lastName,
 		grade: grade,
 		isAdmin: isAdmin,
+		isVerified: false,
 	}).then((res) => {
 		console.log("Document written with ID: ", res);
 		alert(
@@ -145,22 +203,26 @@ interface checkAdminProps {
 export const checkAdmin = ({ email, password }: checkAdminProps) => {
 	return new Promise<boolean>(async (resolve, reject) => {
 		let foundAccount = false;
-		const querySnapshot = await getDocs(accountsDb);
-		querySnapshot.forEach((doc) => {
+		let querySnapshot: any;
+		try {
+			querySnapshot = await getDocs(accountsDb);
+		} catch (err) {
+			alert("Error: " + err);
+			resolve(false);
+		}
+		querySnapshot.forEach((doc: any) => {
 			if (doc.data().email == email && doc.data().password == password) {
 				foundAccount = true;
 				if (doc.data().isAdmin) {
 					resolve(true);
-					console.log("Resolved true");
 				} else {
 					alert("You are not an admin.");
 					resolve(false);
-					console.log("Resolved false");
 				}
 			}
 			if (
-				querySnapshot.docs.map((doc) => doc.data()).indexOf(doc) ==
-				querySnapshot.docs.map((doc) => doc.data()).length - 1
+				querySnapshot.docs.map((doc: any) => doc.data()).indexOf(doc) ==
+				querySnapshot.docs.map((doc: any) => doc.data()).length - 1
 			) {
 				resolve(false);
 				alert("Incorrect email or password.");

@@ -103,6 +103,7 @@ export default function CreateAccount() {
 											lastName: lastName,
 											grade: grade,
 											isAdmin: false,
+											isVerified: false,
 										});
 									}}
 								>

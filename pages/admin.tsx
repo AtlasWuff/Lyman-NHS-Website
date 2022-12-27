@@ -4,10 +4,16 @@ import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { app, db, checkAdmin } from "../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import {
+	checkAdmin,
+	getAccounts,
+	AccInterface,
+	updateMember,
+	deleteMember,
+} from "../firebase";
+import { collection, addDoc, updateDoc } from "firebase/firestore";
 
 // CSS imports
 import styles from "../styles/pages/Admin.module.css";
@@ -28,17 +34,65 @@ export default function Admin() {
 	const [isUserAdmin, setIsUserAdmin] = useState(false);
 	const [showLoading, setShowLoading] = useState(false);
 
+	interface Accounts {
+		accounts: Array<AccInterface>;
+	}
+	const [accounts, setAccounts] = useState<Accounts>({ accounts: [] });
+
 	const adminButtonClicked = async ({ email, password }: AdminProps) => {
 		await setShowLoading(true);
 		let res = await checkAdmin({ email, password });
-		console.log("Res: " + res);
 		setIsUserAdmin(res);
 		setShowLoading(false);
-		console.log("showLoading: " + showLoading);
 	};
 
-	const logAdmin = async () => {
-		console.log("isUserAdmin: " + isUserAdmin);
+	const getAccAwait = async () => {
+		return await getAccounts();
+	};
+
+	useEffect(() => {
+		getAccAwait().then((res) => {
+			setAccounts({ accounts: res });
+		});
+		console.log("Fetched accounts");
+	}, []);
+
+	const approvePendingMember = async (index: number) => {
+		const accs: any = accounts.accounts;
+		console.log(accs);
+		await updateMember(accs[index].firstName + " " + accs[index].lastName, {
+			isVerified: true,
+		});
+
+		let thing = accs.filter(
+			(item: any) =>
+				item.firstName + " " + item.lastName !=
+				accs[index].firstName + " " + accs[index].lastName
+		) as any;
+
+		setAccounts({
+			accounts: thing,
+		});
+	};
+
+	const denyPendingMember = async (index: number) => {
+		await deleteMember(
+			accounts.accounts[index].firstName +
+				" " +
+				accounts.accounts[index].lastName
+		);
+	};
+
+	const refreshAccounts = async () => {
+		getAccAwait().then((res) => {
+			setAccounts({ accounts: res });
+		});
+		console.log("Fetched accounts");
+		console.log(accounts);
+	};
+
+	const expandMember = (index: number) => {
+		console.log(index);
 	};
 
 	return (
@@ -55,22 +109,135 @@ export default function Admin() {
 						<PageTitle title="NHS Admin" />
 						<div id={`${styles.notTitle}`}>
 							<section className="container-sm text-center">
+								<h1>Profile Managment</h1>
 								<div className="row">
-									<div className="col-md-6 d-flex align-items-center justify-content-center">
-										<h2>Pending Member Requests</h2>
+									<div
+										className="col-md-6 d-flex align-items-center flex-column"
+										id={`${styles.pendingMembers}`}
+									>
+										<h2>Pending Members</h2>
+										<button onClick={() => refreshAccounts()}>Refresh</button>
+										<p>
+											New profiles show below here and require approval before
+											being added to the member list
+										</p>
+										<div className={`${styles.MembersWrap}`}>
+											<div className={`${styles.Members}`}>
+												{accounts.accounts.filter(
+													(item) => item.isVerified == false
+												).length > 0 ? (
+													accounts.accounts
+														.filter((item) => item.isVerified == false)
+														.map((account) => {
+															return (
+																<div
+																	key={accounts.accounts.indexOf(account)}
+																	className={`${styles.pendingMember} w-100`}
+																>
+																	<div className="d-flex justify-content-between w-100 flex-row">
+																		<button
+																			className={`${styles.pendingPWrap}`}
+																			onClick={(e) => {
+																				expandMember(
+																					accounts.accounts.indexOf(account)
+																				);
+																			}}
+																		>
+																			<p>
+																				{account.firstName +
+																					" " +
+																					account.lastName}
+																			</p>
+																		</button>
+																		<div className="d-flex align-items-center justify-content-center flex-row">
+																			<button
+																				className="ApproveButton-pushable me-2"
+																				onClick={(e) => {
+																					approvePendingMember(
+																						accounts.accounts.indexOf(account)
+																					);
+																				}}
+																			>
+																				<span className="ApproveButton-shadow"></span>
+																				<span className="ApproveButton-edge"></span>
+
+																				<span className="ApproveButton-front text">
+																					Approve
+																				</span>
+																			</button>
+																			<button
+																				className="DenyButton-pushable"
+																				onClick={(e) => {
+																					approvePendingMember(
+																						accounts.accounts.indexOf(account)
+																					);
+																				}}
+																			>
+																				<span className="DenyButton-shadow"></span>
+																				<span className="DenyButton-edge"></span>
+
+																				<span className="DenyButton-front text">
+																					Deny
+																				</span>
+																			</button>
+																		</div>
+																	</div>
+																</div>
+															);
+														})
+												) : (
+													<div className="d-flex align-items-center justify-content-center w-100">
+														<label className={`${styles.noPending}`}>
+															No pending members
+														</label>
+													</div>
+												)}
+											</div>
+										</div>
 									</div>
-									<div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
+									<div className="col-md-6 d-flex flex-column align-items-center ">
 										<h2>Member List</h2>
-										<button
-											className="LoadButton-pushable my-2"
-											onClick={() => {
-												logAdmin();
-											}}
-										>
-											<span className="LoadButton-shadow"></span>
-											<span className="LoadButton-edge"></span>
-											<span className="LoadButton-front text">Log</span>
-										</button>
+										<div className={`${styles.MembersWrap}`}>
+											<div className={`${styles.Members}`}>
+												{accounts.accounts.filter(
+													(item) => item.isVerified == true
+												).length > 0 ? (
+													accounts.accounts
+														.filter((item) => item.isVerified == true)
+														.map((account) => {
+															return (
+																<div
+																	key={accounts.accounts.indexOf(account)}
+																	className={`${styles.pendingMember} w-100`}
+																>
+																	<div className="d-flex justify-content-between w-100 flex-row">
+																		<button
+																			className={`${styles.pendingPWrap}`}
+																			onClick={(e) => {
+																				expandMember(
+																					accounts.accounts.indexOf(account)
+																				);
+																			}}
+																		>
+																			<p>
+																				{account.firstName +
+																					" " +
+																					account.lastName}
+																			</p>
+																		</button>
+																	</div>
+																</div>
+															);
+														})
+												) : (
+													<div className="d-flex align-items-center justify-content-center w-100">
+														<label className={`${styles.noPending}`}>
+															No pending members
+														</label>
+													</div>
+												)}
+											</div>
+										</div>
 									</div>
 								</div>
 							</section>

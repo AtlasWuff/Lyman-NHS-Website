@@ -34,11 +34,8 @@ export default function Navbar({}: Props) {
 			<div className={`${styles.NavWrapper}`} ref={navbarRef}>
 				<ul className="d-flex flex-row justify-content-around align-items-center">
 					<li className="col-2" id={`${styles.NavTitle}`}>
-						<Link
-							href="/"
-							className="d-flex flex-row justify-content-center align-items-center"
-						>
-							<div id={`${styles.NavTitleDiv}`}>
+						<div className="d-flex flex-row justify-content-center align-items-center">
+							<Link href="/" id={`${styles.NavTitleDiv}`}>
 								<Image
 									src={"/img/lymannhsborder.png"}
 									width={50}
@@ -49,8 +46,8 @@ export default function Navbar({}: Props) {
 									className="pe-2 hoverUnderlineAnim"
 								/>
 								<p className={`${styles.hoverUnderlineAnim}`}>NHS</p>
-							</div>
-						</Link>
+							</Link>
+						</div>
 					</li>
 					<li className="col-6">
 						<div className="d-flex flex-row justify-content-around align-items-center">

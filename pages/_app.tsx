@@ -17,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
 				src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 				crossOrigin="anonymous"
 			></Script>
+			<Script src="/scripts/LoadEffect.js" />
 
 			<Layout>
 				<Component {...pageProps} />
