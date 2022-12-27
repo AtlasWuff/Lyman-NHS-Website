@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, getDocs } from "firebase/firestore";
+import * as EmailValidator from "email-validator";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -23,10 +24,12 @@ export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
 // All DBs
-export const membersDb = collection(db, "Members");
-export const eventsDb = collection(db, "Events");
-export const announcementsDb = collection(db, "Announcements");
-export const accountsDb = collection(db, "Accounts");
+const membersDb = collection(db, "Members");
+const eventsDb = collection(db, "Events");
+const announcementsDb = collection(db, "Announcements");
+const accountsDb = collection(db, "Accounts");
+
+// All docs
 
 interface newAccountProps {
 	email: string;
@@ -35,7 +38,6 @@ interface newAccountProps {
 	lastName: string;
 	grade: string | number;
 	isAdmin: boolean;
-	db: any;
 }
 
 export const newAccount = async ({
@@ -45,7 +47,6 @@ export const newAccount = async ({
 	lastName,
 	grade,
 	isAdmin,
-	db,
 }: newAccountProps) => {
 	if (
 		email == "" ||
@@ -64,7 +65,7 @@ export const newAccount = async ({
 	} else if (grade > 12 || grade < 9) {
 		alert("Please enter a valid grade.");
 		return;
-	} else if (!email.includes("@")) {
+	} else if (!(await EmailValidator.validate(email))) {
 		alert("Please enter a valid email.");
 		return;
 	} else if (password.length < 8) {
@@ -114,8 +115,13 @@ export const newAccount = async ({
 			return;
 		}
 	}
+	let newAccDoc = doc(
+		db,
+		"Accounts",
+		(firstName + " " + lastName).toLowerCase()
+	);
 
-	const docRef = await addDoc(db, {
+	const docRef = await setDoc(newAccDoc, {
 		email: email,
 		password: password,
 		firstName: firstName,
@@ -123,7 +129,7 @@ export const newAccount = async ({
 		grade: grade,
 		isAdmin: isAdmin,
 	}).then((res) => {
-		console.log("Document written with ID: ", res.id);
+		console.log("Document written with ID: ", res);
 		alert(
 			`Success!\nEmail: ${email}\nPassword: ${password}
 			\nNote: All passwords are encrypted and cannot be seen by anyone.`
@@ -131,38 +137,37 @@ export const newAccount = async ({
 	});
 };
 
-// interface addMemberProps {
-// 	name: String;
-// 	grade: String | Number;
-// 	email: String;
-// 	db: any;
-// }
+interface checkAdminProps {
+	email: string;
+	password: string;
+}
 
-// export const addMember = async ({ name, grade, email, db }: addMemberProps) => {
-// 	if (
-// 		name == "" ||
-// 		grade == "" ||
-// 		email == "" ||
-// 		name == null ||
-// 		grade == null ||
-// 		email == null
-// 	) {
-// 		alert("Please fill out all fields.");
-// 		return;
-// 	} else if (grade > 12 || grade < 9) {
-// 		alert("Please enter a valid grade.");
-// 		return;
-// 	} else if (!email.includes("@")) {
-// 		alert("Please enter a valid email.");
-// 		return;
-// 	}
-
-// 	const docRef = await addDoc(db, {
-// 		name: name,
-// 		grade: grade,
-// 		email: email,
-// 	}).then((res) => {
-// 		console.log("Document written with ID: ", res.id);
-// 		alert(`Success!\nName: ${name}\nGrade: ${grade}\nEmail: ${email}`);
-// 	});
-// };
+export const checkAdmin = ({ email, password }: checkAdminProps) => {
+	return new Promise<boolean>(async (resolve, reject) => {
+		let foundAccount = false;
+		const querySnapshot = await getDocs(accountsDb);
+		querySnapshot.forEach((doc) => {
+			if (doc.data().email == email && doc.data().password == password) {
+				foundAccount = true;
+				if (doc.data().isAdmin) {
+					resolve(true);
+					console.log("Resolved true");
+				} else {
+					alert("You are not an admin.");
+					resolve(false);
+					console.log("Resolved false");
+				}
+			}
+			if (
+				querySnapshot.docs.map((doc) => doc.data()).indexOf(doc) ==
+				querySnapshot.docs.map((doc) => doc.data()).length - 1
+			) {
+				resolve(false);
+				alert("Incorrect email or password.");
+			}
+		});
+		if (!foundAccount) {
+			alert("Incorrect email or password.");
+		}
+	});
+};

@@ -6,7 +6,7 @@ import Script from "next/script";
 
 import { useRef, useState } from "react";
 
-import { app, db } from "../firebase";
+import { app, db, checkAdmin } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 
 // CSS imports
@@ -15,53 +15,25 @@ import styles from "../styles/pages/Admin.module.css";
 // Component imports
 import PageTitle from "../components/parts/PageTitle";
 
-// Interface for addMember function
+// Interface for function
+interface AdminProps {
+	email: string;
+	password: string;
+}
 
 // Page
 export default function Admin() {
-	const [name, setName] = useState("");
-	const [grade, setGrade] = useState("");
 	const [email, setEmail] = useState("");
-	// const [loggedIn, setLoggedIn] = useState(false);
-	// const [password, setPassword] = useState("");
+	const [password, setPassword] = useState("");
+	const [isUserAdmin, setIsUserAdmin] = useState(false);
 
-	// const login = (password: String) => {
-	// 	if (password == "password") {
-	// 		setLoggedIn(true);
-	// 	} else {
-	// 		alert("Incorrect password.");
-	// 	}
-	// };
-
-	// const dbInstance = collection(db, "Members");
-	// const addMember = async ({ name, grade, email }: addMemberProps) => {
-	// 	if (
-	// 		name == "" ||
-	// 		grade == "" ||
-	// 		email == "" ||
-	// 		name == null ||
-	// 		grade == null ||
-	// 		email == null
-	// 	) {
-	// 		alert("Please fill out all fields.");
-	// 		return;
-	// 	} else if (grade > 12 || grade < 9) {
-	// 		alert("Please enter a valid grade.");
-	// 		return;
-	// 	} else if (!email.includes("@")) {
-	// 		alert("Please enter a valid email.");
-	// 		return;
-	// 	}
-
-	// 	const docRef = await addDoc(dbInstance, {
-	// 		name: name,
-	// 		grade: grade,
-	// 		email: email,
-	// 	}).then((r) => {
-	// 		console.log("Document written with ID: ", r.id);
-	// 		alert(`Success!\nName: ${name}\nGrade: ${grade}\nEmail: ${email}`);
-	// 	});
-	// };
+	const adminButtonClicked = async ({ email, password }: AdminProps) => {
+		console.log("clicked");
+		let res = await checkAdmin({ email, password });
+		console.log("resssss: " + res);
+		setIsUserAdmin(res);
+		console.log("isUserAdmin: " + isUserAdmin);
+	};
 
 	return (
 		<>
@@ -72,76 +44,42 @@ export default function Admin() {
 
 			{/* ! Main homepage content */}
 			<main>
-				{/* {loggedIn ? ( */}
-				<>
-					<PageTitle title="NHS Admin" />
-					<div id={`${styles.notTitle}`}>
-						<section className="container-sm text-center">
-							<div className="row">
-								<div className="col-md-6 d-flex align-items-center justify-content-center">
-									<h2>Pending Member Requests</h2>
-								</div>
-								<div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
-									<h2>Add Members</h2>
-									<div className="row">
-										<div className="col-md-6 flex-column d-flex align-items-center justify-content-center">
-											<input
-												type="text"
-												placeholder="Name"
-												onChange={(e) => setName(e.target.value)}
-												className={`${styles.memberInput}`}
-											/>
-											<input
-												type="text"
-												placeholder="Grade"
-												onChange={(e) => setGrade(e.target.value)}
-												className={`${styles.memberInput}`}
-											/>
-											<input
-												type="text"
-												placeholder="Email"
-												onChange={(e) => setEmail(e.target.value)}
-												className={`${styles.memberInput}`}
-											/>
-										</div>
-										<div className="col-md-6 flex-column d-flex align-items-center justify-content-center">
-											<button
-												className="LoadButton-pushable my-3"
-												// onClick={() => {
-												// 	addMember({
-												// 		name: name,
-												// 		grade: grade,
-												// 		email: email,
-												// 	});
-												// }}
-											>
-												<span className="LoadButton-shadow"></span>
-												<span className="LoadButton-edge"></span>
-
-												<span className="LoadButton-front text">
-													Add Member
-												</span>
-											</button>
-										</div>
+				{isUserAdmin ? (
+					<>
+						<PageTitle title="NHS Admin" />
+						<div id={`${styles.notTitle}`}>
+							<section className="container-sm text-center">
+								<div className="row">
+									<div className="col-md-6 d-flex align-items-center justify-content-center">
+										<h2>Pending Member Requests</h2>
+									</div>
+									<div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
+										<h2>Member List</h2>
 									</div>
 								</div>
-							</div>
-						</section>
-					</div>
-				</>
-				{/* ) : (
-					<div className="vw-100 vh-100 d-flex align-items-center justify-content-center flex-column">
-						<h1>Enter the password</h1>
+							</section>
+						</div>
+					</>
+				) : (
+					<div className="w-100 vh-100 d-flex align-items-center justify-content-center flex-column">
+						<h1>Sign in</h1>
+						<input
+							type="email"
+							placeholder="Email"
+							className={`${styles.passInput}`}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
 						<input
 							type="password"
 							placeholder="Password"
 							className={`${styles.passInput}`}
 							onChange={(e) => setPassword(e.target.value)}
 						/>
+
 						<button
-							className="LoadButton-pushable my-3"
+							className="LoadButton-pushable my-2"
 							onClick={() => {
-								login(password);
+								adminButtonClicked({ email, password });
 							}}
 						>
 							<span className="LoadButton-shadow"></span>
@@ -149,7 +87,7 @@ export default function Admin() {
 							<span className="LoadButton-front text">Login</span>
 						</button>
 					</div>
-				)} */}
+				)}
 			</main>
 		</>
 	);

@@ -62,7 +62,7 @@ export default function Navbar({}: Props) {
 					</li>
 					<li className="col-4 d-flex align-items-center justify-content-evenly px-5">
 						<Link href="/createaccount" className="hoverUnderlineAnim">
-							Create Account
+							Create Profile
 						</Link>
 					</li>
 				</ul>

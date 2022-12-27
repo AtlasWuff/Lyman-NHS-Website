@@ -6,7 +6,7 @@ import Script from "next/script";
 
 import { useRef, useState } from "react";
 
-import { app, db, newAccount, accountsDb } from "../firebase";
+import { app, db, newAccount } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 
 // CSS imports
@@ -14,8 +14,6 @@ import styles from "../styles/pages/CreateAccount.module.css";
 
 // Component imports
 import PageTitle from "../components/parts/PageTitle";
-
-// Interface for addMember function
 
 // Page
 export default function CreateAccount() {
@@ -49,9 +47,9 @@ export default function CreateAccount() {
 						<Image src={"/img/campus.jpg"} fill alt="" />
 					</div>
 					<section id={`${styles.loginModal}`}>
-						<h1>Create Account</h1>
+						<h1>Create Profile</h1>
 						<div id={`${styles.loginForm}`}>
-							<h2>Account info</h2>
+							<h2>Profile info</h2>
 							<div className={`${styles.loginInput}`}>
 								<p>Email</p>
 								<input
@@ -105,14 +103,13 @@ export default function CreateAccount() {
 											lastName: lastName,
 											grade: grade,
 											isAdmin: false,
-											db: accountsDb,
 										});
 									}}
 								>
 									<span className="LoadButton-shadow"></span>
 									<span className="LoadButton-edge"></span>
 
-									<span className="LoadButton-front text">Create Account</span>
+									<span className="LoadButton-front text">Create Profile</span>
 								</button>
 							</div>
 						</div>
