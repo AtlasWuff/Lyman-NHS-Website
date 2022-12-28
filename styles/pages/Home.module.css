@@ -159,11 +159,12 @@
 	align-items: center;
 	background-color: var(--bg-color-primary);
 	padding: 1rem 2rem;
-	border-radius: 6px;
+	border-radius: 12px;
 	box-shadow: 5px 5px 10px var(--shadow-color);
 	border: 3px solid var(--border-color);
 	position: relative;
 	z-index: 101;
+	max-width: 90vw;
 }
 
 #signUpModalContent input {
@@ -199,4 +200,15 @@
 	color: black;
 	margin-bottom: 0.5rem;
 	padding: 0.25rem 0.25rem;
+	cursor: pointer;
+}
+
+#AboutUs {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	margin-bottom: 1rem;
+	max-width: 90vw;
 }

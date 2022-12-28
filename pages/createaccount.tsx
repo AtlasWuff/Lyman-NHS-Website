@@ -104,6 +104,8 @@ export default function CreateAccount() {
 											grade: grade,
 											isAdmin: false,
 											isVerified: false,
+											volunteerHours: 0,
+											tutoringHours: 0,
 										});
 									}}
 								>

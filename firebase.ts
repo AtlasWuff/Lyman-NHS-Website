@@ -60,6 +60,71 @@ export const didAccLogin = async (
 	});
 };
 
+export const getEventVolunteers = async (eventName: string) => {
+	return new Promise<string[]>(async (resolve, reject) => {
+		let querySnapshot: any;
+		try {
+			querySnapshot = await getDocs(eventsDb);
+		} catch (err) {
+			console.log(err);
+			reject(err);
+		}
+
+		querySnapshot.forEach((doc: any) => {
+			if (doc.data().eventName.toLowerCase() == eventName.toLowerCase()) {
+				resolve(doc.data().volunteers);
+			}
+		});
+	});
+};
+
+export const getNameFromEmail = async (email: string, querySnapshot: any) => {
+	return new Promise<string>(async (resolve, reject) => {
+		querySnapshot.forEach((doc: any) => {
+			if (doc.data().email == email) {
+				resolve(doc.data().firstName + " " + doc.data().lastName);
+			}
+		});
+	});
+};
+
+export const isPersonInVolunteers = async (
+	email: string,
+	name: string,
+	eventName: string
+) => {
+	return new Promise<boolean>(async (resolve, reject) => {
+		let querySnapshot: any;
+		try {
+			querySnapshot = await getDocs(eventsDb);
+		} catch (err) {
+			console.log(err);
+			reject(err);
+		}
+		if (querySnapshot.empty) {
+			alert("No events found");
+			resolve(false);
+			return;
+		}
+
+		for (let i = 0; i < querySnapshot.size; i++) {
+			if (
+				querySnapshot.docs[i].data().eventName.toLowerCase() ==
+				eventName.toLowerCase()
+			) {
+				let volunteers = querySnapshot.docs[i].data().volunteers;
+				for (let j = 0; j < volunteers.length; j++) {
+					if (volunteers[j] == name) {
+						resolve(true);
+						return;
+					}
+				}
+			}
+		}
+		resolve(false);
+	});
+};
+
 export const addEventVolunteers = async (
 	eventName: string,
 	email: string,
@@ -95,31 +160,43 @@ export const addEventVolunteers = async (
 	});
 };
 
-export const getEventVolunteers = async (eventName: string) => {
-	return new Promise<string[]>(async (resolve, reject) => {
+export const removeEventVolunteers = async (
+	eventName: string,
+	email: string,
+	password: string
+) => {
+	return new Promise<any>(async (resolve, reject) => {
 		let querySnapshot: any;
 		try {
-			querySnapshot = await getDocs(eventsDb);
+			querySnapshot = await getDocs(accountsDb);
 		} catch (err) {
 			console.log(err);
 			reject(err);
 		}
+		let name = await getNameFromEmail(email, querySnapshot);
+		if (!(await didAccLogin(eventName, email, password, querySnapshot))) {
+			alert("Incorrect email or password.");
+			resolve(false);
+			return;
+		} else if (!(await isPersonInVolunteers(email, name, eventName))) {
+			alert("You are not signed up for this event currently.");
+			resolve(false);
+			return;
+		} else {
+			try {
+				let voluns = await getEventVolunteers(eventName);
+				console.log(querySnapshot);
+				let namee = await getNameFromEmail(email, querySnapshot);
+				console.log(namee);
 
-		querySnapshot.forEach((doc: any) => {
-			if (doc.data().eventName.toLowerCase() == eventName.toLowerCase()) {
-				resolve(doc.data().volunteers);
+				await updateDoc(doc(db, "Events", eventName.toLowerCase()), {
+					volunteers: voluns.filter((volun) => volun !== namee),
+				});
+				resolve(true);
+			} catch (err) {
+				console.log(err);
 			}
-		});
-	});
-};
-
-export const getNameFromEmail = async (email: string, querySnapshot: any) => {
-	return new Promise<string>(async (resolve, reject) => {
-		querySnapshot.forEach((doc: any) => {
-			if (doc.data().email == email) {
-				resolve(doc.data().firstName + " " + doc.data().lastName);
-			}
-		});
+		}
 	});
 };
 
@@ -183,10 +260,34 @@ export const deleteEvent = async (eventName: string, date: string) => {
 	});
 };
 
+export interface AccInterface {
+	email: string;
+	password: string;
+	firstName: string;
+	lastName: string;
+	grade: string | number;
+	isAdmin: boolean;
+	isVerified: boolean;
+	volunteerHours: number;
+	tutoringHours: number;
+}
+
+interface newAccountProps {
+	email: string;
+	password: string;
+	firstName: string;
+	lastName: string;
+	grade: string | number;
+	isAdmin: boolean;
+	isVerified: boolean;
+	volunteerHours: number;
+	tutoringHours: number;
+}
+
 export const makeMemberAdmin = async (name: string) => {
 	return new Promise<void>(async (resolve, reject) => {
 		try {
-			await updateDoc(doc(db, "Accounts", name), {
+			await updateDoc(doc(db, "Accounts", name.toLowerCase()), {
 				isAdmin: true,
 			});
 			resolve();
@@ -199,7 +300,7 @@ export const makeMemberAdmin = async (name: string) => {
 export const makeMemberNotAdmin = async (name: string) => {
 	return new Promise<void>(async (resolve, reject) => {
 		try {
-			await updateDoc(doc(db, "Accounts", name), {
+			await updateDoc(doc(db, "Accounts", name.toLowerCase()), {
 				isAdmin: false,
 			});
 			resolve();
@@ -212,8 +313,11 @@ export const makeMemberNotAdmin = async (name: string) => {
 export const updateMember = async (name: string, modifiedField: object) => {
 	return new Promise<void>(async (resolve, reject) => {
 		try {
-			await updateDoc(doc(db, "Accounts", name), modifiedField);
-			resolve();
+			updateDoc(doc(db, "Accounts", name.toLowerCase()), modifiedField).then(
+				() => {
+					resolve();
+				}
+			);
 		} catch (err) {
 			console.log(err);
 		}
@@ -223,23 +327,13 @@ export const updateMember = async (name: string, modifiedField: object) => {
 export const deleteMember = async (name: string) => {
 	return new Promise<void>(async (resolve, reject) => {
 		try {
-			await deleteDoc(doc(db, "Accounts", name));
+			await deleteDoc(doc(db, "Accounts", name.toLowerCase()));
 			resolve();
 		} catch (err) {
 			console.log(err);
 		}
 	});
 };
-
-export interface AccInterface {
-	email: string;
-	firstName: string;
-	lastName: string;
-	grade: string | number;
-	isAdmin: boolean;
-	isVerified: boolean;
-	password: string;
-}
 
 export const getAccounts = async () => {
 	return new Promise<AccInterface[]>(async (resolve, reject) => {
@@ -260,16 +354,6 @@ export const getAccounts = async () => {
 	});
 };
 
-interface newAccountProps {
-	email: string;
-	password: string;
-	firstName: string;
-	lastName: string;
-	grade: string | number;
-	isAdmin: boolean;
-	isVerified: boolean;
-}
-
 export const newAccount = async ({
 	email,
 	password,
@@ -278,6 +362,8 @@ export const newAccount = async ({
 	grade,
 	isAdmin,
 	isVerified,
+	volunteerHours,
+	tutoringHours,
 }: newAccountProps) => {
 	if (
 		email == "" ||
@@ -360,12 +446,11 @@ export const newAccount = async ({
 		grade: grade,
 		isAdmin: isAdmin,
 		isVerified: false,
+		volunteerHours: 0,
+		tutoringHours: 0,
 	}).then((res) => {
 		console.log("Document written with ID: ", res);
-		alert(
-			`Success!\nEmail: ${email}\nPassword: ${password}
-			\nNote: All passwords are encrypted and cannot be seen by anyone.`
-		);
+		alert(`Success!\nEmail: ${email}\nPassword: ${password}`);
 	});
 };
 

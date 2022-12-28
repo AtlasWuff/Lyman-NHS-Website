@@ -9,6 +9,7 @@ import {
 	getEvents,
 	addEvent,
 	addEventVolunteers,
+	removeEventVolunteers,
 } from "../firebase";
 import { useEffectOnce } from "usehooks-ts";
 import { InstagramEmbed } from "react-social-media-embed";
@@ -30,6 +31,7 @@ export default function Home() {
 
 	const [events, setEvents] = useState<Array<eventProps>>([]);
 	const [showSignUpModal, setShowSignUpModal] = useState(false);
+	const [showLeaveEventModal, setShowLeaveEventModal] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [eventInput, setEventInput] = useState("");
@@ -42,15 +44,14 @@ export default function Home() {
 		setShowSignUpModal(!showSignUpModal);
 	};
 
+	const displayLeaveEventModal = async () => {
+		setShowLeaveEventModal(!showLeaveEventModal);
+	};
+
 	const addVolunteerDb = async () => {
 		if (
 			email === "" ||
 			password === "" ||
-			eventInput === "" ||
-			eventInput === "Select an event" ||
-			email === "Email" ||
-			password === "Password" ||
-			eventInput === "Event" ||
 			email === undefined ||
 			password === undefined ||
 			eventInput === undefined
@@ -65,6 +66,23 @@ export default function Home() {
 				if (e == true) {
 					alert("Successfully signed up for event");
 					setShowSignUpModal(!showSignUpModal);
+				} else {
+					console.log(e);
+				}
+			});
+		}
+	};
+
+	const removeVolunteerDb = async () => {
+		if (email === "" || email === undefined || eventInput === undefined) {
+			alert("Please fill out all fields");
+		} else if (!EmailValidator.validate(email)) {
+			alert("Please enter a valid email");
+		} else {
+			removeEventVolunteers(eventInput, email, password).then((e) => {
+				if (e == true) {
+					alert("Successfully left event");
+					setShowLeaveEventModal(!showLeaveEventModal);
 				} else {
 					console.log(e);
 				}
@@ -94,16 +112,39 @@ export default function Home() {
 					</p>
 				</PageTitle>
 				<div id={`${styles.notTitle}`}>
+					<section id={`${styles.AboutUs}`} className="container-lg">
+						<h1 className="mb-0">About Us</h1>
+						<p className="mt-0 container">
+							Lyman NHS is a club that focuses on community service and
+							leadership. We are a group of students who are passionate about
+							helping others and making a difference in our community. We
+							provide opportunities for students to get involved in the
+							community and to make a difference in the lives of others.
+						</p>
+					</section>
+
 					<section id={`${styles.UpcomingEvents}`} className="container-lg">
 						<h1 className="mb-0">Upcoming Events</h1>
-						<button
-							className="LoadButton-pushable mb-3 mt-3"
-							onClick={(a) => displayModal()}
-						>
-							<span className="LoadButton-shadow"></span>
-							<span className="LoadButton-edge"></span>
-							<span className="LoadButton-front text">Sign up for event</span>
-						</button>
+						<div className="d-flex flex-row align-items-center justify-content-center">
+							<button
+								className="ApproveButton-pushable mb-3 mt-3 me-3"
+								onClick={(a) => displayModal()}
+							>
+								<span className="ApproveButton-shadow"></span>
+								<span className="ApproveButton-edge"></span>
+								<span className="ApproveButton-front text">
+									Sign up for event
+								</span>
+							</button>
+							<button
+								className="DenyButton-pushable mb-3 mt-3"
+								onClick={(a) => displayLeaveEventModal()}
+							>
+								<span className="DenyButton-shadow"></span>
+								<span className="DenyButton-edge"></span>
+								<span className="DenyButton-front text">Leave event</span>
+							</button>
+						</div>
 						{showSignUpModal ? (
 							<div id={`${styles.signUpModal}`}>
 								<div id={`${styles.signUpModalContent}`}>
@@ -158,10 +199,64 @@ export default function Home() {
 						) : (
 							<></>
 						)}
+						{showLeaveEventModal ? (
+							<div id={`${styles.signUpModal}`}>
+								<div id={`${styles.signUpModalContent}`}>
+									<Image
+										src={"/img/close.svg"}
+										width={30}
+										height={30}
+										onClick={() => setShowLeaveEventModal(!showLeaveEventModal)}
+										id={`${styles.closeModal}`}
+										alt="Close modal"
+									/>
+									<h1>Leave Event</h1>
+									<p className="mb-2">
+										Enter email & password for member verification
+									</p>
+									<input
+										type="text"
+										placeholder="Email"
+										value={email}
+										onChange={(v) => setEmail(v.target.value)}
+									/>
+									<input
+										type="text"
+										placeholder="Password"
+										value={password}
+										onChange={(v) => setPassword(v.target.value)}
+									/>
+									<p className="mb-2">Select event to leave</p>
+									<select
+										value={eventInput}
+										onChange={(v) => setEventInput(v.target.value)}
+									>
+										{events.map((e) => (
+											<option
+												value={e.eventName}
+												key={events.indexOf(e) + "di"}
+											>
+												{e.eventName}
+											</option>
+										))}
+									</select>
+									<button
+										className="LoadButton-pushable my-2"
+										onClick={() => removeVolunteerDb()}
+									>
+										<span className="LoadButton-shadow"></span>
+										<span className="LoadButton-edge"></span>
+										<span className="LoadButton-front text">Submit</span>
+									</button>
+								</div>
+							</div>
+						) : (
+							<></>
+						)}
 
 						<Table
 							minHeight={"20vh"}
-							maxHeight={"90vh"}
+							maxHeight={"85vh"}
 							bgColor={"rgba(0,0,0,0.2)"}
 							widthVal={"90%"}
 						>
@@ -272,7 +367,7 @@ export default function Home() {
 						<h1 className="mb-3">Recent Posts</h1>
 						<Table
 							minHeight={"20vh"}
-							maxHeight={"90vh"}
+							maxHeight={"85vh"}
 							bgColor={"rgba(0,0,0,0.2)"}
 							widthVal={"90%"}
 						>

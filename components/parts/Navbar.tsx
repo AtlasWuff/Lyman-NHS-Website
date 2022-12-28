@@ -28,8 +28,8 @@ export default function Navbar({}: Props) {
 		<nav>
 			<div className={`${styles.NavWrapper}`} ref={navbarRef}>
 				<ul className="d-flex flex-row justify-content-around align-items-center">
-					<li className="col-2" id={`${styles.NavTitle}`}>
-						<div className="d-flex flex-row justify-content-center align-items-center">
+					<li className="col-lg-2 col-sm-6" id={`${styles.NavTitle}`}>
+						<div className="d-flex flex-row justify-content-lg-center p-lg-0 p-3 align-items-center">
 							<Link href="/" id={`${styles.NavTitleDiv}`}>
 								<Image
 									src={"/img/lymannhsborder.png"}
@@ -44,17 +44,11 @@ export default function Navbar({}: Props) {
 							</Link>
 						</div>
 					</li>
-					<li className="col-6">
-						<div className="d-flex flex-row justify-content-around align-items-center">
-							<Link href="/about" className="hoverUnderlineAnim">
-								About
-							</Link>
-							<Link href="/admin" className="hoverUnderlineAnim">
-								Admin
-							</Link>
-						</div>
-					</li>
-					<li className="col-4 d-flex align-items-center justify-content-evenly px-5">
+					<li className="col-lg-6 d-flex align-items-center justify-content-evenly"></li>
+					<li className="col-lg-4 col-xs-6 d-flex align-items-center justify-content-center">
+						<Link href="/admin" className="hoverUnderlineAnim p-lg-5 p-3">
+							Admin
+						</Link>
 						<Link href="/createaccount" className="hoverUnderlineAnim">
 							Create Profile
 						</Link>

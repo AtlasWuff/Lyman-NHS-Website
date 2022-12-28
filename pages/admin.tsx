@@ -19,6 +19,7 @@ import {
 	deleteEvent,
 } from "../firebase";
 import { collection, addDoc, updateDoc } from "firebase/firestore";
+import { useEffectOnce } from "usehooks-ts";
 
 // CSS imports
 import styles from "../styles/pages/Admin.module.css";
@@ -76,11 +77,14 @@ export default function Admin() {
 	 * @param {void}
 	 * @return {void}
 	 */
-	// useEffect(() => {
-	// 	getAccAwait().then((res) => {
-	// 		setAccounts({ accounts: res });
-	// 	});
-	// }, []);
+	useEffectOnce(() => {
+		getAccAwait().then((res) => {
+			setAccounts({ accounts: res });
+		});
+		getEventAwait().then((res) => {
+			setEvents({ events: res });
+		});
+	});
 
 	/* Approve pending member removing them from the state and database
 	 * @param {number} index
@@ -154,12 +158,14 @@ export default function Admin() {
 				Last_Name: item.lastName,
 				Email: item.email,
 				Grade: item.grade,
+				VolunteerHours: item.volunteerHours,
+				TutoringHours: item.tutoringHours,
 			};
 		});
 
 		const options = {
 			fieldSeparator: ",",
-			filename: "VerifiedMembers",
+			filename: "MemberInfoList",
 			quoteStrings: '"',
 			decimalSeparator: ".",
 			showLabels: true,
@@ -167,7 +173,14 @@ export default function Admin() {
 			title: "NHS Member List",
 			useTextFile: false,
 			useBom: true,
-			headers: ["First Name", "Last Name", "Email", "Grade"],
+			headers: [
+				"First Name",
+				"Last Name",
+				"Email",
+				"Grade",
+				"Volunteer Hours",
+				"Tutoring Hours",
+			],
 			// useKeysAsHeaders: true, // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
 		};
 		const csvExporter = new ExportToCsv(options);
@@ -300,6 +313,10 @@ export default function Admin() {
 		}
 	};
 
+	const [hoursName, setHoursName] = useState("");
+	const [hoursNewVolunteerHours, setHoursNewVolunteerHours] = useState("");
+	const [hoursNewTutoringHours, setHoursNewTutoringHours] = useState("");
+
 	return (
 		<>
 			{/* Meta tags */}
@@ -317,7 +334,7 @@ export default function Admin() {
 								className={`${styles.adminSection} container-sm text-center`}
 							>
 								<h1>Profile Managment</h1>
-								<button
+								{/* <button
 									className="LoadButton-pushable my-2"
 									onClick={async () => {
 										await refreshAccounts();
@@ -329,7 +346,7 @@ export default function Admin() {
 									<span className="LoadButton-shadow"></span>
 									<span className="LoadButton-edge"></span>
 									<span className="LoadButton-front text">Load Items</span>
-								</button>
+								</button> */}
 								<div className="row">
 									<div
 										className="col-lg-6 d-flex align-items-center flex-column"
@@ -471,6 +488,14 @@ export default function Admin() {
 																			<p>
 																				<b>Grade:</b> {account.grade}
 																			</p>
+																			<p>
+																				<b>Volunteer Hours:</b>{" "}
+																				{account.volunteerHours}
+																			</p>
+																			<p>
+																				<b>Tutoring Hours:</b>{" "}
+																				{account.tutoringHours}
+																			</p>
 																		</Collapsable>
 																	</div>
 																	<div
@@ -544,7 +569,7 @@ export default function Admin() {
 											<p>Event Name</p>
 											<input
 												type="text"
-												onChange={(e) => setEventName(e.target.value)}
+												onChange={(e) => setEventName(e.target.value.trim())}
 												value={eventName}
 											/>
 										</div>
@@ -552,7 +577,7 @@ export default function Admin() {
 											<p>Date</p>
 											<input
 												type="date"
-												onChange={(e) => setEventDate(e.target.value)}
+												onChange={(e) => setEventDate(e.target.value.trim())}
 												value={eventDate}
 											/>
 										</div>
@@ -560,7 +585,9 @@ export default function Admin() {
 											<p>Location</p>
 											<input
 												type="text"
-												onChange={(e) => setEventLocation(e.target.value)}
+												onChange={(e) =>
+													setEventLocation(e.target.value.trim())
+												}
 												value={eventLocation}
 											/>
 										</div>
@@ -568,7 +595,9 @@ export default function Admin() {
 											<p>Start Time</p>
 											<input
 												type="text"
-												onChange={(e) => setEventStartTime(e.target.value)}
+												onChange={(e) =>
+													setEventStartTime(e.target.value.trim())
+												}
 												value={eventStartTime}
 											/>
 										</div>
@@ -576,22 +605,22 @@ export default function Admin() {
 											<p>End Time</p>
 											<input
 												type="text"
-												onChange={(e) => setEventEndTime(e.target.value)}
+												onChange={(e) => setEventEndTime(e.target.value.trim())}
 												value={eventEndTime}
 											/>
 										</div>
-										<div className={`${styles.eventInput}`}>
+										<div className={`${styles.eventInput} mb-2`}>
 											<p>Volunteers Needed</p>
 											<input
 												type="text"
 												onChange={(e) =>
-													setEventVolunteersNeeded(e.target.value)
+													setEventVolunteersNeeded(e.target.value.trim())
 												}
 												value={eventVolunteersNeeded}
 											/>
 										</div>
 										<button
-											className="ApproveButton-pushable"
+											className="ApproveButton-pushable mb-3"
 											onClick={() => {
 												addEventRefresh();
 											}}
@@ -604,7 +633,8 @@ export default function Admin() {
 											</span>
 										</button>
 									</div>
-									<div className="col-12 col-lg-6 d-flex align-items-center justify-content-center">
+									<div className="col-12 col-lg-6 d-flex align-items-center justify-content-center flex-column">
+										<h2>Events</h2>
 										<Table
 											minHeight={"20vh"}
 											maxHeight={"80vh"}
@@ -681,6 +711,80 @@ export default function Admin() {
 									</div>
 								</div>
 							</section>
+							<section
+								className={`${styles.adminSection} container-sm text-center`}
+							>
+								<h1>Hours Managments</h1>
+								<p>
+									New hours are <b>not</b> additive, it replaces the previous
+									value. Ensure all hours are what the member should have after
+									clicking submit. Values shown in the dropdown are the members
+									current hours{" "}
+								</p>
+								<div className="w-100 d-flex align-items-center justify-content-center flex-column container">
+									<div className={`${styles.eventInput}`}>
+										<p>Member: </p>
+										<select
+											value={hoursName}
+											onChange={(v) => setHoursName(v.target.value)}
+										>
+											{accounts.accounts
+												.filter((e) => e.isVerified == true)
+												.map((e) => (
+													<option
+														value={e.firstName + " " + e.lastName}
+														key={accounts.accounts.indexOf(e) + "di"}
+													>
+														{e.firstName +
+															" " +
+															e.lastName +
+															" | Volunteer: " +
+															e.volunteerHours +
+															" Tutor: " +
+															e.tutoringHours}
+													</option>
+												))}
+										</select>
+									</div>
+
+									<div className={`${styles.eventInput}`}>
+										<p>New Volunteer Hours</p>
+										<input
+											type="text"
+											onChange={(e) =>
+												setHoursNewVolunteerHours(e.target.value.trim())
+											}
+											value={hoursNewVolunteerHours}
+										/>
+									</div>
+									<div className={`${styles.eventInput}`}>
+										<p>New Tutoring Hours</p>
+										<input
+											type="text"
+											onChange={(e) =>
+												setHoursNewTutoringHours(e.target.value.trim())
+											}
+											value={hoursNewTutoringHours}
+										/>
+									</div>
+									<button
+										className="ApproveButton-pushable mb-3"
+										onClick={async () => {
+											updateMember(hoursName, {
+												volunteerHours: hoursNewVolunteerHours,
+												tutoringHours: hoursNewTutoringHours,
+											}).then(() => {
+												alert("Updated");
+											});
+										}}
+									>
+										<span className="ApproveButton-shadow"></span>
+										<span className="ApproveButton-edge"></span>
+
+										<span className="ApproveButton-front text">Submit</span>
+									</button>
+								</div>
+							</section>
 						</div>
 					</>
 				) : (
@@ -699,13 +803,13 @@ export default function Admin() {
 									type="email"
 									placeholder="Email"
 									className={`${styles.passInput}`}
-									onChange={(e) => setEmail(e.target.value)}
+									onChange={(e) => setEmail(e.target.value.trim())}
 								/>
 								<input
 									type="password"
 									placeholder="Password"
 									className={`${styles.passInput}`}
-									onChange={(e) => setPassword(e.target.value)}
+									onChange={(e) => setPassword(e.target.value.trim())}
 								/>
 
 								<button
