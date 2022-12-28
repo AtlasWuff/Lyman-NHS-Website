@@ -37,7 +37,7 @@ div.CollapsableContent > div {
 }
 
 .CollapsableExpanded div.CollapsableContent {
-	max-height: 12rem;
+	max-height: 7rem;
 	border-top: 2px solid black;
 	overflow: scroll;
 	overflow-x: hidden;

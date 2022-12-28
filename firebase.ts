@@ -36,6 +36,32 @@ const eventsDb = collection(db, "Events");
 const announcementsDb = collection(db, "Announcements");
 const accountsDb = collection(db, "Accounts");
 
+export const makeMemberAdmin = async (name: string) => {
+	return new Promise<void>(async (resolve, reject) => {
+		try {
+			await updateDoc(doc(db, "Accounts", name), {
+				isAdmin: true,
+			});
+			resolve();
+		} catch (err) {
+			console.log(err);
+		}
+	});
+};
+
+export const makeMemberNotAdmin = async (name: string) => {
+	return new Promise<void>(async (resolve, reject) => {
+		try {
+			await updateDoc(doc(db, "Accounts", name), {
+				isAdmin: false,
+			});
+			resolve();
+		} catch (err) {
+			console.log(err);
+		}
+	});
+};
+
 export const updateMember = async (name: string, modifiedField: object) => {
 	return new Promise<void>(async (resolve, reject) => {
 		try {
@@ -71,6 +97,7 @@ export interface AccInterface {
 export const getAccounts = async () => {
 	return new Promise<AccInterface[]>(async (resolve, reject) => {
 		let querySnapshot: any;
+		console.log("Getting accounts...");
 		try {
 			querySnapshot = await getDocs(accountsDb);
 		} catch (err) {
@@ -205,15 +232,20 @@ export const checkAdmin = ({ email, password }: checkAdminProps) => {
 		let foundAccount = false;
 		let querySnapshot: any;
 		try {
-			querySnapshot = await getDocs(accountsDb);
+			querySnapshot = await getAccounts();
 		} catch (err) {
 			alert("Error: " + err);
 			resolve(false);
 		}
-		querySnapshot.forEach((doc: any) => {
-			if (doc.data().email == email && doc.data().password == password) {
+		let resForPromise: Function;
+		let forPromise = new Promise<void>(async (resolve, reject) => {
+			resForPromise = resolve;
+		});
+
+		querySnapshot.forEach((doc: AccInterface) => {
+			if (doc.email == email && doc.password == password) {
 				foundAccount = true;
-				if (doc.data().isAdmin) {
+				if (doc.isAdmin) {
 					resolve(true);
 				} else {
 					alert("You are not an admin.");
@@ -221,13 +253,13 @@ export const checkAdmin = ({ email, password }: checkAdminProps) => {
 				}
 			}
 			if (
-				querySnapshot.docs.map((doc: any) => doc.data()).indexOf(doc) ==
-				querySnapshot.docs.map((doc: any) => doc.data()).length - 1
+				querySnapshot.map((doc: any) => doc).indexOf(doc) ==
+				querySnapshot.map((doc: any) => doc).length - 1
 			) {
-				resolve(false);
-				alert("Incorrect email or password.");
+				resForPromise();
 			}
 		});
+		await forPromise;
 		if (!foundAccount) {
 			alert("Incorrect email or password.");
 			resolve(false);

@@ -11,6 +11,8 @@ import {
 	AccInterface,
 	updateMember,
 	deleteMember,
+	makeMemberAdmin,
+	makeMemberNotAdmin,
 } from "../firebase";
 import { collection, addDoc, updateDoc } from "firebase/firestore";
 
@@ -73,7 +75,6 @@ export default function Admin() {
 		getAccAwait().then((res) => {
 			setAccounts({ accounts: res });
 		});
-		console.log("Fetched accounts");
 	}, []);
 
 	/* Approve pending member removing them from the state and database
@@ -96,6 +97,7 @@ export default function Admin() {
 		setAccounts({
 			accounts: thing,
 		});
+		refreshAccounts();
 	};
 
 	/* Deny pending member removing them from the state and database
@@ -119,6 +121,7 @@ export default function Admin() {
 		setAccounts({
 			accounts: thing,
 		});
+		refreshAccounts();
 	};
 
 	/* Refresh accounts updating the state
@@ -129,8 +132,6 @@ export default function Admin() {
 		getAccAwait().then((res) => {
 			setAccounts({ accounts: res });
 		});
-		console.log("Fetched accounts");
-		console.log(accounts);
 	};
 
 	/* Export member list to spreadsheet
@@ -163,6 +164,17 @@ export default function Admin() {
 		};
 		const csvExporter = new ExportToCsv(options);
 		csvExporter.generateCsv(betterAccounts);
+		// console.log(await getAccAwait());
+	};
+
+	const makeMemberAdminRemove = async (name: string) => {
+		await makeMemberAdmin(name);
+		refreshAccounts();
+	};
+
+	const makeMemberNotAdminRemove = async (name: string) => {
+		await makeMemberNotAdmin(name);
+		refreshAccounts();
 	};
 
 	return (
@@ -180,15 +192,6 @@ export default function Admin() {
 						<div id={`${styles.notTitle}`}>
 							<section className="container-sm text-center">
 								<h1>Profile Managment</h1>
-								<button
-									className="ApproveButton-pushable me-2"
-									onClick={() => refreshAccounts()}
-								>
-									<span className="ApproveButton-shadow"></span>
-									<span className="ApproveButton-edge"></span>
-
-									<span className="ApproveButton-front text">Refresh</span>
-								</button>
 								<div className="row">
 									<div
 										className="col-md-6 d-flex align-items-center flex-column"
@@ -307,19 +310,65 @@ export default function Admin() {
 																className={`${styles.pendingMember} w-100`}
 															>
 																<div className="d-flex justify-content-between w-100 flex-row">
-																	<Collapsable
-																		initText={
-																			account.firstName + " " + account.lastName
-																		}
-																		className="w-100"
+																	<div className={`${styles.MemberItemText}`}>
+																		<Collapsable
+																			initText={
+																				account.firstName +
+																				" " +
+																				account.lastName
+																			}
+																			className="w-100"
+																		>
+																			<p>
+																				<b>Email:</b> {account.email}
+																			</p>
+																			<p>
+																				<b>Grade:</b> {account.grade}
+																			</p>
+																		</Collapsable>
+																	</div>
+																	<div
+																		className="d-flex align-items-center justify-content-center flex-row"
+																		id={`${styles.adminOptionsDiv}`}
 																	>
-																		<p>
-																			<b>Email:</b> {account.email}
-																		</p>
-																		<p>
-																			<b>Grade:</b> {account.grade}
-																		</p>
-																	</Collapsable>
+																		{account.isAdmin != true ? (
+																			<button
+																				className="ApproveButton-pushable me-2"
+																				onClick={(e) => {
+																					makeMemberAdminRemove(
+																						account.firstName +
+																							" " +
+																							account.lastName
+																					);
+																				}}
+																			>
+																				<span className="ApproveButton-shadow"></span>
+																				<span className="ApproveButton-edge"></span>
+
+																				<span className="ApproveButton-front text">
+																					Make Admin
+																				</span>
+																			</button>
+																		) : (
+																			<button
+																				className="DenyButton-pushable me-2"
+																				onClick={(e) => {
+																					makeMemberNotAdminRemove(
+																						account.firstName +
+																							" " +
+																							account.lastName
+																					);
+																				}}
+																			>
+																				<span className="DenyButton-shadow"></span>
+																				<span className="DenyButton-edge"></span>
+
+																				<span className="DenyButton-front text">
+																					Remove Admin
+																				</span>
+																			</button>
+																		)}
+																	</div>
 																</div>
 															</div>
 														);
