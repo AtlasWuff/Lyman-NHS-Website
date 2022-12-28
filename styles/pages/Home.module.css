@@ -71,6 +71,7 @@
 #notTitle {
 	position: relative;
 	z-index: 3;
+	margin-bottom: 2rem;
 }
 
 .wave img {
@@ -89,4 +90,113 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: 1.5rem;
+	--bs-gutter-x: 0rem;
+}
+
+.event {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.tableUpcomingEventsItem {
+	color: white !important	;
+}
+
+.event > p {
+	color: white !important;
+}
+
+#SocialMedia {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 1.5rem;
+	--bs-gutter-x: 0rem;
+}
+
+.eventCard p,
+.eventCard label {
+	color: white !important;
+	overflow-wrap: anywhere;
+	white-space: break-spaces;
+}
+
+.eventCard label {
+	text-decoration: underline;
+	font-weight: 700;
+}
+
+.eventCard {
+	width: 100%;
+	text-align: center;
+}
+
+#signUpModal {
+	width: 100vw;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#signUpModal * {
+	color: var(--font-color-normal);
+}
+
+#signUpModalContent {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--bg-color-primary);
+	padding: 1rem 2rem;
+	border-radius: 6px;
+	box-shadow: 5px 5px 10px var(--shadow-color);
+	border: 3px solid var(--border-color);
+	position: relative;
+	z-index: 101;
+}
+
+#signUpModalContent input {
+	width: 100%;
+	text-align: center;
+	background-color: white;
+	border: 3px solid var(--border-color);
+	border-radius: 6px;
+	color: black;
+	margin-bottom: 0.5rem;
+}
+
+#closeModal {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	z-index: 101;
+	cursor: pointer;
+	transform-origin: center;
+	transition: transform 0.2s ease-in-out;
+}
+
+#closeModal:hover {
+	transform: scale(1.2);
+}
+
+#signUpModalContent select {
+	width: auto;
+	text-align: center;
+	background-color: white;
+	border: 3px solid var(--border-color);
+	border-radius: 6px;
+	color: black;
+	margin-bottom: 0.5rem;
+	padding: 0.25rem 0.25rem;
 }

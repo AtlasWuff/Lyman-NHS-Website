@@ -1,7 +1,6 @@
 .TableWrapper {
 	border-radius: 6px;
 	border: 3px solid var(--border-color);
-	width: 95%;
 	overflow: hidden;
 	box-shadow: 5px 5px 10px var(--shadow-color);
 }
@@ -9,7 +8,6 @@
 .Table {
 	width: auto;
 	overflow-y: scroll;
-	background-color: gray;
 	padding: 0.5rem 1rem;
 	display: flex;
 	justify-content: space-between;
@@ -24,7 +22,7 @@
 }
 
 .Table p {
-	color: black !important;
+	color: black;
 }
 
 .Table::-webkit-scrollbar-track {

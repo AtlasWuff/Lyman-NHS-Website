@@ -31,9 +31,7 @@ export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
 // All DBs
-const membersDb = collection(db, "Members");
 const eventsDb = collection(db, "Events");
-const announcementsDb = collection(db, "Announcements");
 export const accountsDb = collection(db, "Accounts");
 
 export interface eventProps {
@@ -45,6 +43,85 @@ export interface eventProps {
 	volunteersNeeded: string;
 	volunteers: string[];
 }
+
+export const didAccLogin = async (
+	eventName: string,
+	email: string,
+	password: string,
+	querySnapshot: any
+) => {
+	return new Promise<boolean>(async (resolve, reject) => {
+		querySnapshot.forEach((doc: any) => {
+			if (doc.data().email === email && doc.data().password === password) {
+				resolve(true);
+			}
+		});
+		resolve(false);
+	});
+};
+
+export const addEventVolunteers = async (
+	eventName: string,
+	email: string,
+	password: string
+) => {
+	return new Promise<any>(async (resolve, reject) => {
+		let querySnapshot: any;
+		try {
+			querySnapshot = await getDocs(accountsDb);
+		} catch (err) {
+			console.log(err);
+			reject(err);
+		}
+		if (!(await didAccLogin(eventName, email, password, querySnapshot))) {
+			alert("Incorrect email or password.");
+			resolve(false);
+			return;
+		} else {
+			try {
+				let voluns = await getEventVolunteers(eventName);
+				console.log(querySnapshot);
+				let namee = await getNameFromEmail(email, querySnapshot);
+				console.log(namee);
+
+				await updateDoc(doc(db, "Events", eventName.toLowerCase()), {
+					volunteers: [...voluns, namee],
+				});
+				resolve(true);
+			} catch (err) {
+				console.log(err);
+			}
+		}
+	});
+};
+
+export const getEventVolunteers = async (eventName: string) => {
+	return new Promise<string[]>(async (resolve, reject) => {
+		let querySnapshot: any;
+		try {
+			querySnapshot = await getDocs(eventsDb);
+		} catch (err) {
+			console.log(err);
+			reject(err);
+		}
+
+		querySnapshot.forEach((doc: any) => {
+			if (doc.data().eventName.toLowerCase() == eventName.toLowerCase()) {
+				resolve(doc.data().volunteers);
+			}
+		});
+	});
+};
+
+export const getNameFromEmail = async (email: string, querySnapshot: any) => {
+	return new Promise<string>(async (resolve, reject) => {
+		querySnapshot.forEach((doc: any) => {
+			if (doc.data().email == email) {
+				resolve(doc.data().firstName + " " + doc.data().lastName);
+			}
+		});
+	});
+};
 
 export const getEvents = async () => {
 	return new Promise<eventProps[]>(async (resolve, reject) => {

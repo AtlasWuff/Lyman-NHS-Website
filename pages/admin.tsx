@@ -340,7 +340,11 @@ export default function Admin() {
 											New profiles show below here and require approval before
 											being added to the member list
 										</p>
-										<Table maxHeight={"80vh"} minHeight={"20vh"}>
+										<Table
+											maxHeight={"80vh"}
+											minHeight={"20vh"}
+											bgColor={"rgba(0,0,0,0.2)"}
+										>
 											{/* Maps through all accounts that are pending and displays them */}
 											{/* If there are no pending accounts, display a message */}
 											{accounts.accounts.filter(
@@ -433,7 +437,11 @@ export default function Admin() {
 												Export to CSV
 											</span>
 										</button>
-										<Table minHeight={"20vh"} maxHeight={"80vh"}>
+										<Table
+											minHeight={"20vh"}
+											maxHeight={"80vh"}
+											bgColor={"rgba(0,0,0,0.2)"}
+										>
 											{/* Maps through the accounts array and displays the accounts that are approved */}
 											{/* If there are no approved accounts, it will display a message */}
 											{accounts.accounts.filter(
@@ -559,7 +567,7 @@ export default function Admin() {
 										<div className={`${styles.eventInput}`}>
 											<p>Start Time</p>
 											<input
-												type="time"
+												type="text"
 												onChange={(e) => setEventStartTime(e.target.value)}
 												value={eventStartTime}
 											/>
@@ -567,7 +575,7 @@ export default function Admin() {
 										<div className={`${styles.eventInput}`}>
 											<p>End Time</p>
 											<input
-												type="time"
+												type="text"
 												onChange={(e) => setEventEndTime(e.target.value)}
 												value={eventEndTime}
 											/>
@@ -597,7 +605,11 @@ export default function Admin() {
 										</button>
 									</div>
 									<div className="col-12 col-lg-6 d-flex align-items-center justify-content-center">
-										<Table minHeight={"20vh"} maxHeight={"80vh"}>
+										<Table
+											minHeight={"20vh"}
+											maxHeight={"80vh"}
+											bgColor={"rgba(0,0,0,0.2)"}
+										>
 											{events.events.length > 0 ? (
 												events.events.map((event: eventProps) => {
 													return (
