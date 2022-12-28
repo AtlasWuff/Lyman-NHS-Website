@@ -17,7 +17,7 @@ export default function Navbar({}: Props) {
 	useEffect(() => {
 		window.addEventListener("scroll", () => {
 			if (navbarRef.current !== null) {
-				document.body.getBoundingClientRect().top <= -1
+				document.body.getBoundingClientRect().top <= -34
 					? navbarRef.current.classList.add(`${styles.scrolledNav}`)
 					: navbarRef.current.classList.remove(`${styles.scrolledNav}`);
 			}
