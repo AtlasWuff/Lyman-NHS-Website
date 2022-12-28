@@ -46,7 +46,7 @@ export default function Navbar({}: Props) {
 					</li>
 					<li className="col-lg-6 d-flex align-items-center justify-content-evenly"></li>
 					<li className="col-lg-4 col-xs-6 d-flex align-items-center justify-content-center">
-						<Link href="/admin" className="hoverUnderlineAnim p-lg-5 p-3">
+						<Link href="/admin" className="hoverUnderlineAnim mx-lg-5 mx-3">
 							Admin
 						</Link>
 						<Link href="/createaccount" className="hoverUnderlineAnim">

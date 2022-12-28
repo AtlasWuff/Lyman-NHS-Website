@@ -22,9 +22,15 @@
 	border-radius: 8px;
 	background-color: white;
 	margin: 8px 0px;
-	width: 30%;
+	width: 40%;
 	border: 3px solid black;
 	font-size: 24px;
+}
+
+@media screen and (max-width: 600px) {
+	.passInput {
+		width: 80vw;
+	}
 }
 
 #pendingMembers {
