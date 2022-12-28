@@ -34,7 +34,77 @@ export const db = getFirestore(app);
 const membersDb = collection(db, "Members");
 const eventsDb = collection(db, "Events");
 const announcementsDb = collection(db, "Announcements");
-const accountsDb = collection(db, "Accounts");
+export const accountsDb = collection(db, "Accounts");
+
+export interface eventProps {
+	eventName: string;
+	date: string;
+	location: string;
+	startTime: string;
+	endTime: string;
+	volunteersNeeded: string;
+	volunteers: string[];
+}
+
+export const getEvents = async () => {
+	return new Promise<eventProps[]>(async (resolve, reject) => {
+		let querySnapshot: any;
+		try {
+			querySnapshot = await getDocs(eventsDb);
+			console.log("Getting events...");
+		} catch (err) {
+			console.log(err);
+			reject(err);
+		}
+		let events: eventProps[] = [];
+		querySnapshot.forEach((doc: any) => {
+			events.push(doc.data());
+		});
+		resolve(events);
+	});
+};
+
+export const addEvent = async ({
+	eventName,
+	date,
+	location,
+	startTime,
+	endTime,
+	volunteersNeeded,
+	volunteers,
+}: eventProps) => {
+	return new Promise<any>(async (resolve, reject) => {
+		try {
+			let newEventDoc = doc(db, "Events", eventName.toLowerCase());
+
+			const docRef = await setDoc(newEventDoc, {
+				eventName,
+				date,
+				location,
+				startTime,
+				endTime,
+				volunteersNeeded,
+				volunteers,
+			}).then((res) => {
+				alert(`Success!\nEvent ${eventName} has been added to the database.`);
+				resolve(true);
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	});
+};
+
+export const deleteEvent = async (eventName: string, date: string) => {
+	return new Promise<any>(async (resolve, reject) => {
+		try {
+			await deleteDoc(doc(db, "Events", eventName.toLowerCase()));
+			resolve(true);
+		} catch (err) {
+			console.log(err);
+		}
+	});
+};
 
 export const makeMemberAdmin = async (name: string) => {
 	return new Promise<void>(async (resolve, reject) => {

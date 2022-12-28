@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
-import { useEffect, useRef, useState } from "react";
+import { Ref, useEffect, useRef, useState } from "react";
 import { ExportToCsv } from "export-to-csv";
 import {
 	checkAdmin,
@@ -13,6 +13,10 @@ import {
 	deleteMember,
 	makeMemberAdmin,
 	makeMemberNotAdmin,
+	eventProps,
+	getEvents,
+	addEvent,
+	deleteEvent,
 } from "../firebase";
 import { collection, addDoc, updateDoc } from "firebase/firestore";
 
@@ -23,6 +27,7 @@ import styles from "../styles/pages/Admin.module.css";
 import PageTitle from "../components/parts/PageTitle";
 import Table from "../components/parts/Table";
 import Collapsable from "../components/parts/Collapsable";
+import { data } from "jquery";
 
 // Interface for function
 interface AdminProps {
@@ -71,11 +76,11 @@ export default function Admin() {
 	 * @param {void}
 	 * @return {void}
 	 */
-	useEffect(() => {
-		getAccAwait().then((res) => {
-			setAccounts({ accounts: res });
-		});
-	}, []);
+	// useEffect(() => {
+	// 	getAccAwait().then((res) => {
+	// 		setAccounts({ accounts: res });
+	// 	});
+	// }, []);
 
 	/* Approve pending member removing them from the state and database
 	 * @param {number} index
@@ -97,7 +102,7 @@ export default function Admin() {
 		setAccounts({
 			accounts: thing,
 		});
-		refreshAccounts();
+		await refreshAccounts();
 	};
 
 	/* Deny pending member removing them from the state and database
@@ -121,7 +126,7 @@ export default function Admin() {
 		setAccounts({
 			accounts: thing,
 		});
-		refreshAccounts();
+		await refreshAccounts();
 	};
 
 	/* Refresh accounts updating the state
@@ -129,8 +134,11 @@ export default function Admin() {
 	 * @return {void}
 	 */
 	const refreshAccounts = async () => {
-		getAccAwait().then((res) => {
-			setAccounts({ accounts: res });
+		return new Promise((resolve, reject) => {
+			getAccAwait().then((res) => {
+				setAccounts({ accounts: res });
+				resolve(res);
+			});
 		});
 	};
 
@@ -164,17 +172,132 @@ export default function Admin() {
 		};
 		const csvExporter = new ExportToCsv(options);
 		csvExporter.generateCsv(betterAccounts);
+		alert(
+			"Put the file in google drive and it will interpret it as a spreadsheet"
+		);
 		// console.log(await getAccAwait());
 	};
 
 	const makeMemberAdminRemove = async (name: string) => {
 		await makeMemberAdmin(name);
-		refreshAccounts();
+		await refreshAccounts();
 	};
 
 	const makeMemberNotAdminRemove = async (name: string) => {
 		await makeMemberNotAdmin(name);
-		refreshAccounts();
+		await refreshAccounts();
+	};
+
+	interface EventsStateProp {
+		events: Array<eventProps>;
+	}
+
+	const [eventName, setEventName] = useState("");
+	const [eventDate, setEventDate] = useState("");
+	const [eventLocation, setEventLocation] = useState("");
+	const [eventStartTime, setEventStartTime] = useState("");
+	const [eventEndTime, setEventEndTime] = useState("");
+	const [eventVolunteersNeeded, setEventVolunteersNeeded] = useState("");
+	const [eventVolunteersSignedUp, setEventVolunteersSignedUp] = useState([]);
+	const [events, setEvents] = useState<EventsStateProp>({ events: [] });
+
+	/* Refresh accounts updating the state
+	 * @param {void}
+	 * @return {void}
+	 */
+	const getEventAwait = async () => {
+		return await getEvents();
+	};
+
+	const refreshEvents = async () => {
+		return new Promise((resolve, reject) => {
+			getEventAwait().then((res) => {
+				setEvents({ events: res });
+				resolve(res);
+			});
+		});
+	};
+
+	const addEventRefresh = async () => {
+		// console.log({
+		// 	eventName: eventName,
+		// 	date: eventDate,
+		// 	location: eventLocation,
+		// 	startTime: eventStartTime,
+		// 	endTime: eventEndTime,
+		// 	volunteersNeeded: eventVolunteersNeeded,
+		// 	volunteers: eventVolunteersSignedUp,
+		// });
+		if (
+			eventName == "" ||
+			eventDate == "" ||
+			eventLocation == "" ||
+			eventStartTime == "" ||
+			eventEndTime == "" ||
+			eventVolunteersNeeded == "" ||
+			eventName == undefined ||
+			eventDate == undefined ||
+			eventLocation == undefined ||
+			eventStartTime == undefined ||
+			eventEndTime == undefined ||
+			eventVolunteersNeeded == undefined
+		) {
+			alert("Please fill out all fields");
+			return;
+		}
+		if (
+			isNaN(parseInt(eventVolunteersNeeded)) ||
+			eventVolunteersNeeded == "0"
+		) {
+			alert("Please enter a number for volunteers needed");
+			return;
+		}
+
+		addEvent({
+			eventName: eventName,
+			date: eventDate,
+			location: eventLocation,
+			startTime: eventStartTime,
+			endTime: eventEndTime,
+			volunteersNeeded: eventVolunteersNeeded,
+			volunteers: eventVolunteersSignedUp,
+		}).then(async () => {
+			setEvents({
+				events: [
+					...events.events,
+					{
+						eventName: eventName,
+						date: eventDate,
+						location: eventLocation,
+						startTime: eventStartTime,
+						endTime: eventEndTime,
+						volunteersNeeded: eventVolunteersNeeded,
+						volunteers: eventVolunteersSignedUp,
+					},
+				],
+			});
+			await refreshEvents();
+		});
+	};
+
+	const deleteEventRefresh = async (name: string, datee: string) => {
+		await deleteEvent(name, datee);
+		setEvents({
+			events: events.events.filter(
+				(event) => event.eventName !== name && event.date !== datee
+			),
+		});
+		await refreshEvents();
+	};
+
+	const loadItemsButtonRef = useRef<HTMLButtonElement>(null);
+	const deleteRefItem = async (ref: any) => {
+		if (ref.current) {
+			for (let i = 0; i < ref.current.children.length; i++) {
+				ref.current.removeChild(ref.current.children[i]);
+			}
+			ref.current.remove();
+		}
 	};
 
 	return (
@@ -190,11 +313,26 @@ export default function Admin() {
 					<>
 						<PageTitle title="NHS Admin" />
 						<div id={`${styles.notTitle}`}>
-							<section className="container-sm text-center">
+							<section
+								className={`${styles.adminSection} container-sm text-center`}
+							>
 								<h1>Profile Managment</h1>
+								<button
+									className="LoadButton-pushable my-2"
+									onClick={async () => {
+										await refreshAccounts();
+										await refreshEvents();
+										deleteRefItem(loadItemsButtonRef);
+									}}
+									ref={loadItemsButtonRef}
+								>
+									<span className="LoadButton-shadow"></span>
+									<span className="LoadButton-edge"></span>
+									<span className="LoadButton-front text">Load Items</span>
+								</button>
 								<div className="row">
 									<div
-										className="col-md-6 d-flex align-items-center flex-column"
+										className="col-lg-6 d-flex align-items-center flex-column"
 										id={`${styles.pendingMembers}`}
 									>
 										<h2>Pending Members</h2>
@@ -280,7 +418,7 @@ export default function Admin() {
 											)}
 										</Table>
 									</div>
-									<div className="col-md-6 d-flex flex-column align-items-center ">
+									<div className="col-lg-6 d-flex flex-column align-items-center ">
 										<h2>Member List</h2>
 										<button
 											className="LoadButton-pushable mb-2"
@@ -377,6 +515,153 @@ export default function Admin() {
 												<div className="d-flex align-items-center justify-content-center w-100">
 													<label className={`${styles.noPending}`}>
 														No pending members
+													</label>
+												</div>
+											)}
+										</Table>
+									</div>
+								</div>
+							</section>
+							<section
+								className={`${styles.adminSection} container-sm text-center`}
+							>
+								<h1>Events</h1>
+								<div className="row">
+									<div
+										className="col-12 col-lg-6 container-md"
+										id={`${styles.addEventForm}`}
+									>
+										<h2>Add Event</h2>
+										<div className={`${styles.eventInput}`}>
+											<p>Event Name</p>
+											<input
+												type="text"
+												onChange={(e) => setEventName(e.target.value)}
+												value={eventName}
+											/>
+										</div>
+										<div className={`${styles.eventInput}`}>
+											<p>Date</p>
+											<input
+												type="date"
+												onChange={(e) => setEventDate(e.target.value)}
+												value={eventDate}
+											/>
+										</div>
+										<div className={`${styles.eventInput}`}>
+											<p>Location</p>
+											<input
+												type="text"
+												onChange={(e) => setEventLocation(e.target.value)}
+												value={eventLocation}
+											/>
+										</div>
+										<div className={`${styles.eventInput}`}>
+											<p>Start Time</p>
+											<input
+												type="time"
+												onChange={(e) => setEventStartTime(e.target.value)}
+												value={eventStartTime}
+											/>
+										</div>
+										<div className={`${styles.eventInput}`}>
+											<p>End Time</p>
+											<input
+												type="time"
+												onChange={(e) => setEventEndTime(e.target.value)}
+												value={eventEndTime}
+											/>
+										</div>
+										<div className={`${styles.eventInput}`}>
+											<p>Volunteers Needed</p>
+											<input
+												type="text"
+												onChange={(e) =>
+													setEventVolunteersNeeded(e.target.value)
+												}
+												value={eventVolunteersNeeded}
+											/>
+										</div>
+										<button
+											className="ApproveButton-pushable"
+											onClick={() => {
+												addEventRefresh();
+											}}
+										>
+											<span className="ApproveButton-shadow"></span>
+											<span className="ApproveButton-edge"></span>
+
+											<span className="ApproveButton-front text">
+												Add Event
+											</span>
+										</button>
+									</div>
+									<div className="col-12 col-lg-6 d-flex align-items-center justify-content-center">
+										<Table minHeight={"20vh"} maxHeight={"80vh"}>
+											{events.events.length > 0 ? (
+												events.events.map((event: eventProps) => {
+													return (
+														<div
+															className={`${styles.eventsItem}`}
+															key={
+																"event" + events.events.indexOf(event as never)
+															}
+														>
+															<div className="d-flex align-items-center justify-content-center flex-row w-100 flex-wrap">
+																<Collapsable
+																	initText={event.eventName}
+																	className="w-100"
+																>
+																	<p>
+																		<b>Date:</b> {event.date}
+																	</p>
+																	<p>
+																		<b>Location:</b> {event.location}
+																	</p>
+																	<p>
+																		<b>Start Time:</b> {event.startTime}
+																	</p>
+																	<p>
+																		<b>End Time:</b> {event.endTime}
+																	</p>
+																	<p>
+																		<b>Volunteers Needed: </b>
+																		{event.volunteersNeeded}
+																	</p>
+																	<p>
+																		<b>Volunteers: </b>
+																		{event.volunteers}
+																	</p>
+																</Collapsable>
+															</div>
+															<div
+																className="d-flex align-items-center justify-content-center flex-row"
+																id={`${styles.eventDeleteButtonDiv}`}
+															>
+																<button
+																	className="DenyButton-pushable"
+																	onClick={() => {
+																		deleteEventRefresh(
+																			event.eventName,
+																			event.date
+																		);
+																	}}
+																>
+																	<span className="DenyButton-shadow"></span>
+																	<span className="DenyButton-edge"></span>
+
+																	<span className="DenyButton-front text">
+																		Delete
+																	</span>
+																</button>
+															</div>
+														</div>
+													);
+												})
+											) : (
+												<div className="d-flex align-items-center justify-content-center w-100">
+													<label className={`${styles.noPending}`}>
+														No events
 													</label>
 												</div>
 											)}
