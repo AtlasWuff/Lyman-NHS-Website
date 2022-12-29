@@ -165,7 +165,6 @@ export const addEventVolunteers = async (
 		} else {
 			try {
 				let voluns = await getEventVolunteers(eventName);
-				console.log(querySnapshot);
 				let namee = await getNameFromEmail(email, querySnapshot);
 
 				await updateDoc(doc(db, "Events", eventName.toLowerCase()), {
