@@ -124,6 +124,7 @@ export default function Home() {
 			{/* Meta tags */}
 			<Head>
 				<title>Lyman NHS</title>
+				<link rel="canonical" href="https://lymannhs.netlify.app/" />
 			</Head>
 
 			{/* ! Main homepage content */}

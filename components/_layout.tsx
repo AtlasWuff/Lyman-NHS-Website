@@ -18,6 +18,27 @@ export default function Layout({ children }: Props) {
 		<>
 			<Head>
 				<link rel="icon" href="/img/lymannhs.svg" />
+				<meta charSet="UTF-8" />
+				<meta name="description" content="Tachanks' website" />
+				<meta
+					name="keywords"
+					content="Lyman NHS,NHS,NHS Lyman,Lyman NHS Club,NHS Lyman club,Lyman,Lyman high,Lyman high school,lyman high school nhs,lyman high school NHS"
+				/>
+				<meta name="theme-color" content="#345beb" data-reactroot="" />
+				<meta property="og:title" content="Lyman NHS" />
+				<meta
+					property="og:description"
+					content="Lyman High School's National Honor Society website"
+				/>
+				<meta property="og:type" content="website" />
+				<meta property="og:url" content="https://lymannhs.netlify.app" />
+				<meta
+					property="og:image"
+					content="https://lymannhs.netlify.app/img/lymannhs.svg"
+				/>
+
+				<meta name="author" content="Josh" />
+				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			</Head>
 
 			{/* Webpage global layout */}

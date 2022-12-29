@@ -37,6 +37,10 @@ export default function CreateAccount() {
 			{/* Meta tags */}
 			<Head>
 				<title>Lyman NHS</title>
+				<link
+					rel="canonical"
+					href="https://lymannhs.netlify.app/createprofile"
+				/>
 			</Head>
 
 			{/* ! Main homepage content */}

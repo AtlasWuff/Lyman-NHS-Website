@@ -326,6 +326,7 @@ export default function Admin() {
 			{/* Meta tags */}
 			<Head>
 				<title>Lyman NHS</title>
+				<link rel="canonical" href="https://lymannhs.netlify.app/admin" />
 			</Head>
 
 			{/* ! Main homepage content */}
