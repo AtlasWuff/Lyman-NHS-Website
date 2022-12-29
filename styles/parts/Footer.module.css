@@ -22,8 +22,7 @@
 }
 
 .Socials a img {
-	transition: transform 0.05s ease-in-out;
-	transition: box-shadow 0.05s ease-in-out;
+	transition: transform 0.05s ease-in-out, box-shadow 0.05s ease-in-out;
 	transform-origin: center;
 	border-radius: 8px;
 }
