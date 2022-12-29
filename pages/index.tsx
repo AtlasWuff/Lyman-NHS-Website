@@ -112,7 +112,7 @@ export default function Home() {
 						"\nVolunteer hours: " +
 						e[0] +
 						"\n" +
-						"Event hours: " +
+						"Tutoring hours: " +
 						e[1]
 				);
 			});
