@@ -36,7 +36,7 @@ export default function CreateAccount() {
 		<>
 			{/* Meta tags */}
 			<Head>
-				<title>NHS Admin</title>
+				<title>Lyman NHS</title>
 			</Head>
 
 			{/* ! Main homepage content */}

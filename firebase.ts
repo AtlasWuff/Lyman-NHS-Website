@@ -303,6 +303,41 @@ interface newAccountProps {
 	tutoringHours: number;
 }
 
+export const checkMemberHours = async (email: string, password: string) => {
+	return new Promise<Array<string>>(async (resolve, reject) => {
+		let querySnapshot: any;
+		try {
+			querySnapshot = await getDocs(accountsDb);
+		} catch (err) {
+			console.log(err);
+			reject(err);
+		}
+		let hours: Array<string> = [];
+		let itemsProcessed = 0;
+		let foundAccount = false;
+		querySnapshot.forEach((doc: any) => {
+			itemsProcessed++;
+			if (
+				doc.data().email.trim() == email.trim() &&
+				doc.data().password.trim() == password.trim()
+			) {
+				foundAccount = true;
+				hours.push(doc.data().volunteerHours.toString());
+				hours.push(doc.data().tutoringHours.toString());
+				getNameFromEmail(email, querySnapshot).then((name) => {
+					hours.push(name);
+					resolve(hours);
+					return;
+				});
+			} else if (querySnapshot.size === itemsProcessed && !foundAccount) {
+				alert("Incorrect email or password.");
+				reject("Incorrect email or password.");
+				return;
+			}
+		});
+	});
+};
+
 export const makeMemberAdmin = async (name: string) => {
 	return new Promise<void>(async (resolve, reject) => {
 		try {

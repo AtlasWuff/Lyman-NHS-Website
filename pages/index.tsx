@@ -10,6 +10,7 @@ import {
 	addEvent,
 	addEventVolunteers,
 	removeEventVolunteers,
+	checkMemberHours,
 } from "../firebase";
 import { useEffectOnce } from "usehooks-ts";
 import { InstagramEmbed } from "react-social-media-embed";
@@ -90,6 +91,34 @@ export default function Home() {
 		}
 	};
 
+	const [showHourCheckModal, setShowHourCheckModal] = useState(false);
+	const [hourCheckEmail, setHourCheckEmail] = useState("");
+	const [hourCheckPassword, setHourCheckPassword] = useState("");
+
+	const displayHourCheckModal = async () => {
+		setShowHourCheckModal(!showHourCheckModal);
+	};
+
+	const checkHours = async () => {
+		if (hourCheckEmail === "" || hourCheckPassword === "") {
+			alert("Please fill out all fields");
+		} else if (!EmailValidator.validate(hourCheckEmail)) {
+			alert("Please enter a valid email");
+		} else {
+			checkMemberHours(hourCheckEmail, hourCheckPassword).then((e) => {
+				alert(
+					"Hours for " +
+						e[2] +
+						"\nVolunteer hours: " +
+						e[0] +
+						"\n" +
+						"Event hours: " +
+						e[1]
+				);
+			});
+		}
+	};
+
 	return (
 		<>
 			{/* Meta tags */}
@@ -113,7 +142,7 @@ export default function Home() {
 				</PageTitle>
 				<div id={`${styles.notTitle}`}>
 					<section id={`${styles.AboutUs}`} className="container-lg">
-						<h1 className="mb-0">About Us</h1>
+						<h1 className="mb-0">About</h1>
 						<p className="mt-0 container">
 							Lyman NHS is a club that focuses on community service and
 							leadership. We are a group of students who are passionate about
@@ -121,6 +150,70 @@ export default function Home() {
 							provide opportunities for students to get involved in the
 							community and to make a difference in the lives of others.
 						</p>
+						<hr></hr>
+						<p>Members are required to have...</p>
+						<div
+							className="row align-items-center justify-content-center container-md px-md-5"
+							id={`${styles.requirmentsRow}`}
+						>
+							<div className="col-md-6 col-12">
+								<p className="hoverUnderlineAnim">20 hours of volunteering</p>
+							</div>
+							<div className="col-md-6 col-12">
+								<p className="hoverUnderlineAnim">5 hours of tutoring</p>
+							</div>
+						</div>
+						<button
+							className="LoadButton-pushable mt-3"
+							onClick={(a) => displayHourCheckModal()}
+						>
+							<span className="LoadButton-shadow"></span>
+							<span className="LoadButton-edge"></span>
+							<span className="LoadButton-front text">
+								Check your hours here
+							</span>
+						</button>
+
+						{showHourCheckModal ? (
+							<div id={`${styles.signUpModal}`}>
+								<div id={`${styles.signUpModalContent}`}>
+									<Image
+										src={"/img/close.svg"}
+										width={30}
+										height={30}
+										onClick={() => setShowHourCheckModal(!showHourCheckModal)}
+										id={`${styles.closeModal}`}
+										alt="Close modal"
+									/>
+									<h1>Check your hours</h1>
+									<p className="mb-2">
+										Enter email & password for member verification
+									</p>
+									<input
+										type="text"
+										placeholder="Email"
+										value={hourCheckEmail}
+										onChange={(v) => setHourCheckEmail(v.target.value)}
+									/>
+									<input
+										type="text"
+										placeholder="Password"
+										value={hourCheckPassword}
+										onChange={(v) => setHourCheckPassword(v.target.value)}
+									/>
+									<button
+										className="LoadButton-pushable my-2"
+										onClick={() => checkHours()}
+									>
+										<span className="LoadButton-shadow"></span>
+										<span className="LoadButton-edge"></span>
+										<span className="LoadButton-front text">Submit</span>
+									</button>
+								</div>
+							</div>
+						) : (
+							<></>
+						)}
 					</section>
 
 					<section id={`${styles.UpcomingEvents}`} className="container-lg">

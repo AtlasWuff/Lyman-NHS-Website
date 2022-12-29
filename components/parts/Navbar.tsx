@@ -49,7 +49,7 @@ export default function Navbar({}: Props) {
 						<Link href="/admin" className="hoverUnderlineAnim mx-lg-5 mx-3">
 							Admin
 						</Link>
-						<Link href="/createaccount" className="hoverUnderlineAnim">
+						<Link href="/createprofile" className="hoverUnderlineAnim">
 							Create Profile
 						</Link>
 					</li>
