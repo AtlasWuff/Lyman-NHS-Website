@@ -89,6 +89,19 @@ export const getNameFromEmail = async (email: string, querySnapshot: any) => {
 	});
 };
 
+export const getIsVerfiedFromEmail = async (
+	email: string,
+	querySnapshot: any
+) => {
+	return new Promise<boolean>(async (resolve, reject) => {
+		querySnapshot.forEach((doc: any) => {
+			if (doc.data().email == email) {
+				resolve(doc.data().isVerified);
+			}
+		});
+	});
+};
+
 export const isPersonInVolunteers = async (
 	email: string,
 	name: string,
@@ -141,6 +154,12 @@ export const addEventVolunteers = async (
 		}
 		if (!(await didAccLogin(eventName, email, password, querySnapshot))) {
 			alert("Incorrect email or password.");
+			resolve(false);
+			return;
+		} else if (!(await getIsVerfiedFromEmail(email, querySnapshot))) {
+			alert(
+				"Your account must first be approved by an admin to sign up for events."
+			);
 			resolve(false);
 			return;
 		} else {
