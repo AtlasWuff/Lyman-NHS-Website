@@ -428,6 +428,7 @@ export const newAccount = async ({
 		"|",
 		"}",
 		"~",
+		".",
 	];
 	for (let i = 0; i < specialChars.length; i++) {
 		if (password.includes(specialChars[i])) {
