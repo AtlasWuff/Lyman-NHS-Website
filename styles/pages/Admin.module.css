@@ -77,7 +77,7 @@
 	width: 100%;
 }
 
-.eventInput {
+.eventInput:not([type="checkbox"]) {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -159,3 +159,32 @@
 	padding: 0.25rem 0.25rem;
 	cursor: pointer;
 }
+
+.eventInput input[type="checkbox"] {
+	border-radius: 4px;
+	margin: 0px 0px;
+	border: 3px solid black;
+	height: 25px;
+	width: 25px;
+	transition: transform 0.5s ease, background-color 0.5s ease-in-out,
+		opacity 0.5s ease-in-out;
+	background-color: red;
+	cursor: pointer;
+	position: relative;
+	margin-bottom: ;
+}
+
+.eventInput input[type="checkbox"]:checked {
+	transform: rotate(360deg);
+	background-color: green;
+}
+
+/* .eventInput input[type="checkbox"]::after {
+	content: url("/img/check.svg");
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out;
+}
+
+.eventInput input[type="checkbox"]:checked::after {
+	opacity: 1;
+} */

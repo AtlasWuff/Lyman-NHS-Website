@@ -213,6 +213,7 @@ export default function Admin() {
 	const [eventVolunteersNeeded, setEventVolunteersNeeded] = useState("");
 	const [eventVolunteersSignedUp, setEventVolunteersSignedUp] = useState([]);
 	const [events, setEvents] = useState<EventsStateProp>({ events: [] });
+	const [eventIsTutoring, setEventIsTutoring] = useState<boolean>(false);
 
 	/* Refresh accounts updating the state
 	 * @param {void}
@@ -253,7 +254,8 @@ export default function Admin() {
 			eventLocation == undefined ||
 			eventStartTime == undefined ||
 			eventEndTime == undefined ||
-			eventVolunteersNeeded == undefined
+			eventVolunteersNeeded == undefined ||
+			eventIsTutoring == undefined
 		) {
 			alert("Please fill out all fields");
 			return;
@@ -274,6 +276,7 @@ export default function Admin() {
 			endTime: eventEndTime,
 			volunteersNeeded: eventVolunteersNeeded,
 			volunteers: eventVolunteersSignedUp,
+			isTutoring: eventIsTutoring,
 		}).then(async () => {
 			setEvents({
 				events: [
@@ -286,6 +289,7 @@ export default function Admin() {
 						endTime: eventEndTime,
 						volunteersNeeded: eventVolunteersNeeded,
 						volunteers: eventVolunteersSignedUp,
+						isTutoring: eventIsTutoring,
 					},
 				],
 			});
@@ -617,6 +621,13 @@ export default function Admin() {
 													setEventVolunteersNeeded(e.target.value.trim())
 												}
 												value={eventVolunteersNeeded}
+											/>
+										</div>
+										<div className={`${styles.eventInput} mb-2`}>
+											<p>Is this a tutoring event?</p>
+											<input
+												type="checkbox"
+												onChange={(e) => setEventIsTutoring(e.target.checked)}
 											/>
 										</div>
 										<button

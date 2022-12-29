@@ -265,7 +265,14 @@ export default function Home() {
 									<div className=" d-lg-flex justify-content-lg-center w-100">
 										<div className={`col-lg-6`}>
 											{events
-												.filter((ee) => events.indexOf(ee) % 2 == 0)
+												.filter(
+													(ee) =>
+														events
+															.filter((eee) => eee.isTutoring == false)
+															.indexOf(ee) %
+															2 ==
+															0 && ee.isTutoring == false
+												)
 												.map((e) => {
 													return (
 														<div
@@ -312,7 +319,137 @@ export default function Home() {
 										</div>
 										<div className={`col-lg-6`}>
 											{events
-												.filter((ee) => events.indexOf(ee) % 2 != 0)
+												.filter(
+													(ee) =>
+														events
+															.filter((eee) => eee.isTutoring == false)
+															.indexOf(ee) %
+															2 !=
+															0 && ee.isTutoring == false
+												)
+												.map((e) => {
+													return (
+														<div
+															className={`${styles.event} mb-2`}
+															key={events.indexOf(e) + "event"}
+														>
+															<h2>{e.eventName}</h2>
+															<Table widthVal={"95%"} bgColor="rgba(0,0,0,0.2)">
+																<div className="d-flex justify-content-center w-100 align-items-center">
+																	<div className={`${styles.eventCard} row`}>
+																		<div className="col-sm-6">
+																			<label>Date</label>
+																			<p>{e.date}</p>
+																			<label>Location</label>
+																			<p>{e.location}</p>
+																			<label>Start Time</label>
+																			<p>{e.startTime}</p>
+																		</div>
+
+																		<div className="col-sm-6">
+																			<label>End Time</label>
+																			<p>{e.endTime}</p>
+																			<label>Volunteers Needed</label>
+																			<p>{e.volunteersNeeded}</p>
+																			<label>Currently Signed Up</label>
+																			<p>
+																				{/* map volunteers array */}
+																				{e.volunteers.map((v) => {
+																					return (
+																						<span key={v + "volunteer"}>
+																							{v}
+																							<br />
+																						</span>
+																					);
+																				})}
+																			</p>
+																		</div>
+																	</div>
+																</div>
+															</Table>
+														</div>
+													);
+												})}
+										</div>
+									</div>
+								</div>
+							</div>
+						</Table>
+						<h2 className="mt-3">Tutoring</h2>
+						<p className="mb-2">Use the same buttons as above</p>
+						<Table
+							minHeight={"20vh"}
+							maxHeight={"85vh"}
+							bgColor={"rgba(0,0,0,0.2)"}
+							widthVal={"90%"}
+						>
+							<div className="d-flex justify-content-center w-100">
+								<div className={`row w-100 ${styles.tableUpcomingEventsItem}`}>
+									<div className=" d-lg-flex justify-content-lg-center w-100">
+										<div className={`col-lg-6`}>
+											{events
+												.filter(
+													(ee) =>
+														events
+															.filter((eee) => eee.isTutoring == true)
+															.indexOf(ee) %
+															2 ==
+															0 && ee.isTutoring == true
+												)
+												.map((e) => {
+													return (
+														<div
+															className={`${styles.event} mb-2`}
+															key={events.indexOf(e) + "event"}
+														>
+															<h2>{e.eventName}</h2>
+															<Table widthVal={"95%"} bgColor="rgba(0,0,0,0.2)">
+																<div className="d-flex justify-content-center w-100 align-items-center">
+																	<div className={`${styles.eventCard} row`}>
+																		<div className="col-sm-6">
+																			<label>Date</label>
+																			<p>{e.date}</p>
+																			<label>Location</label>
+																			<p>{e.location}</p>
+																			<label>Start Time</label>
+																			<p>{e.startTime}</p>
+																		</div>
+
+																		<div className="col-sm-6">
+																			<label>End Time</label>
+																			<p>{e.endTime}</p>
+																			<label>Volunteers Needed</label>
+																			<p>{e.volunteersNeeded}</p>
+																			<label>Currently Signed Up</label>
+																			<p>
+																				{/* map volunteers array */}
+																				{e.volunteers.map((v) => {
+																					return (
+																						<span key={v + "volunteer"}>
+																							{v}
+																							<br />
+																						</span>
+																					);
+																				})}
+																			</p>
+																		</div>
+																	</div>
+																</div>
+															</Table>
+														</div>
+													);
+												})}
+										</div>
+										<div className={`col-lg-6`}>
+											{events
+												.filter(
+													(ee) =>
+														events
+															.filter((eee) => eee.isTutoring == true)
+															.indexOf(ee) %
+															2 !=
+															0 && ee.isTutoring == true
+												)
 												.map((e) => {
 													return (
 														<div
