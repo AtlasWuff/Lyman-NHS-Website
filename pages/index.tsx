@@ -175,7 +175,9 @@ export default function Home() {
 									<p className="mb-2">Select event to sign up for</p>
 									<select
 										value={eventInput}
-										onChange={(v) => setEventInput(v.target.value)}
+										onChange={(v) => {
+											setEventInput(v.target.value);
+										}}
 									>
 										{events.map((e) => (
 											<option

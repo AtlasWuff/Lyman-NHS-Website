@@ -167,13 +167,13 @@ export const addEventVolunteers = async (
 				let voluns = await getEventVolunteers(eventName);
 				console.log(querySnapshot);
 				let namee = await getNameFromEmail(email, querySnapshot);
-				console.log(namee);
 
 				await updateDoc(doc(db, "Events", eventName.toLowerCase()), {
 					volunteers: [...voluns, namee],
 				});
 				resolve(true);
 			} catch (err) {
+				console.log("bad here");
 				console.log(err);
 			}
 		}
@@ -205,9 +205,7 @@ export const removeEventVolunteers = async (
 		} else {
 			try {
 				let voluns = await getEventVolunteers(eventName);
-				console.log(querySnapshot);
 				let namee = await getNameFromEmail(email, querySnapshot);
-				console.log(namee);
 
 				await updateDoc(doc(db, "Events", eventName.toLowerCase()), {
 					volunteers: voluns.filter((volun) => volun !== namee),
