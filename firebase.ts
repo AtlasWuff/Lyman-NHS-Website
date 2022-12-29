@@ -53,7 +53,10 @@ export const didAccLogin = async (
 ) => {
 	return new Promise<boolean>(async (resolve, reject) => {
 		querySnapshot.forEach((doc: any) => {
-			if (doc.data().email === email && doc.data().password === password) {
+			if (
+				doc.data().email.toLowerCase() === email.toLowerCase() &&
+				doc.data().password === password
+			) {
 				resolve(true);
 			}
 		});
@@ -82,7 +85,7 @@ export const getEventVolunteers = async (eventName: string) => {
 export const getNameFromEmail = async (email: string, querySnapshot: any) => {
 	return new Promise<string>(async (resolve, reject) => {
 		querySnapshot.forEach((doc: any) => {
-			if (doc.data().email == email) {
+			if (doc.data().email.toLowerCase() == email.toLowerCase()) {
 				resolve(doc.data().firstName + " " + doc.data().lastName);
 			}
 		});
@@ -95,7 +98,7 @@ export const getIsVerfiedFromEmail = async (
 ) => {
 	return new Promise<boolean>(async (resolve, reject) => {
 		querySnapshot.forEach((doc: any) => {
-			if (doc.data().email == email) {
+			if (doc.data().email.toLowerCase() == email.toLowerCase()) {
 				resolve(doc.data().isVerified);
 			}
 		});
@@ -318,13 +321,13 @@ export const checkMemberHours = async (email: string, password: string) => {
 		querySnapshot.forEach((doc: any) => {
 			itemsProcessed++;
 			if (
-				doc.data().email.trim() == email.trim() &&
+				doc.data().email.trim().toLowerCase() == email.trim().toLowerCase() &&
 				doc.data().password.trim() == password.trim()
 			) {
 				foundAccount = true;
 				hours.push(doc.data().volunteerHours.toString());
 				hours.push(doc.data().tutoringHours.toString());
-				getNameFromEmail(email, querySnapshot).then((name) => {
+				getNameFromEmail(email.toLowerCase(), querySnapshot).then((name) => {
 					hours.push(name);
 					resolve(hours);
 					return;
@@ -530,7 +533,10 @@ export const checkAdmin = ({ email, password }: checkAdminProps) => {
 		});
 
 		querySnapshot.forEach((doc: AccInterface) => {
-			if (doc.email == email && doc.password == password) {
+			if (
+				doc.email.toLowerCase() == email.toLowerCase() &&
+				doc.password == password
+			) {
 				foundAccount = true;
 				if (doc.isAdmin) {
 					resolve(true);
