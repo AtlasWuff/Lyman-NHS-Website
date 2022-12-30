@@ -21,6 +21,9 @@ import {
 import { collection, addDoc, updateDoc } from "firebase/firestore";
 import { useEffectOnce } from "usehooks-ts";
 
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+
 // CSS imports
 import styles from "../styles/pages/Admin.module.css";
 
@@ -38,6 +41,21 @@ interface AdminProps {
 
 // Page
 export default function Admin() {
+	const controls = useAnimation();
+	const secondControls = useAnimation();
+	const [ref, inView] = useInView();
+	const [secondRef, secondInView] = useInView();
+	useEffect(() => {
+		if (inView) {
+			controls.start("visible");
+		}
+	}, [controls, inView]);
+	useEffect(() => {
+		if (secondInView) {
+			secondControls.start("visible");
+		}
+	}, [secondControls, secondInView]);
+
 	// Basically says that the accounts state is an array of the AccInterface type
 	interface Accounts {
 		accounts: Array<AccInterface>;
@@ -322,7 +340,11 @@ export default function Admin() {
 	const [hoursNewTutoringHours, setHoursNewTutoringHours] = useState("");
 
 	return (
-		<>
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
 			{/* Meta tags */}
 			<Head>
 				<title>Lyman NHS</title>
@@ -332,7 +354,11 @@ export default function Admin() {
 			{/* ! Main homepage content */}
 			<main>
 				{isUserAdmin ? (
-					<>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+					>
 						<PageTitle title="NHS Admin" />
 						<div id={`${styles.notTitle}`}>
 							<section
@@ -565,7 +591,17 @@ export default function Admin() {
 							>
 								<h1>Events</h1>
 								<div className="row">
-									<div
+									<motion.div
+										animate={controls}
+										ref={ref}
+										transition={{
+											duration: 0.5,
+											ease: [0.5, 0.01, -0.05, 0.9],
+										}}
+										initial={{ scale: 0 }}
+										variants={{
+											visible: { scale: 1 },
+										}}
 										className="col-12 col-lg-6 container-md"
 										id={`${styles.addEventForm}`}
 									>
@@ -644,7 +680,7 @@ export default function Admin() {
 												Add Event
 											</span>
 										</button>
-									</div>
+									</motion.div>
 									<div className="col-12 col-lg-6 d-flex align-items-center justify-content-center flex-column">
 										<h2>Events</h2>
 										<Table
@@ -733,7 +769,16 @@ export default function Admin() {
 									clicking submit. Values shown in the dropdown are the members
 									current hours{" "}
 								</p>
-								<div className="w-100 d-flex align-items-center justify-content-center flex-column container">
+								<motion.div
+									animate={secondControls}
+									ref={secondRef}
+									transition={{ duration: 0.5, ease: [0.5, 0.01, -0.05, 0.9] }}
+									initial={{ scale: 0 }}
+									variants={{
+										visible: { scale: 1 },
+									}}
+									className="w-100 d-flex align-items-center justify-content-center flex-column container"
+								>
 									<div className={`${styles.eventInput}`}>
 										<p>Member: </p>
 										<select
@@ -795,10 +840,10 @@ export default function Admin() {
 
 										<span className="ApproveButton-front text">Submit</span>
 									</button>
-								</div>
+								</motion.div>
 							</section>
 						</div>
-					</>
+					</motion.div>
 				) : (
 					<>
 						{showLoading ? (
@@ -839,6 +884,6 @@ export default function Admin() {
 					</>
 				)}
 			</main>
-		</>
+		</motion.div>
 	);
 }

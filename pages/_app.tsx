@@ -7,6 +7,7 @@ import "../styles/global.css";
 import Layout from "../components/_layout";
 import Script from "next/script";
 import type { AppProps } from "next/app";
+import { AnimatePresence } from "framer-motion";
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (
@@ -20,7 +21,9 @@ export default function App({ Component, pageProps }: AppProps) {
 			<Script src="/scripts/LoadEffect.js" />
 
 			<Layout>
-				<Component {...pageProps} />
+				<AnimatePresence mode="wait" exitBeforeEnter>
+					<Component {...pageProps} />
+				</AnimatePresence>
 			</Layout>
 		</>
 	);

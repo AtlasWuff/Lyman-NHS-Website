@@ -9,6 +9,8 @@ import { useRef, useState } from "react";
 import { app, db, newAccount } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 
+import { motion, AnimatePresence } from "framer-motion";
+
 // CSS imports
 import styles from "../styles/pages/CreateAccount.module.css";
 
@@ -33,7 +35,11 @@ export default function CreateAccount() {
 	];
 
 	return (
-		<>
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
 			{/* Meta tags */}
 			<Head>
 				<title>Lyman NHS</title>
@@ -50,79 +56,83 @@ export default function CreateAccount() {
 					<div id={`${styles.loginBg}`}>
 						<Image src={"/img/campus.jpg"} fill alt="" />
 					</div>
-					<section id={`${styles.loginModal}`}>
-						<h1>Create Profile</h1>
-						<div id={`${styles.loginForm}`}>
-							<h2>Profile info</h2>
-							<div className={`${styles.loginInput}`}>
-								<p>Email</p>
-								<input
-									type="text"
-									onChange={(e) => setEmail(e.target.value)}
-									value={email}
-								/>
-							</div>
-							<div className={`${styles.loginInput}`}>
-								<p>Password</p>
-								<input
-									type="text"
-									onChange={(e) => setPassword(e.target.value)}
-									value={password}
-								/>
-							</div>
+					<AnimatePresence>
+						<section id={`${styles.loginModal}`}>
+							<h1>Create Profile</h1>
+							<div id={`${styles.loginForm}`}>
+								<h2>Profile info</h2>
+								<div className={`${styles.loginInput}`}>
+									<p>Email</p>
+									<input
+										type="text"
+										onChange={(e) => setEmail(e.target.value)}
+										value={email}
+									/>
+								</div>
+								<div className={`${styles.loginInput}`}>
+									<p>Password</p>
+									<input
+										type="text"
+										onChange={(e) => setPassword(e.target.value)}
+										value={password}
+									/>
+								</div>
 
-							<h2>Other</h2>
-							<div className={`${styles.loginInput}`}>
-								<p>First Name</p>
-								<input
-									type="text"
-									value={firstName}
-									onChange={(e) => setFirstName(e.target.value)}
-								/>
-							</div>
-							<div className={`${styles.loginInput}`}>
-								<p>Last Name</p>
-								<input
-									type="text"
-									value={lastName}
-									onChange={(e) => setLastName(e.target.value)}
-								/>
-							</div>
-							<div className={`${styles.loginInput}`}>
-								<p>Grade</p>
-								<input
-									type="number"
-									value={grade}
-									onChange={(e) => setGrade(e.target.value)}
-								/>
-							</div>
-							<div className={`${styles.loginButton}`}>
-								<button
-									className="LoadButton-pushable my-3"
-									onClick={() => {
-										newAccount({
-											email: email,
-											password: password,
-											firstName: firstName,
-											lastName: lastName,
-											grade: grade,
-											isAdmin: false,
-											isVerified: false,
-											volunteerHours: 0,
-											tutoringHours: 0,
-										});
-									}}
-								>
-									<span className="LoadButton-shadow"></span>
-									<span className="LoadButton-edge"></span>
+								<h2>Other</h2>
+								<div className={`${styles.loginInput}`}>
+									<p>First Name</p>
+									<input
+										type="text"
+										value={firstName}
+										onChange={(e) => setFirstName(e.target.value)}
+									/>
+								</div>
+								<div className={`${styles.loginInput}`}>
+									<p>Last Name</p>
+									<input
+										type="text"
+										value={lastName}
+										onChange={(e) => setLastName(e.target.value)}
+									/>
+								</div>
+								<div className={`${styles.loginInput}`}>
+									<p>Grade</p>
+									<input
+										type="number"
+										value={grade}
+										onChange={(e) => setGrade(e.target.value)}
+									/>
+								</div>
+								<div className={`${styles.loginButton}`}>
+									<button
+										className="LoadButton-pushable my-3"
+										onClick={() => {
+											newAccount({
+												email: email,
+												password: password,
+												firstName: firstName,
+												lastName: lastName,
+												grade: grade,
+												isAdmin: false,
+												isVerified: false,
+												volunteerHours: 0,
+												tutoringHours: 0,
+											});
+										}}
+									>
+										<span className="LoadButton-shadow"></span>
+										<span className="LoadButton-edge"></span>
 
-									<span className="LoadButton-front text">Create Profile</span>
-								</button>
+										<span className="LoadButton-front text">
+											Create Profile
+										</span>
+									</button>
+								</div>
 							</div>
-						</div>
-					</section>
+						</section>
+					</AnimatePresence>
 				</div>
 			</main>
-		</>
+		</motion.div>
 	);
 }

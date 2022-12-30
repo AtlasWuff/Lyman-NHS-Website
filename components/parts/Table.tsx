@@ -1,6 +1,9 @@
 // Imports
 import * as React from "react";
 
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+
 // CSS imports
 import styles from "../../styles/parts/Table.module.css";
 
@@ -13,6 +16,7 @@ interface Props {
 	bgColor?: string;
 	widthVal?: string;
 	showLoading?: boolean;
+	className?: string;
 	children?: React.ReactNode;
 }
 
@@ -23,11 +27,30 @@ export default function Table({
 	bgColor = "rgba(0,0,0,0.2)",
 	widthVal = "95%",
 	showLoading,
+	className,
 	children,
 }: Props) {
+	const controls = useAnimation();
+	const [ref, inView] = useInView();
+
+	React.useEffect(() => {
+		if (inView) {
+			controls.start("visible");
+		}
+	}, [controls, inView]);
 	return (
 		<>
-			<div className={`${styles.TableWrapper}`} style={{ width: widthVal }}>
+			<motion.div
+				className={`${styles.TableWrapper} ${className}`}
+				style={{ width: widthVal }}
+				animate={controls}
+				ref={ref}
+				transition={{ duration: 0.5, ease: [0.5, 0.01, -0.05, 0.9] }}
+				initial={{ scale: 0 }}
+				variants={{
+					visible: { scale: 1 },
+				}}
+			>
 				<div
 					className={`${styles.Table}`}
 					style={{
@@ -38,7 +61,7 @@ export default function Table({
 				>
 					{children}
 				</div>
-			</div>
+			</motion.div>
 		</>
 	);
 }

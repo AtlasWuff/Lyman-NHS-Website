@@ -15,6 +15,8 @@ import {
 import { useEffectOnce } from "usehooks-ts";
 import { InstagramEmbed } from "react-social-media-embed";
 import * as EmailValidator from "email-validator";
+import { useAnimation, motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 // CSS imports
 import styles from "../styles/pages/Home.module.css";
@@ -120,7 +122,11 @@ export default function Home() {
 	};
 
 	return (
-		<>
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
 			{/* Meta tags */}
 			<Head>
 				<title>Lyman NHS</title>
@@ -349,12 +355,12 @@ export default function Home() {
 						) : (
 							<></>
 						)}
-
 						<Table
 							minHeight={"20vh"}
 							maxHeight={"85vh"}
 							bgColor={"rgba(0,0,0,0.2)"}
 							widthVal={"90%"}
+							// className="swipeFromRight"
 						>
 							<div className="d-flex justify-content-center w-100">
 								<div className={`row w-100 ${styles.tableUpcomingEventsItem}`}>
@@ -595,7 +601,6 @@ export default function Home() {
 							</div>
 						</Table>
 					</section>
-					<section id={`${styles.RecentEvents}`}></section>
 					<section id={`${styles.SocialMedia}`} className="container-lg">
 						<h1 className="mb-3">Recent Posts</h1>
 						<Table
@@ -629,6 +634,6 @@ export default function Home() {
 					<section id={`${styles.People}`}></section>
 				</div>
 			</main>
-		</>
+		</motion.div>
 	);
 }
