@@ -365,7 +365,7 @@ export default function Home() {
 							<div className="d-flex justify-content-center w-100">
 								<div className={`row w-100 ${styles.tableUpcomingEventsItem}`}>
 									<div className=" d-lg-flex justify-content-lg-center w-100">
-										<div className={`col-xxl-4 col-md-6 col-12`}>
+										<div className={`col-xl-4 col-md-6 col-12`}>
 											{events
 												.filter(
 													(ee) =>
@@ -433,7 +433,7 @@ export default function Home() {
 													);
 												})}
 										</div>
-										<div className={`col-xxl-4 col-md-6 col-12`}>
+										<div className={`col-xl-4 col-md-6 col-12`}>
 											{events
 												.filter(
 													(ee) =>
@@ -501,7 +501,7 @@ export default function Home() {
 													);
 												})}
 										</div>
-										<div className={`col-xxl-4 col-md-6 col-12`}>
+										<div className={`col-xl-4 col-md-6 col-12`}>
 											{events
 												.filter(
 													(ee) =>
@@ -584,7 +584,7 @@ export default function Home() {
 							<div className="d-flex justify-content-center w-100">
 								<div className={`row w-100 ${styles.tableUpcomingEventsItem}`}>
 									<div className=" d-lg-flex justify-content-lg-center w-100">
-										<div className={`col-xxl-4 col-md-6 col-12`}>
+										<div className={`col-xl-4 col-md-6 col-12`}>
 											{events
 												.filter(
 													(ee) =>
@@ -652,7 +652,7 @@ export default function Home() {
 													);
 												})}
 										</div>
-										<div className={`col-xxl-4 col-md-6 col-12`}>
+										<div className={`col-xl-4 col-md-6 col-12`}>
 											{events
 												.filter(
 													(ee) =>
@@ -720,7 +720,7 @@ export default function Home() {
 													);
 												})}
 										</div>
-										<div className={`col-xxl-4 col-md-6 col-12`}>
+										<div className={`col-xl-4 col-md-6 col-12`}>
 											{events
 												.filter(
 													(ee) =>
