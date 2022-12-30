@@ -129,14 +129,41 @@
 	white-space: break-spaces;
 }
 
-.eventCard label {
-	text-decoration: underline;
-	font-weight: 700;
+.eventCard p:first-of-type {
+	/* text-decoration: underline; */
+	/* font-weight: 700; */
+	white-space: nowrap;
 }
 
 .eventCard {
 	width: 100%;
-	text-align: center;
+	text-align: left;
+	color: white !important;
+}
+
+.eventCard > div > p > b::after {
+	content: "-";
+}
+
+.eventCard > div {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+	.eventCard > div {
+		flex-direction: row;
+		/* justify-content: center;
+		align-items: center; */
+	}
+	.event > div {
+		width: 100% !important;
+	}
+	.eventCard > div > p > b {
+		/* text-decoration: underline; */
+	}
 }
 
 #signUpModal {
