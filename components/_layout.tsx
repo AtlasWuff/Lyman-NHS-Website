@@ -17,6 +17,10 @@ export default function Layout({ children }: Props) {
 	return (
 		<>
 			<Head>
+				<meta
+					name="google-site-verification"
+					content="VmGiD2gwTijQ1k9a2i6lKsdVfCV3lflb6VltDstfsJ0"
+				/>
 				<link rel="icon" href="/img/lymannhs.svg" />
 				<meta charSet="UTF-8" />
 				<meta name="description" content="Tachanks' website" />
