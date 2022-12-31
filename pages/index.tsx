@@ -364,14 +364,14 @@ export default function Home() {
 						>
 							<div className="d-flex justify-content-center w-100">
 								<div className={`row w-100 ${styles.tableUpcomingEventsItem}`}>
-									<div className={`col-xl-4 col-md-6 col-12`}>
+									<div className={`col-lg-6`}>
 										{events
 											.filter(
 												(ee) =>
 													events
 														.filter((eee) => eee.isTutoring == false)
 														.indexOf(ee) %
-														3 ==
+														2 ==
 														0 && ee.isTutoring == false
 											)
 											.map((e) => {
@@ -432,83 +432,15 @@ export default function Home() {
 												);
 											})}
 									</div>
-									<div className={`col-xl-4 col-md-6 col-12`}>
+									<div className={`col-lg-6`}>
 										{events
 											.filter(
 												(ee) =>
 													events
 														.filter((eee) => eee.isTutoring == false)
 														.indexOf(ee) %
-														3 ==
+														2 ==
 														1 && ee.isTutoring == false
-											)
-											.map((e) => {
-												return (
-													<div
-														className={`${styles.event} mb-2`}
-														key={events.indexOf(e) + "event"}
-													>
-														<h2>{e.eventName}</h2>
-														<Table
-															widthVal={"95%"}
-															bgColor="rgba(0,0,0,0.2)"
-															minHeight={"10vh"}
-															maxHeight={"40vh"}
-														>
-															<div className="d-flex justify-content-center w-100 align-items-center">
-																<div className={`${styles.eventCard}`}>
-																	<div className="">
-																		<p>
-																			<b>Date</b>
-																		</p>
-																		<p>{e.date}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Location</b>
-																		</p>
-																		<p>{e.location}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Time</b>
-																		</p>
-																		<p>
-																			{e.startTime} - {e.endTime}
-																		</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Volunteers Needed</b>
-																		</p>
-																		<p>{e.volunteersNeeded}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Signed Up</b>
-																		</p>
-																		<p className="w-100">
-																			{e.volunteers.map((v) => {
-																				return <>{v}, </>;
-																			})}
-																		</p>
-																	</div>
-																</div>
-															</div>
-														</Table>
-													</div>
-												);
-											})}
-									</div>
-									<div className={`col-xl-4 col-md-6 col-12`}>
-										{events
-											.filter(
-												(ee) =>
-													events
-														.filter((eee) => eee.isTutoring == false)
-														.indexOf(ee) %
-														3 ==
-														2 && ee.isTutoring == false
 											)
 											.map((e) => {
 												return (
@@ -581,14 +513,14 @@ export default function Home() {
 						>
 							<div className="d-flex justify-content-center w-100">
 								<div className={`row w-100 ${styles.tableUpcomingEventsItem}`}>
-									<div className={`col-xl-4 col-md-6 col-12`}>
+									<div className={`col-lg-6`}>
 										{events
 											.filter(
 												(ee) =>
 													events
 														.filter((eee) => eee.isTutoring == true)
 														.indexOf(ee) %
-														3 ==
+														2 ==
 														0 && ee.isTutoring == true
 											)
 											.map((e) => {
@@ -649,83 +581,15 @@ export default function Home() {
 												);
 											})}
 									</div>
-									<div className={`col-xl-4 col-md-6 col-12`}>
+									<div className={`col-lg-6`}>
 										{events
 											.filter(
 												(ee) =>
 													events
 														.filter((eee) => eee.isTutoring == true)
 														.indexOf(ee) %
-														3 ==
+														2 ==
 														1 && ee.isTutoring == true
-											)
-											.map((e) => {
-												return (
-													<div
-														className={`${styles.event} mb-2`}
-														key={events.indexOf(e) + "event"}
-													>
-														<h2>{e.eventName}</h2>
-														<Table
-															widthVal={"95%"}
-															bgColor="rgba(0,0,0,0.2)"
-															minHeight={"10vh"}
-															maxHeight={"40vh"}
-														>
-															<div className="d-flex justify-content-center w-100 align-items-center">
-																<div className={`${styles.eventCard}`}>
-																	<div className="">
-																		<p>
-																			<b>Date</b>
-																		</p>
-																		<p>{e.date}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Location</b>
-																		</p>
-																		<p>{e.location}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Time</b>
-																		</p>
-																		<p>
-																			{e.startTime} - {e.endTime}
-																		</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Volunteers Needed</b>
-																		</p>
-																		<p>{e.volunteersNeeded}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Signed Up</b>
-																		</p>
-																		<p className="w-100">
-																			{e.volunteers.map((v) => {
-																				return <>{v}, </>;
-																			})}
-																		</p>
-																	</div>
-																</div>
-															</div>
-														</Table>
-													</div>
-												);
-											})}
-									</div>
-									<div className={`col-xl-4 col-md-6 col-12`}>
-										{events
-											.filter(
-												(ee) =>
-													events
-														.filter((eee) => eee.isTutoring == true)
-														.indexOf(ee) %
-														3 ==
-														2 && ee.isTutoring == true
 											)
 											.map((e) => {
 												return (
