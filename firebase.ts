@@ -225,6 +225,16 @@ export const getEvents = async () => {
 		let querySnapshot: any;
 		try {
 			querySnapshot = await getDocs(eventsDb);
+			querySnapshot = querySnapshot.docs;
+			querySnapshot = querySnapshot.map((doc: any) => {
+				return doc.data();
+			});
+
+			querySnapshot = querySnapshot.sort((a: any, b: any) => {
+				return ((a.date.replaceAll("-", "") as number) -
+					b.date.replaceAll("-", "")) as number;
+			});
+			console.log(querySnapshot);
 			console.log("Getting events...");
 		} catch (err) {
 			console.log(err);
@@ -232,7 +242,7 @@ export const getEvents = async () => {
 		}
 		let events: eventProps[] = [];
 		querySnapshot.forEach((doc: any) => {
-			events.push(doc.data());
+			events.push(doc);
 		});
 		resolve(events);
 	});
