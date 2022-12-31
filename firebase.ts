@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, deleteDoc } from "firebase/firestore";
+import { getFirestore, deleteDoc, getDoc } from "firebase/firestore";
 import {
 	collection,
 	addDoc,
@@ -69,6 +69,7 @@ export const getEventVolunteers = async (eventName: string) => {
 		let querySnapshot: any;
 		try {
 			querySnapshot = await getDocs(eventsDb);
+			console.log(querySnapshot.docs);
 		} catch (err) {
 			console.log(err);
 			reject(err);
@@ -155,6 +156,26 @@ export const addEventVolunteers = async (
 			console.log(err);
 			reject(err);
 		}
+		let name = await getNameFromEmail(email, querySnapshot);
+		let resolveThing: Function;
+		let rejectThing: Function;
+		let promise = new Promise((resolve, reject) => {
+			resolveThing = resolve;
+			rejectThing = reject;
+		});
+
+		if (eventName.length <= 0) {
+			console.log("its short");
+			getEvents().then((events) => {
+				eventName = events[0].eventName;
+				console.log("thingy->" + eventName);
+				resolveThing(true);
+			});
+		} else {
+			console.log("its long");
+			resolveThing(true);
+		}
+		await promise;
 		if (!(await didAccLogin(eventName, email, password, querySnapshot))) {
 			alert("Incorrect email or password.");
 			resolve(false);
@@ -165,14 +186,27 @@ export const addEventVolunteers = async (
 			);
 			resolve(false);
 			return;
+		} else if (await isPersonInVolunteers(email, name, eventName)) {
+			alert("You are already signed up for this event.");
+			resolve(false);
+			return;
 		} else {
 			try {
-				let voluns = await getEventVolunteers(eventName);
-				let namee = await getNameFromEmail(email, querySnapshot);
+				let voluns: Array<string>;
+				if (eventName.length > 0) {
+					console.log("here");
+					voluns = await getEventVolunteers(eventName);
+				} else {
+					eventName = await getDocs(eventsDb).then((querySnapshott) => {
+						return querySnapshott.docs[0].data().eventName;
+					});
+					voluns = [];
+				}
 
 				await updateDoc(doc(db, "Events", eventName.toLowerCase()), {
-					volunteers: [...voluns, namee],
+					volunteers: [...voluns, name],
 				});
+
 				resolve(true);
 			} catch (err) {
 				console.log("bad here");
@@ -196,6 +230,24 @@ export const removeEventVolunteers = async (
 			reject(err);
 		}
 		let name = await getNameFromEmail(email, querySnapshot);
+		let resolveThing: Function;
+		let rejectThing: Function;
+		let promise = new Promise((resolve, reject) => {
+			resolveThing = resolve;
+			rejectThing = reject;
+		});
+		if (eventName.length <= 0) {
+			console.log("its short");
+			getEvents().then((events) => {
+				eventName = events[0].eventName;
+				console.log("thingy->" + eventName);
+				resolveThing(true);
+			});
+		} else {
+			console.log("its long");
+			resolveThing(true);
+		}
+		await promise;
 		if (!(await didAccLogin(eventName, email, password, querySnapshot))) {
 			alert("Incorrect email or password.");
 			resolve(false);

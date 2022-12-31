@@ -65,6 +65,7 @@ export default function Home() {
 		} else if (password.length < 8) {
 			alert("Password must be at least 8 characters");
 		} else {
+			console.log(eventInput);
 			addEventVolunteers(eventInput, email, password).then((e) => {
 				if (e == true) {
 					alert("Successfully signed up for event");
@@ -292,7 +293,11 @@ export default function Home() {
 									<select
 										value={eventInput}
 										onChange={(v) => {
-											setEventInput(v.target.value);
+											if (v.target.value.length > 0) {
+												setEventInput(v.target.value);
+											} else {
+												setEventInput("");
+											}
 										}}
 									>
 										{events.map((e) => (
