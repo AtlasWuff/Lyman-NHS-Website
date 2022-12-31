@@ -62,7 +62,7 @@ export default function Home() {
 			alert("Please fill out all fields");
 		} else if (!EmailValidator.validate(email)) {
 			alert("Please enter a valid email");
-		} else if (password.length / 2 < 8) {
+		} else if (password.length < 8) {
 			alert("Password must be at least 8 characters");
 		} else {
 			addEventVolunteers(eventInput, email, password).then((e) => {
