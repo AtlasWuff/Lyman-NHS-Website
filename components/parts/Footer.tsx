@@ -27,7 +27,12 @@ export default function Footer({}: Props) {
 					</a>
 				</p>
 				<p>
-					<a href="mailto: joshuaew06@gmail.com" className="hoverUnderlineAnim">
+					<a
+						href="mailto: joshuaew06@gmail.com"
+						target="_blank"
+						rel="noreferrer"
+						className="hoverUnderlineAnim"
+					>
 						Problems?
 					</a>
 				</p>
