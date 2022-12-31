@@ -22,7 +22,6 @@ export default function Table({ initText, className, children }: Props) {
 
 	const expandCollapsable = () => {
 		setIsExpanded(!isExpanded);
-		console.log("Collapsable is expanded: ", !isExpanded);
 		if (collapsableRef.current) {
 			collapsableRef.current.classList.toggle(styles.CollapsableExpanded);
 		}

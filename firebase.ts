@@ -234,7 +234,6 @@ export const getEvents = async () => {
 				return ((a.date.replaceAll("-", "") as number) -
 					b.date.replaceAll("-", "")) as number;
 			});
-			console.log(querySnapshot);
 			console.log("Getting events...");
 		} catch (err) {
 			console.log(err);

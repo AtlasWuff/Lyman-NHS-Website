@@ -110,7 +110,6 @@ export default function Admin() {
 	 */
 	const approvePendingMember = async (index: number) => {
 		const accs: any = accounts.accounts;
-		console.log(accs);
 		await updateMember(accs[index].firstName + " " + accs[index].lastName, {
 			isVerified: true,
 		});
