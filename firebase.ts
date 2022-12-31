@@ -157,8 +157,8 @@ export const addEventVolunteers = async (
 			reject(err);
 		}
 		let name = await getNameFromEmail(email, querySnapshot);
-		let resolveThing: Function;
-		let rejectThing: Function;
+		let resolveThing: any;
+		let rejectThing: any;
 		let promise = new Promise((resolve, reject) => {
 			resolveThing = resolve;
 			rejectThing = reject;
@@ -230,8 +230,8 @@ export const removeEventVolunteers = async (
 			reject(err);
 		}
 		let name = await getNameFromEmail(email, querySnapshot);
-		let resolveThing: Function;
-		let rejectThing: Function;
+		let resolveThing: any;
+		let rejectThing: any;
 		let promise = new Promise((resolve, reject) => {
 			resolveThing = resolve;
 			rejectThing = reject;
