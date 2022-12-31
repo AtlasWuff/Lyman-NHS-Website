@@ -101,6 +101,11 @@
 	align-items: center;
 }
 
+.event > h2 {
+	text-align: center;
+	word-break: break-word;
+}
+
 .tableUpcomingEventsItem {
 	color: white !important	;
 }

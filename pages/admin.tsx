@@ -611,7 +611,6 @@ export default function Admin() {
 											<input
 												type="text"
 												onChange={(e) => setEventName(e.target.value.trim())}
-												value={eventName}
 											/>
 										</div>
 										<div className={`${styles.eventInput}`}>
@@ -619,7 +618,6 @@ export default function Admin() {
 											<input
 												type="date"
 												onChange={(e) => setEventDate(e.target.value.trim())}
-												value={eventDate}
 											/>
 										</div>
 										<div className={`${styles.eventInput}`}>
@@ -629,7 +627,6 @@ export default function Admin() {
 												onChange={(e) =>
 													setEventLocation(e.target.value.trim())
 												}
-												value={eventLocation}
 											/>
 										</div>
 										<div className={`${styles.eventInput}`}>
@@ -639,7 +636,6 @@ export default function Admin() {
 												onChange={(e) =>
 													setEventStartTime(e.target.value.trim())
 												}
-												value={eventStartTime}
 											/>
 										</div>
 										<div className={`${styles.eventInput}`}>
@@ -647,7 +643,6 @@ export default function Admin() {
 											<input
 												type="text"
 												onChange={(e) => setEventEndTime(e.target.value.trim())}
-												value={eventEndTime}
 											/>
 										</div>
 										<div className={`${styles.eventInput} mb-2`}>
@@ -657,7 +652,6 @@ export default function Admin() {
 												onChange={(e) =>
 													setEventVolunteersNeeded(e.target.value.trim())
 												}
-												value={eventVolunteersNeeded}
 											/>
 										</div>
 										<div className={`${styles.eventInput} mb-2`}>
