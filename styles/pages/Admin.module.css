@@ -148,7 +148,7 @@
 	margin-right: 0.5rem;
 }
 
-.eventInput select {
+.eventInputHours select {
 	width: auto;
 	text-align: center;
 	background-color: white;
@@ -187,3 +187,16 @@
 .eventInput input[type="checkbox"]:checked::after {
 	opacity: 1;
 } */
+
+.eventInput {
+	max-width: 100vw;
+	min-width: 0;
+}
+
+@media screen and (max-width: 767px) {
+	.eventInputHours p {
+		font-weight: 600;
+		margin-top: 0.2rem;
+		margin-bottom: 0.15rem !important	;
+	}
+}

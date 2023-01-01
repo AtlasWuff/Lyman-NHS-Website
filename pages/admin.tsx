@@ -364,6 +364,7 @@ export default function Admin() {
 								className={`${styles.adminSection} container-sm text-center`}
 							>
 								<h1>Profile Managment</h1>
+								{/* ! Uncomment if reads in db become too much */}
 								{/* <button
 									className="LoadButton-pushable my-2"
 									onClick={async () => {
@@ -772,12 +773,15 @@ export default function Admin() {
 									}}
 									className="w-100 d-flex align-items-center justify-content-center flex-column container"
 								>
-									<div className={`${styles.eventInput}`}>
-										<p>Member: </p>
+									<div
+										className={`flex-md-row flex-column d-flex text-white ${styles.eventInputHours} align-items-center justify-content-center `}
+									>
+										<p className="pe-2">Member: </p>
 										<select
 											value={hoursName}
 											onChange={(v) => setHoursName(v.target.value)}
 										>
+											<option value="Select a member">Select a member</option>
 											{accounts.accounts
 												.filter((e) => e.isVerified == true)
 												.map((e) => (
@@ -820,12 +824,29 @@ export default function Admin() {
 									<button
 										className="ApproveButton-pushable mb-3"
 										onClick={async () => {
-											updateMember(hoursName, {
-												volunteerHours: hoursNewVolunteerHours,
-												tutoringHours: hoursNewTutoringHours,
-											}).then(() => {
-												alert("Updated");
-											});
+											if (
+												hoursName == "" ||
+												hoursName.length <= 0 ||
+												hoursName == "Select a member"
+											) {
+												alert("Please select a member");
+												return;
+											} else if (
+												hoursNewVolunteerHours == "" ||
+												hoursNewVolunteerHours.length <= 0 ||
+												hoursNewTutoringHours == "" ||
+												hoursNewTutoringHours.length <= 0
+											) {
+												alert("Please enter a value for both fields");
+												return;
+											} else {
+												updateMember(hoursName, {
+													volunteerHours: hoursNewVolunteerHours,
+													tutoringHours: hoursNewTutoringHours,
+												}).then(() => {
+													alert("Updated");
+												});
+											}
 										}}
 									>
 										<span className="ApproveButton-shadow"></span>
