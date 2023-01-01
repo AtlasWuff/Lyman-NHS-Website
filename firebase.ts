@@ -16,25 +16,34 @@ import * as EmailValidator from "email-validator";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+const thingyNoScrapers = {
 	// ! Use this for production
-	apiKey: process.env.fbApiKey as string,
-	authDomain: process.env.fbAuthDomain as string,
-	databaseURL: process.env.fbDatabaseURL as string,
-	projectId: process.env.fbProjectId as string,
-	storageBucket: process.env.fbStorageBucket as string,
-	messagingSenderId: process.env.fbMessagingSenderId as string,
-	appId: process.env.fbAppId as string,
-	measurementId: process.env.fbMeasurementId as string,
+	// apiKey: process.env.fbApiKey as string,
+	// authDomain: process.env.fbAuthDomain as string,
+	// databaseURL: process.env.fbDatabaseURL as string,
+	// projectId: process.env.fbProjectId as string,
+	// storageBucket: process.env.fbStorageBucket as string,
+	// messagingSenderId: process.env.fbMessagingSenderId as string,
+	// appId: process.env.fbAppId as string,
+	// measurementId: process.env.fbMeasurementId as string,
+	// ! Use this for local testing
+	apiKey: "AIzaSyB58NIHafzDPAIk1bSCyLcVw6rGF5a3K94",
+	authDomain: "lyman-nhs-website.firebaseapp.com",
+	databaseURL: "https://lyman-nhs-website-default-rtdb.firebaseio.com",
+	projectId: "lyman-nhs-website",
+	storageBucket: "lyman-nhs-website.appspot.com",
+	messagingSenderId: "533934587284",
+	appId: "1:533934587284:web:f1963deddd80d3cafe6381",
+	measurementId: "G-NFHGDK9N6V",
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+export const app = initializeApp(thingyNoScrapers);
 export const db = getFirestore(app);
 
 // Mailjet
 import emailjs from "@emailjs/browser";
-emailjs.init(process.env.emailJSInitKey as string);
+emailjs.init("uq4kVKFRDwE7pFfsW");
 
 // All DBs
 const eventsDb = collection(db, "Events");
@@ -489,7 +498,6 @@ export const newAccount = async ({
 	volunteerHours,
 	tutoringHours,
 }: newAccountProps) => {
-	console.log(firebaseConfig);
 	if (
 		email == "" ||
 		password == "" ||
