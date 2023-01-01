@@ -10,25 +10,31 @@ import {
 	updateDoc,
 } from "firebase/firestore";
 import * as EmailValidator from "email-validator";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-	apiKey: "AIzaSyB58NIHafzDPAIk1bSCyLcVw6rGF5a3K94",
-	authDomain: "lyman-nhs-website.firebaseapp.com",
-	databaseURL: "https://lyman-nhs-website-default-rtdb.firebaseio.com",
-	projectId: "lyman-nhs-website",
-	storageBucket: "lyman-nhs-website.appspot.com",
-	messagingSenderId: "533934587284",
-	appId: "1:533934587284:web:f1963deddd80d3cafe6381",
-	measurementId: "G-NFHGDK9N6V",
+	// ! Use this for production
+	apiKey: process.env.fbApiKey as string,
+	authDomain: process.env.fbAuthDomain as string,
+	databaseURL: process.env.fbDatabaseURL as string,
+	projectId: process.env.fbProjectId as string,
+	storageBucket: process.env.fbStorageBucket as string,
+	messagingSenderId: process.env.fbMessagingSenderId as string,
+	appId: process.env.fbAppId as string,
+	measurementId: process.env.fbMeasurementId as string,
 };
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+
+// Mailjet
+import emailjs from "@emailjs/browser";
+emailjs.init(process.env.emailJSInitKey as string);
 
 // All DBs
 const eventsDb = collection(db, "Events");
@@ -483,6 +489,7 @@ export const newAccount = async ({
 	volunteerHours,
 	tutoringHours,
 }: newAccountProps) => {
+	console.log(firebaseConfig);
 	if (
 		email == "" ||
 		password == "" ||
@@ -551,13 +558,13 @@ export const newAccount = async ({
 			return;
 		}
 	}
-	let newAccDoc = doc(
+	let newAccDoc = await doc(
 		db,
 		"Accounts",
 		(firstName + " " + lastName).toLowerCase()
 	);
 
-	const docRef = await setDoc(newAccDoc, {
+	await setDoc(newAccDoc, {
 		email: email,
 		password: password,
 		firstName: firstName,
@@ -568,8 +575,27 @@ export const newAccount = async ({
 		volunteerHours: 0,
 		tutoringHours: 0,
 	}).then((res) => {
+		console.log("here");
 		console.log("Document written with ID: ", res);
 		alert(`Success!\nEmail: ${email}\nPassword: ${password}`);
+		emailjs
+			.send(
+				"service_o3m7mlh",
+				"template_9ggmcoq",
+				{
+					email_acc: email,
+					from_name: firstName + " " + lastName,
+				},
+				"uq4kVKFRDwE7pFfsW"
+			)
+			.then(
+				function (response) {
+					console.log("Email sent!");
+				},
+				function (error) {
+					console.log(error);
+				}
+			);
 	});
 };
 
