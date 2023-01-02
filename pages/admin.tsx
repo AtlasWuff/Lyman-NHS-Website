@@ -538,7 +538,7 @@ export default function Admin() {
 																	>
 																		{account.isAdmin != true ? (
 																			<button
-																				className="ApproveButton-pushable me-2"
+																				className="ApproveButton-pushable"
 																				onClick={(e) => {
 																					makeMemberAdminRemove(
 																						account.firstName +
@@ -556,7 +556,7 @@ export default function Admin() {
 																			</button>
 																		) : (
 																			<button
-																				className="DenyButton-pushable me-2"
+																				className="DenyButton-pushable"
 																				onClick={(e) => {
 																					makeMemberNotAdminRemove(
 																						account.firstName +
