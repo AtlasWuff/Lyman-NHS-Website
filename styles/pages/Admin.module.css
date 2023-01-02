@@ -193,10 +193,45 @@
 	min-width: 0;
 }
 
+#approvalButtonsDiv {
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+}
+
 @media screen and (max-width: 767px) {
 	.eventInputHours p {
 		font-weight: 600;
 		margin-top: 0.2rem;
 		margin-bottom: 0.15rem !important	;
+	}
+}
+
+@media screen and (min-width: 601px) {
+	#approvalButtonsDiv > button:first-of-type {
+		margin-right: 0.5rem;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	#approvalButtonsDiv {
+		flex-direction: column;
+	}
+
+	#approvalButtonsDiv > button {
+		width: 100%;
+	}
+
+	#approvalButtonsDiv > button > span {
+		font-size: 1rem;
+	}
+
+	#approvalButtonsDiv > button:first-of-type {
+		margin-bottom: 0.5rem;
+	}
+
+	#approvalButtonsDiv > button:nth-of-type(2) {
+		margin-bottom: 0.1rem;
 	}
 }

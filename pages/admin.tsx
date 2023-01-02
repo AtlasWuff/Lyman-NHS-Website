@@ -425,9 +425,12 @@ export default function Admin() {
 																		</Collapsable>
 																	</div>
 
-																	<div className="d-flex align-items-center justify-content-center flex-row">
+																	<div
+																		className=""
+																		id={styles.approvalButtonsDiv}
+																	>
 																		<button
-																			className="ApproveButton-pushable me-2"
+																			className="ApproveButton-pushable"
 																			onClick={(e) => {
 																				approvePendingMember(
 																					accounts.accounts.indexOf(account)
