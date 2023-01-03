@@ -87,25 +87,23 @@ export default function Admin() {
 	 * @param {void}
 	 * @return {Promise}
 	 */
-	const getAccAwait = async () => {
-		return await getAccounts();
-	};
 
 	/* Get accounts on page load
 	 * @param {void}
 	 * @return {void}
 	 */
 	useEffect(() => {
+		const getAccAwait = async () => {
+			return await getAccounts();
+		};
+		const getEventAwait = async () => {
+			return await getEvents();
+		};
 		getAccAwait().then((res) => {
 			setAccounts({ accounts: res });
-			console.log("effect thing acc");
-		});
-	}, []);
-
-	useEffect(() => {
-		getEventAwait().then((res) => {
-			setEvents({ events: res });
-			console.log("effect thing event");
+			getEventAwait().then((res) => {
+				setEvents({ events: res });
+			});
 		});
 	}, []);
 
@@ -160,8 +158,8 @@ export default function Admin() {
 	 * @return {void}
 	 */
 	const refreshAccounts = async () => {
-		return new Promise((resolve, reject) => {
-			getAccAwait().then((res) => {
+		return new Promise(async (resolve, reject) => {
+			await getAccounts().then((res) => {
 				setAccounts({ accounts: res });
 				resolve(res);
 			});
@@ -241,13 +239,10 @@ export default function Admin() {
 	 * @param {void}
 	 * @return {void}
 	 */
-	const getEventAwait = async () => {
-		return await getEvents();
-	};
 
 	const refreshEvents = async () => {
-		return new Promise((resolve, reject) => {
-			getEventAwait().then((res) => {
+		return new Promise(async (resolve, reject) => {
+			await getEvents().then((res) => {
 				setEvents({ events: res });
 				resolve(res);
 			});
@@ -683,7 +678,7 @@ export default function Admin() {
 											</span>
 										</button>
 									</motion.div>
-									<div className="col-12 col-lg-6 d-flex align-items-center justify-content-center flex-column">
+									<div className="col-12 col-lg-6 d-flex align-items-center flex-column">
 										<h2>Events</h2>
 										<Table
 											minHeight={"20vh"}

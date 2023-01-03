@@ -166,9 +166,6 @@
 	.event > div {
 		width: 100% !important;
 	}
-	.eventCard > div > p > b {
-		/* text-decoration: underline; */
-	}
 }
 
 #signUpModal {
