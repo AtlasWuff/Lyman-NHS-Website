@@ -87,6 +87,9 @@ export const getEventVolunteers = async (eventName: string) => {
 			console.log(querySnapshot.docs);
 		} catch (err) {
 			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
 			reject(err);
 		}
 
@@ -132,6 +135,9 @@ export const isPersonInVolunteers = async (
 			querySnapshot = await getDocs(eventsDb);
 		} catch (err) {
 			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
 			reject(err);
 		}
 		if (querySnapshot.empty) {
@@ -169,6 +175,9 @@ export const addEventVolunteers = async (
 			querySnapshot = await getDocs(accountsDb);
 		} catch (err) {
 			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
 			reject(err);
 		}
 		let name = await getNameFromEmail(email, querySnapshot);
@@ -224,7 +233,9 @@ export const addEventVolunteers = async (
 
 				resolve(true);
 			} catch (err) {
-				console.log("bad here");
+				alert(
+					"Error: The database is likely at read capacity, please try again tomorrow."
+				);
 				console.log(err);
 			}
 		}
@@ -242,6 +253,9 @@ export const removeEventVolunteers = async (
 			querySnapshot = await getDocs(accountsDb);
 		} catch (err) {
 			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
 			reject(err);
 		}
 		let name = await getNameFromEmail(email, querySnapshot);
@@ -282,6 +296,10 @@ export const removeEventVolunteers = async (
 				resolve(true);
 			} catch (err) {
 				console.log(err);
+				alert(
+					"Error: The database is likely at read capacity, please try again tomorrow."
+				);
+				reject(err);
 			}
 		}
 	});
@@ -303,7 +321,9 @@ export const getEvents = async () => {
 			});
 			console.log("Getting events...");
 		} catch (err) {
-			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
 			reject(err);
 		}
 		let events: eventProps[] = [];
@@ -343,6 +363,10 @@ export const addEvent = async ({
 			});
 		} catch (err) {
 			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
+			reject(err);
 		}
 	});
 };
@@ -354,6 +378,10 @@ export const deleteEvent = async (eventName: string, date: string) => {
 			resolve(true);
 		} catch (err) {
 			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
+			reject(err);
 		}
 	});
 };
@@ -389,6 +417,9 @@ export const checkMemberHours = async (email: string, password: string) => {
 			querySnapshot = await getDocs(accountsDb);
 		} catch (err) {
 			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
 			reject(err);
 		}
 		let hours: Array<string> = [];
@@ -426,6 +457,10 @@ export const makeMemberAdmin = async (name: string) => {
 			resolve();
 		} catch (err) {
 			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
+			reject();
 		}
 	});
 };
@@ -439,6 +474,10 @@ export const makeMemberNotAdmin = async (name: string) => {
 			resolve();
 		} catch (err) {
 			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
+			reject();
 		}
 	});
 };
@@ -453,6 +492,10 @@ export const updateMember = async (name: string, modifiedField: object) => {
 			);
 		} catch (err) {
 			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
+			reject();
 		}
 	});
 };
@@ -464,6 +507,10 @@ export const deleteMember = async (name: string) => {
 			resolve();
 		} catch (err) {
 			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
+			reject();
 		}
 	});
 };
@@ -475,6 +522,10 @@ export const getAccounts = async () => {
 		try {
 			querySnapshot = await getDocs(accountsDb);
 		} catch (err) {
+			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
 			reject(err);
 		}
 		let ret: AccInterface[] = [];
@@ -619,7 +670,10 @@ export const checkAdmin = ({ email, password }: checkAdminProps) => {
 		try {
 			querySnapshot = await getAccounts();
 		} catch (err) {
-			alert("Error: " + err);
+			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
 			resolve(false);
 		}
 		let resForPromise: Function;
