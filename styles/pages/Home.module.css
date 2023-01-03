@@ -205,6 +205,10 @@
 		inset 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
+#signUpModalContent p {
+	text-align: center;
+}
+
 #signUpModalContent input {
 	width: 100%;
 	text-align: center;

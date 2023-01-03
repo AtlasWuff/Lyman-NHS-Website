@@ -95,14 +95,19 @@ export default function Admin() {
 	 * @param {void}
 	 * @return {void}
 	 */
-	useEffectOnce(() => {
+	useEffect(() => {
 		getAccAwait().then((res) => {
 			setAccounts({ accounts: res });
+			console.log("effect thing acc");
 		});
+	}, []);
+
+	useEffect(() => {
 		getEventAwait().then((res) => {
 			setEvents({ events: res });
+			console.log("effect thing event");
 		});
-	});
+	}, []);
 
 	/* Approve pending member removing them from the state and database
 	 * @param {number} index

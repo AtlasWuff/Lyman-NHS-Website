@@ -214,13 +214,13 @@ export default function Home() {
 										Enter email & password for member verification
 									</p>
 									<input
-										type="text"
+										type="email"
 										placeholder="Email"
 										value={hourCheckEmail}
 										onChange={(v) => setHourCheckEmail(v.target.value)}
 									/>
 									<input
-										type="text"
+										type="password"
 										placeholder="Password"
 										value={hourCheckPassword}
 										onChange={(v) => setHourCheckPassword(v.target.value)}
@@ -278,13 +278,13 @@ export default function Home() {
 										Enter email & password for member verification
 									</p>
 									<input
-										type="text"
+										type="email"
 										placeholder="Email"
 										value={email}
 										onChange={(v) => setEmail(v.target.value)}
 									/>
 									<input
-										type="text"
+										type="password"
 										placeholder="Password"
 										value={password}
 										onChange={(v) => setPassword(v.target.value)}
@@ -338,13 +338,13 @@ export default function Home() {
 										Enter email & password for member verification
 									</p>
 									<input
-										type="text"
+										type="email"
 										placeholder="Email"
 										value={email}
 										onChange={(v) => setEmail(v.target.value)}
 									/>
 									<input
-										type="text"
+										type="password"
 										placeholder="Password"
 										value={password}
 										onChange={(v) => setPassword(v.target.value)}
