@@ -310,7 +310,7 @@ export default function Admin() {
 					},
 				],
 			});
-			await refreshEvents();
+			// await refreshEvents();
 		});
 	};
 
@@ -321,7 +321,7 @@ export default function Admin() {
 				(event) => event.eventName !== name && event.date !== datee
 			),
 		});
-		await refreshEvents();
+		// await refreshEvents();
 	};
 
 	const loadItemsButtonRef = useRef<HTMLButtonElement>(null);
@@ -365,19 +365,19 @@ export default function Admin() {
 							>
 								<h1>Profile Managment</h1>
 								{/* ! Uncomment if reads in db become too much */}
-								{/* <button
+								<button
 									className="LoadButton-pushable my-2"
 									onClick={async () => {
 										await refreshAccounts();
 										await refreshEvents();
-										deleteRefItem(loadItemsButtonRef);
+										// deleteRefItem(loadItemsButtonRef);
 									}}
 									ref={loadItemsButtonRef}
 								>
 									<span className="LoadButton-shadow"></span>
 									<span className="LoadButton-edge"></span>
-									<span className="LoadButton-front text">Load Items</span>
-								</button> */}
+									<span className="LoadButton-front text">Refresh Items</span>
+								</button>
 								<div className="row">
 									<div
 										className="col-lg-6 d-flex align-items-center flex-column"
