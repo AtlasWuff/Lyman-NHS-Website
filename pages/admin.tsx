@@ -310,7 +310,7 @@ export default function Admin() {
 					},
 				],
 			});
-			// await refreshEvents();
+			await refreshEvents();
 		});
 	};
 
@@ -321,7 +321,7 @@ export default function Admin() {
 				(event) => event.eventName !== name && event.date !== datee
 			),
 		});
-		// await refreshEvents();
+		await refreshEvents();
 	};
 
 	const loadItemsButtonRef = useRef<HTMLButtonElement>(null);

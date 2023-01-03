@@ -3,7 +3,6 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, deleteDoc, getDoc } from "firebase/firestore";
 import {
 	collection,
-	addDoc,
 	setDoc,
 	doc,
 	getDocs,
@@ -47,7 +46,9 @@ emailjs.init("uq4kVKFRDwE7pFfsW");
 
 // All DBs
 const eventsDb = collection(db, "Events");
+console.log("Events db line 50");
 export const accountsDb = collection(db, "Accounts");
+console.log("Accounts db line 52");
 
 export interface eventProps {
 	eventName: string;
@@ -230,6 +231,7 @@ export const addEventVolunteers = async (
 				await updateDoc(doc(db, "Events", eventName.toLowerCase()), {
 					volunteers: [...voluns, name],
 				});
+				console.log("Update doc line 234");
 
 				resolve(true);
 			} catch (err) {
@@ -293,6 +295,7 @@ export const removeEventVolunteers = async (
 				await updateDoc(doc(db, "Events", eventName.toLowerCase()), {
 					volunteers: voluns.filter((volun) => volun !== namee),
 				});
+				console.log("Update doc line 298");
 				resolve(true);
 			} catch (err) {
 				console.log(err);
@@ -347,6 +350,7 @@ export const addEvent = async ({
 	return new Promise<any>(async (resolve, reject) => {
 		try {
 			let newEventDoc = doc(db, "Events", eventName.toLowerCase());
+			console.log("Make doc 353");
 
 			const docRef = await setDoc(newEventDoc, {
 				eventName,
@@ -358,6 +362,7 @@ export const addEvent = async ({
 				volunteers,
 				isTutoring,
 			}).then((res) => {
+				console.log("Add event line 362");
 				alert(`Success!\nEvent ${eventName} has been added to the database.`);
 				resolve(true);
 			});
@@ -375,6 +380,7 @@ export const deleteEvent = async (eventName: string, date: string) => {
 	return new Promise<any>(async (resolve, reject) => {
 		try {
 			await deleteDoc(doc(db, "Events", eventName.toLowerCase()));
+			console.log("Delete doc line 383");
 			resolve(true);
 		} catch (err) {
 			console.log(err);
@@ -454,6 +460,7 @@ export const makeMemberAdmin = async (name: string) => {
 			await updateDoc(doc(db, "Accounts", name.toLowerCase()), {
 				isAdmin: true,
 			});
+			console.log("Update doc line 463");
 			resolve();
 		} catch (err) {
 			console.log(err);
@@ -471,6 +478,7 @@ export const makeMemberNotAdmin = async (name: string) => {
 			await updateDoc(doc(db, "Accounts", name.toLowerCase()), {
 				isAdmin: false,
 			});
+			console.log("Update doc line 481");
 			resolve();
 		} catch (err) {
 			console.log(err);
@@ -490,6 +498,7 @@ export const updateMember = async (name: string, modifiedField: object) => {
 					resolve();
 				}
 			);
+			console.log("Update doc line 501");
 		} catch (err) {
 			console.log(err);
 			alert(
@@ -504,6 +513,7 @@ export const deleteMember = async (name: string) => {
 	return new Promise<void>(async (resolve, reject) => {
 		try {
 			await deleteDoc(doc(db, "Accounts", name.toLowerCase()));
+			console.log("Delete doc line 516");
 			resolve();
 		} catch (err) {
 			console.log(err);
@@ -622,6 +632,7 @@ export const newAccount = async ({
 		"Accounts",
 		(firstName + " " + lastName).toLowerCase()
 	);
+	console.log("New doc line 635");
 
 	await setDoc(newAccDoc, {
 		email: email,
@@ -634,8 +645,7 @@ export const newAccount = async ({
 		volunteerHours: 0,
 		tutoringHours: 0,
 	}).then((res) => {
-		console.log("here");
-		console.log("Document written with ID: ", res);
+		console.log("Set doc line 637");
 		alert(`Success!\nEmail: ${email}\nPassword: ${password}`);
 		emailjs
 			.send(
