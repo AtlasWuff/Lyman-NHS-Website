@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
-
+import Confetti from "react-confetti";
 import { useRef, useState } from "react";
 
 import { app, db, newAccount } from "../firebase";
@@ -25,6 +25,7 @@ export default function CreateAccount() {
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [grade, setGrade] = useState("");
+	const [isConfettiExploding, setIsConfettiExploding] = useState(false);
 
 	let allInputs: Array<string | number> = [
 		email,
@@ -48,6 +49,26 @@ export default function CreateAccount() {
 					href="https://lymannhs.netlify.app/createprofile"
 				/>
 			</Head>
+
+			{isConfettiExploding ? (
+				<div
+					className="overflow-hidden vw-100 vh-100 position-fixed top-0 left-0"
+					style={{ zIndex: 3000 }}
+				>
+					<Confetti
+						width={window.innerWidth}
+						height={window.innerHeight}
+						numberOfPieces={100}
+						onConfettiComplete={() => {
+							setIsConfettiExploding(false);
+						}}
+						run={isConfettiExploding}
+						tweenDuration={250}
+					/>
+				</div>
+			) : (
+				<> </>
+			)}
 
 			{/* ! Main homepage content */}
 			<main>
@@ -118,6 +139,10 @@ export default function CreateAccount() {
 												volunteerHours: 0,
 												tutoringHours: 0,
 											});
+											setIsConfettiExploding(true);
+											setTimeout(() => {
+												setIsConfettiExploding(false);
+											}, 5000);
 										}}
 									>
 										<span className="LoadButton-shadow"></span>

@@ -20,9 +20,10 @@ import {
 } from "../firebase";
 import { collection, addDoc, updateDoc } from "firebase/firestore";
 import { useEffectOnce } from "usehooks-ts";
-
+import Confetti from "react-confetti";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useWindowSize } from "usehooks-ts";
 
 // CSS imports
 import styles from "../styles/pages/Admin.module.css";
@@ -45,6 +46,8 @@ export default function Admin() {
 	const secondControls = useAnimation();
 	const [ref, inView] = useInView();
 	const [secondRef, secondInView] = useInView();
+	const [isConfettiExploding, setIsConfettiExploding] = useState(false);
+	const { width, height } = useWindowSize();
 	useEffect(() => {
 		if (inView) {
 			controls.start("visible");
@@ -126,7 +129,13 @@ export default function Admin() {
 		setAccounts({
 			accounts: thing,
 		});
+		setIsConfettiExploding(true);
+
 		await refreshAccounts();
+		setTimeout(() => {
+			setIsConfettiExploding(false);
+		}, 3000);
+		console.log("ccon");
 	};
 
 	/* Deny pending member removing them from the state and database
@@ -213,12 +222,24 @@ export default function Admin() {
 
 	const makeMemberAdminRemove = async (name: string) => {
 		await makeMemberAdmin(name);
+		setIsConfettiExploding(true);
+
 		await refreshAccounts();
+		setTimeout(() => {
+			setIsConfettiExploding(false);
+		}, 3000);
+		console.log("ccon");
 	};
 
 	const makeMemberNotAdminRemove = async (name: string) => {
 		await makeMemberNotAdmin(name);
+		setIsConfettiExploding(true);
+
 		await refreshAccounts();
+		setTimeout(() => {
+			setIsConfettiExploding(false);
+		}, 3000);
+		console.log("ccon");
 	};
 
 	interface EventsStateProp {
@@ -310,7 +331,12 @@ export default function Admin() {
 					},
 				],
 			});
+			setIsConfettiExploding(true);
 			await refreshEvents();
+			setTimeout(() => {
+				setIsConfettiExploding(false);
+			}, 3000);
+			console.log("ccon");
 		});
 	};
 
@@ -351,6 +377,7 @@ export default function Admin() {
 			</Head>
 
 			{/* ! Main homepage content */}
+
 			<main>
 				{isUserAdmin ? (
 					<motion.div
