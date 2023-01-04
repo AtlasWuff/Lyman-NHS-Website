@@ -364,6 +364,8 @@ export default function Admin() {
 	const [hoursNewVolunteerHours, setHoursNewVolunteerHours] = useState("");
 	const [hoursNewTutoringHours, setHoursNewTutoringHours] = useState("");
 
+	const [showTutoringEvents, setShowTutoringEvents] = useState<boolean>(false);
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -620,6 +622,7 @@ export default function Admin() {
 								className={`${styles.adminSection} container-sm text-center`}
 							>
 								<h1>Events</h1>
+
 								<div className="row">
 									<motion.div
 										animate={controls}
@@ -707,71 +710,206 @@ export default function Admin() {
 									</motion.div>
 									<div className="col-12 col-lg-6 d-flex align-items-center flex-column">
 										<h2>Events</h2>
+										<div className="d-flex flex-row justify-content-center align-items-center mb-2">
+											{!showTutoringEvents ? (
+												<button
+													className="ApproveButton-pushable me-2"
+													onClick={(e) => {
+														setShowTutoringEvents(false);
+													}}
+												>
+													<span className="ApproveButton-shadow"></span>
+													<span className="ApproveButton-edge"></span>
+
+													<span className="ApproveButton-front text">
+														Volunteer
+													</span>
+												</button>
+											) : (
+												<button
+													className="DenyButton-pushable me-2"
+													onClick={(e) => {
+														setShowTutoringEvents(false);
+													}}
+												>
+													<span className="DenyButton-shadow"></span>
+													<span className="DenyButton-edge"></span>
+
+													<span className="DenyButton-front text">
+														Volunteer
+													</span>
+												</button>
+											)}
+
+											{showTutoringEvents ? (
+												<button
+													className="ApproveButton-pushable"
+													onClick={(e) => {
+														setShowTutoringEvents(true);
+													}}
+												>
+													<span className="ApproveButton-shadow"></span>
+													<span className="ApproveButton-edge"></span>
+
+													<span className="ApproveButton-front text">
+														Tutoring
+													</span>
+												</button>
+											) : (
+												<button
+													className="DenyButton-pushable"
+													onClick={(e) => {
+														setShowTutoringEvents(true);
+													}}
+												>
+													<span className="DenyButton-shadow"></span>
+													<span className="DenyButton-edge"></span>
+
+													<span className="DenyButton-front text">
+														Tutoring
+													</span>
+												</button>
+											)}
+										</div>
 										<Table
 											minHeight={"20vh"}
 											maxHeight={"80vh"}
 											bgColor={"rgba(0,0,0,0.2)"}
 										>
-											{events.events.length > 0 ? (
-												events.events.map((event: eventProps) => {
-													return (
-														<div
-															className={`${styles.eventsItem}`}
-															key={
-																"event" + events.events.indexOf(event as never)
-															}
-														>
-															<div className="d-flex align-items-center justify-content-center flex-row w-100 flex-wrap">
-																<Collapsable
-																	initText={event.eventName}
-																	className="w-100"
+											{showTutoringEvents ? (
+												events.events.length > 0 ? (
+													events.events
+														.filter((eventt) => eventt.isTutoring)
+														.map((event: eventProps) => {
+															return (
+																<div
+																	className={`${styles.eventsItem}`}
+																	key={
+																		"event" +
+																		events.events.indexOf(event as never)
+																	}
 																>
-																	<p>
-																		<b>Date:</b> {event.date}
-																	</p>
-																	<p>
-																		<b>Location:</b> {event.location}
-																	</p>
-																	<p>
-																		<b>Start Time:</b> {event.startTime}
-																	</p>
-																	<p>
-																		<b>End Time:</b> {event.endTime}
-																	</p>
-																	<p>
-																		<b>Volunteers Needed: </b>
-																		{event.volunteersNeeded}
-																	</p>
-																	<p>
-																		<b>Volunteers: </b>
-																		{event.volunteers}
-																	</p>
-																</Collapsable>
-															</div>
-															<div
-																className="d-flex align-items-center justify-content-center flex-row"
-																id={`${styles.eventDeleteButtonDiv}`}
-															>
-																<button
-																	className="DenyButton-pushable"
-																	onClick={() => {
-																		deleteEventRefresh(
-																			event.eventName,
-																			event.date
-																		);
-																	}}
-																>
-																	<span className="DenyButton-shadow"></span>
-																	<span className="DenyButton-edge"></span>
+																	<div className="d-flex align-items-center justify-content-center flex-row w-100 flex-wrap">
+																		<Collapsable
+																			initText={event.eventName}
+																			className="w-100"
+																		>
+																			<p>
+																				<b>Date:</b> {event.date}
+																			</p>
+																			<p>
+																				<b>Location:</b> {event.location}
+																			</p>
+																			<p>
+																				<b>Start Time:</b> {event.startTime}
+																			</p>
+																			<p>
+																				<b>End Time:</b> {event.endTime}
+																			</p>
+																			<p>
+																				<b>Volunteers Needed: </b>
+																				{event.volunteersNeeded}
+																			</p>
+																			<p>
+																				<b>Volunteers: </b>
+																				{event.volunteers}
+																			</p>
+																		</Collapsable>
+																	</div>
+																	<div
+																		className="d-flex align-items-center justify-content-center flex-row"
+																		id={`${styles.eventDeleteButtonDiv}`}
+																	>
+																		<button
+																			className="DenyButton-pushable"
+																			onClick={() => {
+																				deleteEventRefresh(
+																					event.eventName,
+																					event.date
+																				);
+																			}}
+																		>
+																			<span className="DenyButton-shadow"></span>
+																			<span className="DenyButton-edge"></span>
 
-																	<span className="DenyButton-front text">
-																		Delete
-																	</span>
-																</button>
+																			<span className="DenyButton-front text">
+																				Delete
+																			</span>
+																		</button>
+																	</div>
+																</div>
+															);
+														})
+												) : (
+													<div className="d-flex align-items-center justify-content-center w-100">
+														<label className={`${styles.noPending}`}>
+															No events
+														</label>
+													</div>
+												)
+											) : events.events.length > 0 ? (
+												events.events
+													.filter((eventt) => !eventt.isTutoring)
+													.map((event: eventProps) => {
+														return (
+															<div
+																className={`${styles.eventsItem}`}
+																key={
+																	"event" +
+																	events.events.indexOf(event as never)
+																}
+															>
+																<div className="d-flex align-items-center justify-content-center flex-row w-100 flex-wrap">
+																	<Collapsable
+																		initText={event.eventName}
+																		className="w-100"
+																	>
+																		<p>
+																			<b>Date:</b> {event.date}
+																		</p>
+																		<p>
+																			<b>Location:</b> {event.location}
+																		</p>
+																		<p>
+																			<b>Start Time:</b> {event.startTime}
+																		</p>
+																		<p>
+																			<b>End Time:</b> {event.endTime}
+																		</p>
+																		<p>
+																			<b>Volunteers Needed: </b>
+																			{event.volunteersNeeded}
+																		</p>
+																		<p>
+																			<b>Volunteers: </b>
+																			{event.volunteers}
+																		</p>
+																	</Collapsable>
+																</div>
+																<div
+																	className="d-flex align-items-center justify-content-center flex-row"
+																	id={`${styles.eventDeleteButtonDiv}`}
+																>
+																	<button
+																		className="DenyButton-pushable"
+																		onClick={() => {
+																			deleteEventRefresh(
+																				event.eventName,
+																				event.date
+																			);
+																		}}
+																	>
+																		<span className="DenyButton-shadow"></span>
+																		<span className="DenyButton-edge"></span>
+
+																		<span className="DenyButton-front text">
+																			Delete
+																		</span>
+																	</button>
+																</div>
 															</div>
-														</div>
-													);
-												})
+														);
+													})
 											) : (
 												<div className="d-flex align-items-center justify-content-center w-100">
 													<label className={`${styles.noPending}`}>
