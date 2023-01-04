@@ -559,112 +559,122 @@ export const newAccount = async ({
 	volunteerHours,
 	tutoringHours,
 }: newAccountProps) => {
-	if (
-		email == "" ||
-		password == "" ||
-		firstName == "" ||
-		lastName == "" ||
-		grade == "" ||
-		email == null ||
-		password == null ||
-		firstName == null ||
-		lastName == null ||
-		grade == null
-	) {
-		alert("Please fill out all fields.");
-		return;
-	} else if (grade > 12 || grade < 9) {
-		alert("Please enter a valid grade.");
-		return;
-	} else if (!(await EmailValidator.validate(email))) {
-		alert("Please enter a valid email.");
-		return;
-	} else if (password.length < 8) {
-		alert("Please enter a password with at least 8 characters.");
-		return;
-	}
-	// give me what is said above but all in one if statement and a alert saying "Please enter a password without any special characters."
-	const specialChars = [
-		" ",
-		"\t",
-		"\n",
-		"\r",
-		"\v",
-		"\f",
-		"\0",
-		"\x1a",
-		"\\",
-		"'",
-		'"',
-		"`",
-		"$",
-		"&",
-		"(",
-		")",
-		"*",
-		"+",
-		",",
-		"/",
-		":",
-		";",
-		"<",
-		"=",
-		">",
-		"?",
-		"@",
-		"[",
-		"]",
-		"^",
-		"{",
-		"|",
-		"}",
-		"~",
-		".",
-	];
-	for (let i = 0; i < specialChars.length; i++) {
-		if (password.includes(specialChars[i])) {
-			alert("Please enter a password without any special characters.");
+	return new Promise<boolean>(async (resolve, reject) => {
+		if (
+			email == "" ||
+			password == "" ||
+			firstName == "" ||
+			lastName == "" ||
+			grade == "" ||
+			email == null ||
+			password == null ||
+			firstName == null ||
+			lastName == null ||
+			grade == null
+		) {
+			reject(false);
+			alert("Please fill out all fields.");
+
+			return;
+		} else if (grade > 12 || grade < 9) {
+			reject(false);
+			alert("Please enter a valid grade.");
+
+			return;
+		} else if (!(await EmailValidator.validate(email))) {
+			reject(false);
+			alert("Please enter a valid email.");
+
+			return;
+		} else if (password.length < 8) {
+			reject(false);
+			alert("Please enter a password with at least 8 characters.");
 			return;
 		}
-	}
-	let newAccDoc = await doc(
-		db,
-		"Accounts",
-		(firstName + " " + lastName).toLowerCase()
-	);
-	console.log("New doc line 635");
+		// give me what is said above but all in one if statement and a alert saying "Please enter a password without any special characters."
+		const specialChars = [
+			" ",
+			"\t",
+			"\n",
+			"\r",
+			"\v",
+			"\f",
+			"\0",
+			"\x1a",
+			"\\",
+			"'",
+			'"',
+			"`",
+			"$",
+			"&",
+			"(",
+			")",
+			"*",
+			"+",
+			",",
+			"/",
+			":",
+			";",
+			"<",
+			"=",
+			">",
+			"?",
+			"@",
+			"[",
+			"]",
+			"^",
+			"{",
+			"|",
+			"}",
+			"~",
+			".",
+		];
+		for (let i = 0; i < specialChars.length; i++) {
+			if (password.includes(specialChars[i])) {
+				alert("Please enter a password without any special characters.");
+				return;
+			}
+		}
+		let newAccDoc = await doc(
+			db,
+			"Accounts",
+			(firstName + " " + lastName).toLowerCase()
+		);
+		console.log("New doc line 635");
 
-	await setDoc(newAccDoc, {
-		email: email,
-		password: password,
-		firstName: firstName,
-		lastName: lastName,
-		grade: grade,
-		isAdmin: isAdmin,
-		isVerified: false,
-		volunteerHours: 0,
-		tutoringHours: 0,
-	}).then((res) => {
-		console.log("Set doc line 637");
-		alert(`Success!\nEmail: ${email}\nPassword: ${password}`);
-		emailjs
-			.send(
-				"service_o3m7mlh",
-				"template_9ggmcoq",
-				{
-					email_acc: email,
-					from_name: firstName + " " + lastName,
-				},
-				"uq4kVKFRDwE7pFfsW"
-			)
-			.then(
-				function (response) {
-					console.log("Email sent!");
-				},
-				function (error) {
-					console.log(error);
-				}
-			);
+		await setDoc(newAccDoc, {
+			email: email,
+			password: password,
+			firstName: firstName,
+			lastName: lastName,
+			grade: grade,
+			isAdmin: isAdmin,
+			isVerified: false,
+			volunteerHours: 0,
+			tutoringHours: 0,
+		}).then((res) => {
+			// alert(`Success!\nEmail: ${email}\nPassword: ${password}`);
+			emailjs
+				.send(
+					"service_o3m7mlh",
+					"template_9ggmcoq",
+					{
+						email_acc: email,
+						from_name: firstName + " " + lastName,
+					},
+					"uq4kVKFRDwE7pFfsW"
+				)
+				.then(
+					function (response) {
+						console.log("Email sent!");
+						resolve(true);
+					},
+					function (error) {
+						console.log(error);
+						resolve(true);
+					}
+				);
+		});
 	});
 };
 
