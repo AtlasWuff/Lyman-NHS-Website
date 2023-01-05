@@ -140,24 +140,24 @@ export default function CreateAccount() {
 									<button
 										className="LoadButton-pushable my-3"
 										onClick={() => {
-											// newAccount({
-											// 	email: email,
-											// 	password: password,
-											// 	firstName: firstName,
-											// 	lastName: lastName,
-											// 	grade: grade,
-											// 	isAdmin: false,
-											// 	isVerified: false,
-											// 	volunteerHours: 0,
-											// 	tutoringHours: 0,
-											// }).then((res) => {
-											// if (res) {
-											setFunny(true);
-											setTimeout(() => {
-												setFunny(false);
-											}, 8000);
-											// }
-											// });
+											newAccount({
+												email: email,
+												password: password,
+												firstName: firstName,
+												lastName: lastName,
+												grade: grade,
+												isAdmin: false,
+												isVerified: false,
+												volunteerHours: 0,
+												tutoringHours: 0,
+											}).then((res) => {
+												if (res) {
+													setFunny(true);
+													setTimeout(() => {
+														setFunny(false);
+													}, 8000);
+												}
+											});
 										}}
 									>
 										<span className="LoadButton-shadow"></span>
