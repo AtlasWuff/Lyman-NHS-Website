@@ -653,6 +653,7 @@ export const newAccount = async ({
 			volunteerHours: 0,
 			tutoringHours: 0,
 		}).then((res) => {
+			resolve(true);
 			// alert(`Success!\nEmail: ${email}\nPassword: ${password}`);
 			emailjs
 				.send(

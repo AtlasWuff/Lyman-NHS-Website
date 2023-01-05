@@ -16,6 +16,8 @@ import styles from "../styles/pages/CreateAccount.module.css";
 
 // Component imports
 import PageTitle from "../components/parts/PageTitle";
+import Laser from "../components/funny/Laser";
+import Gifs from "../components/funny/Gifs";
 
 // Page
 export default function CreateAccount() {
@@ -26,6 +28,14 @@ export default function CreateAccount() {
 	const [lastName, setLastName] = useState("");
 	const [grade, setGrade] = useState("");
 	const [isConfettiExploding, setIsConfettiExploding] = useState(false);
+	const [isLaserRunning, setIsLaserRunning] = useState(false);
+	const [isGifRunning, setIsGifRunning] = useState(false);
+
+	const setFunny = (para: boolean) => {
+		setIsConfettiExploding(para);
+		setIsLaserRunning(para);
+		setIsGifRunning(para);
+	};
 
 	let allInputs: Array<string | number> = [
 		email,
@@ -52,7 +62,7 @@ export default function CreateAccount() {
 
 			{isConfettiExploding ? (
 				<div
-					className="overflow-hidden vw-100 vh-100 position-fixed top-0 left-0"
+					className="overflow-hidden vw-100 vh-100 position-fixed top-0 left-0 pointer-event-none"
 					style={{ zIndex: 3000 }}
 				>
 					<Confetti
@@ -60,11 +70,13 @@ export default function CreateAccount() {
 						height={window.innerHeight}
 						numberOfPieces={100}
 						onConfettiComplete={() => {
-							setIsConfettiExploding(false);
+							setFunny(false);
 						}}
 						run={isConfettiExploding}
-						tweenDuration={250}
+						tweenDuration={1000}
 					/>
+					{/* <Laser /> */}
+					<Gifs />
 				</div>
 			) : (
 				<> </>
@@ -85,7 +97,7 @@ export default function CreateAccount() {
 								<div className={`${styles.loginInput}`}>
 									<p>Email</p>
 									<input
-										type="text"
+										type="email"
 										onChange={(e) => setEmail(e.target.value)}
 										value={email}
 									/>
@@ -93,7 +105,7 @@ export default function CreateAccount() {
 								<div className={`${styles.loginInput}`}>
 									<p>Password</p>
 									<input
-										type="text"
+										type="password"
 										onChange={(e) => setPassword(e.target.value)}
 										value={password}
 									/>
@@ -138,11 +150,14 @@ export default function CreateAccount() {
 												isVerified: false,
 												volunteerHours: 0,
 												tutoringHours: 0,
+											}).then((res) => {
+												if (res) {
+													setFunny(true);
+													setTimeout(() => {
+														setFunny(false);
+													}, 10000);
+												}
 											});
-											setIsConfettiExploding(true);
-											setTimeout(() => {
-												setIsConfettiExploding(false);
-											}, 5000);
 										}}
 									>
 										<span className="LoadButton-shadow"></span>

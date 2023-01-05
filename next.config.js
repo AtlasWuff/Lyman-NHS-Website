@@ -15,6 +15,15 @@ const nextConfig = {
 			},
 		];
 	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https:",
+				host: "media.tenor.com",
+				pathname: "/img/*",
+			},
+		],
+	},
 };
 
 module.exports = nextConfig;

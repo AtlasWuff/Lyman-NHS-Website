@@ -33,6 +33,8 @@ import PageTitle from "../components/parts/PageTitle";
 import Table from "../components/parts/Table";
 import Collapsable from "../components/parts/Collapsable";
 import { data } from "jquery";
+import Gifs from "../components/funny/Gifs";
+import Laser from "../components/funny/Laser";
 
 // Interface for function
 interface AdminProps {
@@ -47,6 +49,15 @@ export default function Admin() {
 	const [ref, inView] = useInView();
 	const [secondRef, secondInView] = useInView();
 	const [isConfettiExploding, setIsConfettiExploding] = useState(false);
+	const [isLaserRunning, setIsLaserRunning] = useState(false);
+	const [isGifRunning, setIsGifRunning] = useState(false);
+
+	const setFunny = (para: boolean) => {
+		setIsConfettiExploding(para);
+		setIsLaserRunning(para);
+		setIsGifRunning(para);
+	};
+
 	const { width, height } = useWindowSize();
 	useEffect(() => {
 		if (inView) {
@@ -129,13 +140,12 @@ export default function Admin() {
 		setAccounts({
 			accounts: thing,
 		});
-		setIsConfettiExploding(true);
+		setFunny(true);
 
 		await refreshAccounts();
 		setTimeout(() => {
-			setIsConfettiExploding(false);
+			setFunny(false);
 		}, 3000);
-		console.log("ccon");
 	};
 
 	/* Deny pending member removing them from the state and database
@@ -222,24 +232,12 @@ export default function Admin() {
 
 	const makeMemberAdminRemove = async (name: string) => {
 		await makeMemberAdmin(name);
-		setIsConfettiExploding(true);
-
 		await refreshAccounts();
-		setTimeout(() => {
-			setIsConfettiExploding(false);
-		}, 3000);
-		console.log("ccon");
 	};
 
 	const makeMemberNotAdminRemove = async (name: string) => {
 		await makeMemberNotAdmin(name);
-		setIsConfettiExploding(true);
-
 		await refreshAccounts();
-		setTimeout(() => {
-			setIsConfettiExploding(false);
-		}, 3000);
-		console.log("ccon");
 	};
 
 	interface EventsStateProp {
@@ -331,12 +329,7 @@ export default function Admin() {
 					},
 				],
 			});
-			setIsConfettiExploding(true);
 			await refreshEvents();
-			setTimeout(() => {
-				setIsConfettiExploding(false);
-			}, 3000);
-			console.log("ccon");
 		});
 	};
 
