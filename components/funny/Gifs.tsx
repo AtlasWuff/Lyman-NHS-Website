@@ -54,8 +54,8 @@ export default function Gifs({ children }: Props) {
 							className={styles.gif}
 							// top and left within 25% to 75% of screen
 							style={{
-								top: `${Math.floor(Math.random() * 50) + 10}%`,
-								left: `${Math.floor(Math.random() * 70) + 10}%`,
+								top: `${Math.floor(Math.random() * 50) + 5}%`,
+								left: `${Math.floor(Math.random() * 70) + 5}%`,
 							}}
 							key={index}
 						>
