@@ -104,3 +104,26 @@
 	margin-bottom: 0rem;
 	margin-top: 0.3rem;
 }
+
+#discoball {
+	object-fit: contain;
+	animation: disco 1s infinite;
+}
+
+@keyframes disco {
+	0% {
+		transform: scaleX(-1);
+	}
+	49% {
+		transform: scaleX(-1);
+	}
+	50% {
+		transform: scaleX(1);
+	}
+	99% {
+		transform: scaleX(1);
+	}
+	100% {
+		transform: scaleX(-1);
+	}
+}

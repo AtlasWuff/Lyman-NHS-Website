@@ -77,6 +77,17 @@ export default function CreateAccount() {
 					/>
 					<Laser />
 					<Gifs />
+					<div
+						className="d-flex w-100 justify-content-center align-items-center position-absolute top-0 left-0"
+						id={styles.discoball}
+					>
+						<Image
+							src={"/img/discoball.jpg"}
+							alt=""
+							width={"100"}
+							height={"150"}
+						/>
+					</div>
 				</div>
 			) : (
 				<> </>
