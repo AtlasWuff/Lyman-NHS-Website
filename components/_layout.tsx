@@ -38,7 +38,7 @@ export default function Layout({ children }: Props) {
 				<meta property="og:url" content="https://lymannhs.netlify.app" />
 				<meta
 					property="og:image"
-					content="https://lymannhs.netlify.app/img/lymannhs.svg"
+					content="https://cdn.discordapp.com/attachments/894669724305215509/1060727100862119986/lymannhsborder.png"
 				/>
 
 				<meta name="author" content="Josh" />
