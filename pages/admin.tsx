@@ -19,6 +19,7 @@ import {
 	deleteEvent,
 	deleteCollectionData,
 } from "../firebase";
+import * as EmailValidator from "email-validator";
 import { collection, addDoc, updateDoc } from "firebase/firestore";
 import { useEffectOnce } from "usehooks-ts";
 import Confetti from "react-confetti";
@@ -93,9 +94,28 @@ export default function Admin() {
 	 */
 	const adminButtonClicked = async ({ email, password }: AdminProps) => {
 		await setShowLoading(true);
-		let res = await checkAdmin({ email, password });
-		setIsUserAdmin(res);
-		setShowLoading(false);
+		if (
+			email == "" ||
+			password == "" ||
+			email == undefined ||
+			password == undefined
+		) {
+			setShowLoading(false);
+			alert("Please enter an email and password");
+			return;
+		} else if (!EmailValidator.validate(email)) {
+			setShowLoading(false);
+			alert("Please enter a valid email");
+			return;
+		} else if (password.length < 8) {
+			setShowLoading(false);
+			alert("Please enter a password with at least 8 characters");
+			return;
+		} else {
+			let res = await checkAdmin({ email, password });
+			setIsUserAdmin(res);
+			setShowLoading(false);
+		}
 	};
 
 	/* Get accounts
