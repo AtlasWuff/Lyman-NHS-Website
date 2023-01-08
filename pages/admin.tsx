@@ -362,8 +362,8 @@ export default function Admin() {
 
 	const deleteAccountCollectionRefresh = async (collection: string) => {
 		await deleteCollectionData(collection);
+		await refreshAccounts();
 		setAccounts({ accounts: [] });
-		await refreshEvents();
 	};
 
 	return (
@@ -381,7 +381,7 @@ export default function Admin() {
 			{/* ! Main homepage content */}
 
 			<main>
-				{!isUserAdmin ? (
+				{isUserAdmin ? (
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
