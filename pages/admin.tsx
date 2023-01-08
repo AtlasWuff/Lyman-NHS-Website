@@ -361,9 +361,22 @@ export default function Admin() {
 	const [showTutoringEvents, setShowTutoringEvents] = useState<boolean>(false);
 
 	const deleteAccountCollectionRefresh = async (collection: string) => {
+		const pss = prompt("Enter owner password") as string;
+
+		if (pss !== "bigman") {
+			alert("Wrong password");
+			return;
+		}
+
 		await deleteCollectionData(collection);
+
+		setAccounts({
+			// accounts: accounts.accounts.filter(
+			// 	(account) => account.isVerified != true
+			// ),
+			accounts: [],
+		});
 		await refreshAccounts();
-		setAccounts({ accounts: [] });
 	};
 
 	return (
@@ -543,7 +556,7 @@ export default function Admin() {
 																				" " +
 																				account.lastName
 																			}
-																			className="w-100"
+																			className={`w-100 ${styles.memberItemThing}`}
 																		>
 																			<p>
 																				<b>Email:</b> {account.email}
@@ -559,33 +572,37 @@ export default function Admin() {
 																				<b>Tutoring Hours:</b>{" "}
 																				{account.tutoringHours}
 																			</p>
-																			<button
-																				className="DenyButton-pushable mt-2"
-																				onClick={async () => {
-																					await deleteMember(
-																						account.firstName +
-																							" " +
-																							account.lastName
-																					);
-																					setAccounts({
-																						accounts: accounts.accounts.filter(
-																							(item) =>
-																								item.firstName +
-																									" " +
-																									item.lastName !=
-																								account.firstName +
-																									" " +
-																									account.lastName
-																						),
-																					});
-																				}}
-																			>
-																				<span className="DenyButton-shadow"></span>
-																				<span className="DenyButton-edge"></span>
-																				<span className="DenyButton-front text">
-																					Delete member
-																				</span>
-																			</button>
+																			<div className="w-100 overflow-hidden d-flex justify-content-center align-items-center">
+																				<button
+																					className="DenyButton-pushable mt-2"
+																					onClick={async () => {
+																						await deleteMember(
+																							account.firstName +
+																								" " +
+																								account.lastName
+																						);
+																						setAccounts({
+																							accounts:
+																								accounts.accounts.filter(
+																									(item) =>
+																										item.firstName +
+																											" " +
+																											item.lastName !=
+																										account.firstName +
+																											" " +
+																											account.lastName
+																								),
+																						});
+																					}}
+																					id={styles.deleteMemberButton}
+																				>
+																					<span className="DenyButton-shadow"></span>
+																					<span className="DenyButton-edge"></span>
+																					<span className="DenyButton-front text">
+																						Delete member
+																					</span>
+																				</button>
+																			</div>
 																		</Collapsable>
 																	</div>
 																	<div
@@ -647,6 +664,7 @@ export default function Admin() {
 													onClick={() => {
 														deleteAccountCollectionRefresh("Accounts");
 													}}
+													id={styles.deleteAllMembers}
 												>
 													<span className="DenyButton-shadow"></span>
 													<span className="DenyButton-edge"></span>
