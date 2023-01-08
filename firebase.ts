@@ -730,3 +730,16 @@ export const checkAdmin = ({ email, password }: checkAdminProps) => {
 		}
 	});
 };
+
+export const deleteCollectionData = async (collectionName: string) => {
+	return new Promise<void>(async (resolve, reject) => {
+		var collectionRef = collection(db, collectionName);
+		let querySnapshot = await getDocs(collectionRef);
+		querySnapshot.forEach(async (docy: any) => {
+			await deleteDoc(doc(db, collectionName, docy.id));
+		});
+
+		alert("Collection deleted. Click 'Refresh items' to see changes.");
+		resolve();
+	});
+};

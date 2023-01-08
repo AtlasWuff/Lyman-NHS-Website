@@ -17,6 +17,7 @@ import {
 	getEvents,
 	addEvent,
 	deleteEvent,
+	deleteCollectionData,
 } from "../firebase";
 import { collection, addDoc, updateDoc } from "firebase/firestore";
 import { useEffectOnce } from "usehooks-ts";
@@ -359,6 +360,12 @@ export default function Admin() {
 
 	const [showTutoringEvents, setShowTutoringEvents] = useState<boolean>(false);
 
+	const deleteAccountCollectionRefresh = async (collection: string) => {
+		await deleteCollectionData(collection);
+		setAccounts({ accounts: [] });
+		await refreshEvents();
+	};
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -374,7 +381,7 @@ export default function Admin() {
 			{/* ! Main homepage content */}
 
 			<main>
-				{isUserAdmin ? (
+				{!isUserAdmin ? (
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
@@ -552,6 +559,33 @@ export default function Admin() {
 																				<b>Tutoring Hours:</b>{" "}
 																				{account.tutoringHours}
 																			</p>
+																			<button
+																				className="DenyButton-pushable mt-2"
+																				onClick={async () => {
+																					await deleteMember(
+																						account.firstName +
+																							" " +
+																							account.lastName
+																					);
+																					setAccounts({
+																						accounts: accounts.accounts.filter(
+																							(item) =>
+																								item.firstName +
+																									" " +
+																									item.lastName !=
+																								account.firstName +
+																									" " +
+																									account.lastName
+																						),
+																					});
+																				}}
+																			>
+																				<span className="DenyButton-shadow"></span>
+																				<span className="DenyButton-edge"></span>
+																				<span className="DenyButton-front text">
+																					Delete member
+																				</span>
+																			</button>
 																		</Collapsable>
 																	</div>
 																	<div
@@ -607,6 +641,20 @@ export default function Admin() {
 													</label>
 												</div>
 											)}
+											<div className=" d-flex align-items-center justify-content-center w-100">
+												<button
+													className="DenyButton-pushable mt-2"
+													onClick={() => {
+														deleteAccountCollectionRefresh("Accounts");
+													}}
+												>
+													<span className="DenyButton-shadow"></span>
+													<span className="DenyButton-edge"></span>
+													<span className="DenyButton-front text">
+														Delete all members
+													</span>
+												</button>
+											</div>
 										</Table>
 									</div>
 								</div>
