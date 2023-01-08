@@ -376,7 +376,7 @@ export default function Admin() {
 			// ),
 			accounts: [],
 		});
-		await refreshAccounts();
+		// await refreshAccounts();
 	};
 
 	return (
