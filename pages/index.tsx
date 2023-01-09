@@ -138,7 +138,10 @@ export default function Home() {
 		return check;
 	};
 
-	const [signUpModalDesicion, setSignUpModalDesicion] = useState<string>(false);
+	const [signUpModalDesicion, setSignUpModalDesicion] =
+		useState<string>("Volunteering");
+	const [leaveEventModalDesicion, setLeaveEventModalDesicion] =
+		useState<string>("Volunteering");
 
 	return (
 		<motion.div
@@ -386,19 +389,54 @@ export default function Home() {
 										value={password}
 										onChange={(v) => setPassword(v.target.value)}
 									/>
+									<p className="mb-2">Volunteering or tutoring?</p>
+									<select
+										value={leaveEventModalDesicion}
+										onChange={(v) => {
+											if (v.target.value.length > 0) {
+												setLeaveEventModalDesicion(v.target.value);
+											} else {
+												setLeaveEventModalDesicion("Volunteering");
+											}
+										}}
+									>
+										<option>Volunteering</option>
+										<option>Tutoring</option>
+									</select>
 									<p className="mb-2">Select event to leave</p>
 									<select
 										value={eventInput}
 										onChange={(v) => setEventInput(v.target.value)}
 									>
-										{events.map((e) => (
-											<option
-												value={e.eventName}
-												key={events.indexOf(e) + "di"}
-											>
-												{e.eventName}
-											</option>
-										))}
+										<>
+											{leaveEventModalDesicion == "Volunteering" ? (
+												<>
+													{events
+														.filter((thing) => thing.isTutoring == false)
+														.map((e) => (
+															<option
+																value={e.eventName}
+																key={events.indexOf(e) + "di"}
+															>
+																{e.eventName}
+															</option>
+														))}
+												</>
+											) : (
+												<>
+													{events
+														.filter((thing) => thing.isTutoring == true)
+														.map((e) => (
+															<option
+																value={e.eventName}
+																key={events.indexOf(e) + "di"}
+															>
+																{e.eventName}
+															</option>
+														))}
+												</>
+											)}
+										</>
 									</select>
 									<button
 										className="LoadButton-pushable my-2"
