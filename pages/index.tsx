@@ -138,6 +138,8 @@ export default function Home() {
 		return check;
 	};
 
+	const [signUpModalDesicion, setSignUpModalDesicion] = useState<string>(false);
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -289,6 +291,20 @@ export default function Home() {
 										value={password}
 										onChange={(v) => setPassword(v.target.value)}
 									/>
+									<p className="mb-2">Volunteering or tutoring?</p>
+									<select
+										value={signUpModalDesicion}
+										onChange={(v) => {
+											if (v.target.value.length > 0) {
+												setSignUpModalDesicion(v.target.value);
+											} else {
+												setSignUpModalDesicion("Volunteering");
+											}
+										}}
+									>
+										<option>Volunteering</option>
+										<option>Tutoring</option>
+									</select>
 									<p className="mb-2">Select event to sign up for</p>
 									<select
 										value={eventInput}
@@ -300,14 +316,35 @@ export default function Home() {
 											}
 										}}
 									>
-										{events.map((e) => (
-											<option
-												value={e.eventName}
-												key={events.indexOf(e) + "di"}
-											>
-												{e.eventName}
-											</option>
-										))}
+										<>
+											{signUpModalDesicion == "Volunteering" ? (
+												<>
+													{events
+														.filter((thing) => thing.isTutoring == false)
+														.map((e) => (
+															<option
+																value={e.eventName}
+																key={events.indexOf(e) + "di"}
+															>
+																{e.eventName}
+															</option>
+														))}
+												</>
+											) : (
+												<>
+													{events
+														.filter((thing) => thing.isTutoring == true)
+														.map((e) => (
+															<option
+																value={e.eventName}
+																key={events.indexOf(e) + "di"}
+															>
+																{e.eventName}
+															</option>
+														))}
+												</>
+											)}
+										</>
 									</select>
 									<button
 										className="LoadButton-pushable my-2"
