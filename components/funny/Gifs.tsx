@@ -17,14 +17,11 @@ interface Props {
 export default function Gifs({ children }: Props) {
 	const [gifs, setGifs] = React.useState<Array<string>>([
 		"https://media.tenor.com/Lbrr3HR3CnkAAAAd/snoop-dogg-rap.gif",
-		"https://media.tenor.com/uM-w7nq4kLgAAAAd/party-time-dancing.gif",
 		"https://media.tenor.com/7KE3TH-N4IAAAAAd/celebrate-party.gif",
 		"https://media.tenor.com/ukjUvE17ZcQAAAAd/party-minions.gif",
-		"https://media.tenor.com/aGhj-o6DCoUAAAAC/bitcoinliotta-party.gif",
 		"https://media.tenor.com/R7k3DxD5f34AAAAd/golden-girls-konga.gif",
 		"https://media.tenor.com/TsNWXQ2E8pAAAAAC/celebration-confetti.gif",
 		"https://media.tenor.com/J8KeZSDe_acAAAAd/dace.gif",
-		"https://media.tenor.com/z3HX03QXMqgAAAAd/leslie-jordan-leslie.gif",
 		"https://media.tenor.com/jYqfbfE5wU4AAAAC/yay-yes.gif",
 		"https://media.tenor.com/bIWKGrYb0FIAAAAd/crazy-dance-funny-dance.gif",
 		"https://media.tenor.com/IKwGOsinNnkAAAAd/markiplier-dancing.gif",
