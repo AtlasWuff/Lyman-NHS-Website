@@ -325,10 +325,10 @@ a:hover {
 	border-radius: 6px;
 	background: linear-gradient(
 		to left,
-		#1a7c4e 0%,
-		#1d9c61 8%,
-		#1d9c61 92%,
-		#1a7c4e 100%
+		#1d9c61 0%,
+		#1a7c4e 8%,
+		#1a7c4e 92%,
+		#1d9c61 100%
 	);
 }
 
@@ -410,10 +410,10 @@ a:hover {
 	border-radius: 6px;
 	background: linear-gradient(
 		to left,
-		#98222e 0%,
-		#bb2c3a 8%,
-		#bb2c3a 92%,
-		#98222e 100%
+		#bb2c3a 0%,
+		#98222e 8%,
+		#98222e 92%,
+		#bb2c3a 100%
 	);
 }
 
