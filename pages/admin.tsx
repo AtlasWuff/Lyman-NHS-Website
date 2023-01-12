@@ -268,15 +268,16 @@ export default function Admin() {
 		events: Array<eventProps>;
 	}
 
-	const [eventName, setEventName] = useState("");
-	const [eventDate, setEventDate] = useState("");
-	const [eventLocation, setEventLocation] = useState("");
-	const [eventStartTime, setEventStartTime] = useState("");
-	const [eventEndTime, setEventEndTime] = useState("");
-	const [eventVolunteersNeeded, setEventVolunteersNeeded] = useState("");
+	const [eventName, setEventName] = useState("N/A");
+	const [eventDate, setEventDate] = useState("N/A");
+	const [eventLocation, setEventLocation] = useState("N/A");
+	const [eventStartTime, setEventStartTime] = useState("N/A");
+	const [eventEndTime, setEventEndTime] = useState("N/A");
+	const [eventVolunteersNeeded, setEventVolunteersNeeded] = useState("N/A");
 	const [eventVolunteersSignedUp, setEventVolunteersSignedUp] = useState([]);
 	const [events, setEvents] = useState<EventsStateProp>({ events: [] });
 	const [eventIsTutoring, setEventIsTutoring] = useState<boolean>(false);
+	const [tutoringHost, setTutoringHost] = useState<string>("N/A");
 
 	/* Refresh accounts updating the state
 	 * @param {void}
@@ -309,13 +310,15 @@ export default function Admin() {
 			eventStartTime == "" ||
 			eventEndTime == "" ||
 			eventVolunteersNeeded == "" ||
+			tutoringHost == "" ||
 			eventName == undefined ||
 			eventDate == undefined ||
 			eventLocation == undefined ||
 			eventStartTime == undefined ||
 			eventEndTime == undefined ||
 			eventVolunteersNeeded == undefined ||
-			eventIsTutoring == undefined
+			eventIsTutoring == undefined ||
+			tutoringHost == undefined
 		) {
 			alert("Please fill out all fields");
 			return;
@@ -337,6 +340,7 @@ export default function Admin() {
 			volunteersNeeded: eventVolunteersNeeded,
 			volunteers: eventVolunteersSignedUp,
 			isTutoring: eventIsTutoring,
+			tutorHost: tutoringHost,
 		}).then(async () => {
 			setEvents({
 				events: [
@@ -350,6 +354,7 @@ export default function Admin() {
 						volunteersNeeded: eventVolunteersNeeded,
 						volunteers: eventVolunteersSignedUp,
 						isTutoring: eventIsTutoring,
+						tutorHost: tutoringHost,
 					},
 				],
 			});
@@ -417,7 +422,7 @@ export default function Admin() {
 			{/* ! Main homepage content */}
 
 			<main>
-				{isUserAdmin ? (
+				{!isUserAdmin ? (
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
@@ -722,7 +727,7 @@ export default function Admin() {
 									>
 										<h2>Add Event</h2>
 										<div className={`${styles.eventInput}`}>
-											<p>Event Name</p>
+											<p>{eventIsTutoring ? "Subject" : "Event Name"}</p>
 											<input
 												type="text"
 												onChange={(e) => setEventName(e.target.value.trim())}
@@ -736,7 +741,7 @@ export default function Admin() {
 											/>
 										</div>
 										<div className={`${styles.eventInput}`}>
-											<p>Location</p>
+											<p>{eventIsTutoring ? "Room" : "Location"}</p>
 											<input
 												type="text"
 												onChange={(e) =>
@@ -744,15 +749,20 @@ export default function Admin() {
 												}
 											/>
 										</div>
-										<div className={`${styles.eventInput}`}>
-											<p>Start Time</p>
-											<input
-												type="text"
-												onChange={(e) =>
-													setEventStartTime(e.target.value.trim())
-												}
-											/>
-										</div>
+										{!eventIsTutoring ? (
+											<div className={`${styles.eventInput}`}>
+												<p>Start Time</p>
+												<input
+													type="text"
+													onChange={(e) =>
+														setEventStartTime(e.target.value.trim())
+													}
+												/>
+											</div>
+										) : (
+											<></>
+										)}
+
 										<div className={`${styles.eventInput}`}>
 											<p>End Time</p>
 											<input
@@ -760,8 +770,12 @@ export default function Admin() {
 												onChange={(e) => setEventEndTime(e.target.value.trim())}
 											/>
 										</div>
-										<div className={`${styles.eventInput} mb-2`}>
-											<p>Volunteers Needed</p>
+										<div
+											className={`${styles.eventInput} ${
+												!eventIsTutoring ? "mb-2" : ""
+											}`}
+										>
+											<p>{eventIsTutoring ? "Tutors" : "Volunteers"} Needed</p>
 											<input
 												type="text"
 												onChange={(e) =>
@@ -769,6 +783,19 @@ export default function Admin() {
 												}
 											/>
 										</div>
+										{eventIsTutoring ? (
+											<div className={`${styles.eventInput} mb-2`}>
+												<p>Tutoring Host</p>
+												<input
+													type="text"
+													onChange={(e) =>
+														setTutoringHost(e.target.value.trim())
+													}
+												/>
+											</div>
+										) : (
+											<></>
+										)}
 										<div className={`${styles.eventInput} mb-2`}>
 											<p>Is this a tutoring event?</p>
 											<input
