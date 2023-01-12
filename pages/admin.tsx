@@ -422,7 +422,7 @@ export default function Admin() {
 			{/* ! Main homepage content */}
 
 			<main>
-				{!isUserAdmin ? (
+				{isUserAdmin ? (
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
