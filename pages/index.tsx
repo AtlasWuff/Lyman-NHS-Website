@@ -523,9 +523,7 @@ export default function Home() {
 																		<p>
 																			<b>Time</b>
 																		</p>
-																		<p>
-																			{e.startTime} - {e.endTime}
-																		</p>
+																		<p>{e.endTime}</p>
 																	</div>
 																	<div className="">
 																		<p>
@@ -722,9 +720,7 @@ export default function Home() {
 																		<p>
 																			<b>End Time</b>
 																		</p>
-																		<p>
-																			{e.startTime} - {e.endTime}
-																		</p>
+																		<p>{e.endTime}</p>
 																	</div>
 																	<div className="">
 																		<p>
@@ -818,9 +814,7 @@ export default function Home() {
 																		<p>
 																			<b>End Time</b>
 																		</p>
-																		<p>
-																			{e.startTime} - {e.endTime}
-																		</p>
+																		<p>{e.endTime}</p>
 																	</div>
 
 																	<div className="">
@@ -915,9 +909,7 @@ export default function Home() {
 																		<p>
 																			<b>End Time</b>
 																		</p>
-																		<p>
-																			{e.startTime} - {e.endTime}
-																		</p>
+																		<p>{e.endTime}</p>
 																	</div>
 																	<div className="">
 																		<p>

@@ -726,6 +726,13 @@ export default function Admin() {
 										id={`${styles.addEventForm}`}
 									>
 										<h2>Add Event</h2>
+										<div className={`${styles.eventInput} mt-2`}>
+											<p>Is this a tutoring event?</p>
+											<input
+												type="checkbox"
+												onChange={(e) => setEventIsTutoring(e.target.checked)}
+											/>
+										</div>
 										<div className={`${styles.eventInput}`}>
 											<p>{eventIsTutoring ? "Subject" : "Event Name"}</p>
 											<input
@@ -796,13 +803,7 @@ export default function Admin() {
 										) : (
 											<></>
 										)}
-										<div className={`${styles.eventInput} mb-2`}>
-											<p>Is this a tutoring event?</p>
-											<input
-												type="checkbox"
-												onChange={(e) => setEventIsTutoring(e.target.checked)}
-											/>
-										</div>
+
 										<button
 											className="ApproveButton-pushable mb-3"
 											onClick={() => {
@@ -907,21 +908,22 @@ export default function Admin() {
 																				<b>Date:</b> {event.date}
 																			</p>
 																			<p>
-																				<b>Location:</b> {event.location}
-																			</p>
-																			<p>
-																				<b>Start Time:</b> {event.startTime}
+																				<b>Room:</b> {event.location}
 																			</p>
 																			<p>
 																				<b>End Time:</b> {event.endTime}
 																			</p>
 																			<p>
-																				<b>Volunteers Needed: </b>
+																				<b>Tutors Needed: </b>
 																				{event.volunteersNeeded}
 																			</p>
 																			<p>
-																				<b>Volunteers: </b>
+																				<b>Tutors: </b>
 																				{event.volunteers}
+																			</p>
+																			<p>
+																				<b>Host: </b>
+																				{event.tutorHost}
 																			</p>
 																		</Collapsable>
 																	</div>
