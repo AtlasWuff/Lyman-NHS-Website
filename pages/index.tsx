@@ -17,6 +17,7 @@ import { InstagramEmbed } from "react-social-media-embed";
 import * as EmailValidator from "email-validator";
 import { useAnimation, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import axios from "axios";
 
 // CSS imports
 import styles from "../styles/pages/Home.module.css";
@@ -142,6 +143,19 @@ export default function Home() {
 		useState<string>("Volunteering");
 	const [leaveEventModalDesicion, setLeaveEventModalDesicion] =
 		useState<string>("Volunteering");
+
+	// const [instaRecentPosts, setInstaRecentPosts] = useState<any[]>([]);
+	// useEffect(() => {
+	// 	axios
+	// 		.get(
+	// 			`https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username&access_token=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
+	// 		)
+
+	// 		.then((res) => {
+	// 			setInstaRecentPosts(res.data.data);
+	// 		})
+	// 		.catch((err) => console.log(err));
+	// }, []);
 
 	return (
 		<motion.div
@@ -944,7 +958,7 @@ export default function Home() {
 							</div>
 						</Table>
 					</section>
-					<section id={`${styles.SocialMedia}`} className="container-lg">
+					{/* <section id={`${styles.SocialMedia}`} className="container-lg">
 						<h1 className="mb-3">Recent Posts</h1>
 						<Table
 							minHeight={"20vh"}
@@ -973,8 +987,8 @@ export default function Home() {
 								</div>
 							</div>
 						</Table>
-					</section>
-					<section id={`${styles.People}`}></section>
+					</section> */}
+					{/* <section id={`${styles.People}`}></section> */}
 				</div>
 			</main>
 		</motion.div>
