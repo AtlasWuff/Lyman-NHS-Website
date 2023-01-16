@@ -342,6 +342,15 @@ export default function Home() {
 													<>
 														{events
 															.filter((thing) => thing.isTutoring == false)
+															.filter(
+																(thing) =>
+																	new Date(
+																		parseInt(thing.date.split("-")[0]),
+																		parseInt(thing.date.split("-")[1]) - 1,
+																		parseInt(thing.date.split("-")[2])
+																	).getTime() >=
+																	new Date().getTime() - 86400000
+															)
 															.map((e) => (
 																<option
 																	value={e.eventName}
@@ -355,6 +364,15 @@ export default function Home() {
 													<>
 														{events
 															.filter((thing) => thing.isTutoring == true)
+															.filter(
+																(thing) =>
+																	new Date(
+																		parseInt(thing.date.split("-")[0]),
+																		parseInt(thing.date.split("-")[1]) - 1,
+																		parseInt(thing.date.split("-")[2])
+																	).getTime() >=
+																	new Date().getTime() - 86400000
+															)
 															.map((e) => (
 																<option
 																	value={e.eventName}
@@ -433,6 +451,15 @@ export default function Home() {
 													<>
 														{events
 															.filter((thing) => thing.isTutoring == false)
+															.filter(
+																(thing) =>
+																	new Date(
+																		parseInt(thing.date.split("-")[0]),
+																		parseInt(thing.date.split("-")[1]) - 1,
+																		parseInt(thing.date.split("-")[2])
+																	).getTime() >=
+																	new Date().getTime() - 86400000
+															)
 															.map((e) => (
 																<option
 																	value={e.eventName}
@@ -446,6 +473,15 @@ export default function Home() {
 													<>
 														{events
 															.filter((thing) => thing.isTutoring == true)
+															.filter(
+																(thing) =>
+																	new Date(
+																		parseInt(thing.date.split("-")[0]),
+																		parseInt(thing.date.split("-")[1]) - 1,
+																		parseInt(thing.date.split("-")[2])
+																	).getTime() >=
+																	new Date().getTime() - 86400000
+															)
 															.map((e) => (
 																<option
 																	value={e.eventName}
