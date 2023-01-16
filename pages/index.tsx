@@ -157,6 +157,9 @@ export default function Home() {
 	// 		.catch((err) => console.log(err));
 	// }, []);
 
+	const [showOldTutoringEvents, setShowOldTutoringEvents] =
+		useState<boolean>(false);
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -261,702 +264,868 @@ export default function Home() {
 
 					<section id={`${styles.UpcomingEvents}`} className="container-lg">
 						<h1 className="mb-0">Upcoming Events</h1>
-						<div className="d-flex flex-row align-items-center justify-content-center">
-							<button
-								className="ApproveButton-pushable mb-3 mt-3 me-3"
-								onClick={(a) => displayModal()}
+						<>
+							<div className="d-flex flex-row align-items-center justify-content-center">
+								<button
+									className="ApproveButton-pushable mb-3 mt-3 me-3"
+									onClick={(a) => displayModal()}
+								>
+									<span className="ApproveButton-shadow"></span>
+									<span className="ApproveButton-edge"></span>
+									<span className="ApproveButton-front text">
+										Sign up for event
+									</span>
+								</button>
+								<button
+									className="DenyButton-pushable mb-3 mt-3"
+									onClick={(a) => displayLeaveEventModal()}
+								>
+									<span className="DenyButton-shadow"></span>
+									<span className="DenyButton-edge"></span>
+									<span className="DenyButton-front text">Leave event</span>
+								</button>
+							</div>
+							{showSignUpModal ? (
+								<div id={`${styles.signUpModal}`}>
+									<div id={`${styles.signUpModalContent}`}>
+										<Image
+											src={"/img/close.svg"}
+											width={30}
+											height={30}
+											onClick={() => setShowSignUpModal(!showSignUpModal)}
+											id={`${styles.closeModal}`}
+											alt="Close modal"
+										/>
+										<h1>Sign Up</h1>
+										<p className="mb-2">
+											Enter email & password for member verification
+										</p>
+										<input
+											type="email"
+											placeholder="Email"
+											value={email}
+											onChange={(v) => setEmail(v.target.value)}
+										/>
+										<input
+											type="password"
+											placeholder="Password"
+											value={password}
+											onChange={(v) => setPassword(v.target.value)}
+										/>
+										<p className="mb-2">Volunteering or tutoring?</p>
+										<select
+											value={signUpModalDesicion}
+											onChange={(v) => {
+												if (v.target.value.length > 0) {
+													setSignUpModalDesicion(v.target.value);
+												} else {
+													setSignUpModalDesicion("Volunteering");
+												}
+											}}
+										>
+											<option>Volunteering</option>
+											<option>Tutoring</option>
+										</select>
+										<p className="mb-2">Select event to sign up for</p>
+										<select
+											value={eventInput}
+											onChange={(v) => {
+												if (v.target.value.length > 0) {
+													setEventInput(v.target.value);
+												} else {
+													setEventInput("");
+												}
+											}}
+										>
+											<>
+												{signUpModalDesicion == "Volunteering" ? (
+													<>
+														{events
+															.filter((thing) => thing.isTutoring == false)
+															.map((e) => (
+																<option
+																	value={e.eventName}
+																	key={events.indexOf(e) + "di"}
+																>
+																	{e.eventName}
+																</option>
+															))}
+													</>
+												) : (
+													<>
+														{events
+															.filter((thing) => thing.isTutoring == true)
+															.map((e) => (
+																<option
+																	value={e.eventName}
+																	key={events.indexOf(e) + "di"}
+																>
+																	{e.eventName}
+																</option>
+															))}
+													</>
+												)}
+											</>
+										</select>
+										<button
+											className="LoadButton-pushable my-2"
+											onClick={() => addVolunteerDb()}
+										>
+											<span className="LoadButton-shadow"></span>
+											<span className="LoadButton-edge"></span>
+											<span className="LoadButton-front text">Submit</span>
+										</button>
+									</div>
+								</div>
+							) : (
+								<></>
+							)}
+							{showLeaveEventModal ? (
+								<div id={`${styles.signUpModal}`}>
+									<div id={`${styles.signUpModalContent}`}>
+										<Image
+											src={"/img/close.svg"}
+											width={30}
+											height={30}
+											onClick={() =>
+												setShowLeaveEventModal(!showLeaveEventModal)
+											}
+											id={`${styles.closeModal}`}
+											alt="Close modal"
+										/>
+										<h1>Leave Event</h1>
+										<p className="mb-2">
+											Enter email & password for member verification
+										</p>
+										<input
+											type="email"
+											placeholder="Email"
+											value={email}
+											onChange={(v) => setEmail(v.target.value)}
+										/>
+										<input
+											type="password"
+											placeholder="Password"
+											value={password}
+											onChange={(v) => setPassword(v.target.value)}
+										/>
+										<p className="mb-2">Volunteering or tutoring?</p>
+										<select
+											value={leaveEventModalDesicion}
+											onChange={(v) => {
+												if (v.target.value.length > 0) {
+													setLeaveEventModalDesicion(v.target.value);
+												} else {
+													setLeaveEventModalDesicion("Volunteering");
+												}
+											}}
+										>
+											<option>Volunteering</option>
+											<option>Tutoring</option>
+										</select>
+										<p className="mb-2">Select event to leave</p>
+										<select
+											value={eventInput}
+											onChange={(v) => setEventInput(v.target.value)}
+										>
+											<>
+												{leaveEventModalDesicion == "Volunteering" ? (
+													<>
+														{events
+															.filter((thing) => thing.isTutoring == false)
+															.map((e) => (
+																<option
+																	value={e.eventName}
+																	key={events.indexOf(e) + "di"}
+																>
+																	{e.eventName}
+																</option>
+															))}
+													</>
+												) : (
+													<>
+														{events
+															.filter((thing) => thing.isTutoring == true)
+															.map((e) => (
+																<option
+																	value={e.eventName}
+																	key={events.indexOf(e) + "di"}
+																>
+																	{e.eventName}
+																</option>
+															))}
+													</>
+												)}
+											</>
+										</select>
+										<button
+											className="LoadButton-pushable my-2"
+											onClick={() => removeVolunteerDb()}
+										>
+											<span className="LoadButton-shadow"></span>
+											<span className="LoadButton-edge"></span>
+											<span className="LoadButton-front text">Submit</span>
+										</button>
+									</div>
+								</div>
+							) : (
+								<></>
+							)}
+							<Table
+								minHeight={"20vh"}
+								maxHeight={"85vh"}
+								bgColor={"rgba(0,0,0,0.2)"}
+								widthVal={"90%"}
+								// className="swipeFromRight"
 							>
-								<span className="ApproveButton-shadow"></span>
-								<span className="ApproveButton-edge"></span>
-								<span className="ApproveButton-front text">
-									Sign up for event
-								</span>
-							</button>
-							<button
-								className="DenyButton-pushable mb-3 mt-3"
-								onClick={(a) => displayLeaveEventModal()}
+								<div className="d-flex justify-content-center w-100">
+									<div
+										className={`row w-100 ${styles.tableUpcomingEventsItem}`}
+									>
+										<div className={`col-lg-6`}>
+											{events
+												.filter((event) => {
+													if (!isMobile()) {
+														// Filter out events that are tutoring
+														const isTutoring = event.isTutoring == false;
+
+														// Filter out events that are in the past
+														const isNotInPast =
+															new Date(
+																parseInt(event.date.split("-")[0]),
+																parseInt(event.date.split("-")[1]) - 1,
+																parseInt(event.date.split("-")[2])
+															).getTime() >=
+															new Date().getTime() - 86400000;
+
+														const checkPast = (dat: string) => {
+															return (
+																new Date(
+																	parseInt(dat.split("-")[0]),
+																	parseInt(dat.split("-")[1]) - 1,
+																	parseInt(dat.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000
+															);
+														};
+
+														// Filter out events that are not tutoring and are not in the past
+														const isValidEvent = isTutoring && isNotInPast;
+
+														// Filter out events that are not tutoring and are not in the past
+														const isEvenIndex =
+															events
+																.filter(
+																	(event) =>
+																		event.isTutoring == false &&
+																		checkPast(event.date)
+																)
+																.indexOf(event) %
+																2 ==
+															0;
+
+														// Return events that are not tutoring and are not in the past and are on the even index
+														return isValidEvent && isEvenIndex;
+													} else {
+														const checkPast = (dat: string) => {
+															return (
+																new Date(
+																	parseInt(dat.split("-")[0]),
+																	parseInt(dat.split("-")[1]) - 1,
+																	parseInt(dat.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000
+															);
+														};
+
+														return (
+															events.indexOf(event) <=
+																Math.ceil(events.length / 2) &&
+															checkPast(event.date) &&
+															event.isTutoring == false
+														);
+													}
+												})
+												.map((e) => {
+													return (
+														<div
+															className={`${styles.event} mb-2`}
+															key={events.indexOf(e) + "event"}
+														>
+															<h2>{e.eventName}</h2>
+															<Table
+																widthVal={"95%"}
+																bgColor="rgba(0,0,0,0.2)"
+																minHeight={"10vh"}
+																maxHeight={"40vh"}
+															>
+																<div className="d-flex justify-content-center w-100 align-items-center">
+																	<div className={`${styles.eventCard}`}>
+																		<div className="">
+																			<p>
+																				<b>Date</b>
+																			</p>
+																			<p>{e.date}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Location</b>
+																			</p>
+																			<p>{e.location}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Time</b>
+																			</p>
+																			<p>{e.endTime}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Volunteers Needed</b>
+																			</p>
+																			<p>{e.volunteersNeeded}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Signed Up</b>
+																			</p>
+																			<p className="w-100">
+																				{e.volunteers.map((v) => {
+																					return <>{v}, </>;
+																				})}
+																			</p>
+																		</div>
+																	</div>
+																</div>
+															</Table>
+														</div>
+													);
+												})}
+										</div>
+										<div className={`col-lg-6`}>
+											{events
+												.filter((event) => {
+													if (!isMobile()) {
+														// Filter out events that are tutoring
+														const isTutoring = event.isTutoring == false;
+
+														// Filter out events that are in the past
+														const isNotInPast =
+															new Date(
+																parseInt(event.date.split("-")[0]),
+																parseInt(event.date.split("-")[1]) - 1,
+																parseInt(event.date.split("-")[2])
+															).getTime() >=
+															new Date().getTime() - 86400000;
+
+														const checkPast = (dat: string) => {
+															return (
+																new Date(
+																	parseInt(dat.split("-")[0]),
+																	parseInt(dat.split("-")[1]) - 1,
+																	parseInt(dat.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000
+															);
+														};
+
+														// Filter out events that are not tutoring and are not in the past
+														const isValidEvent = isTutoring && isNotInPast;
+
+														// Filter out events that are not tutoring and are not in the past
+														const isEvenIndex =
+															events
+																.filter(
+																	(event) =>
+																		event.isTutoring == false &&
+																		checkPast(event.date)
+																)
+																.indexOf(event) %
+																2 ==
+															1;
+
+														// Return events that are not tutoring and are not in the past and are on the even index
+														return isValidEvent && isEvenIndex;
+													} else {
+														const checkPast = (dat: string) => {
+															return (
+																new Date(
+																	parseInt(dat.split("-")[0]),
+																	parseInt(dat.split("-")[1]) - 1,
+																	parseInt(dat.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000
+															);
+														};
+
+														return (
+															events.indexOf(event) >
+																Math.ceil(events.length / 2) &&
+															checkPast(event.date) &&
+															event.isTutoring == false
+														);
+													}
+												})
+												.map((e) => {
+													return (
+														<div
+															className={`${styles.event} mb-2`}
+															key={events.indexOf(e) + "event"}
+														>
+															<h2>{e.eventName}</h2>
+															<Table
+																widthVal={"95%"}
+																bgColor="rgba(0,0,0,0.2)"
+																minHeight={"10vh"}
+																maxHeight={"40vh"}
+															>
+																<div className="d-flex justify-content-center w-100 align-items-center">
+																	<div className={`${styles.eventCard}`}>
+																		<div className="">
+																			<p>
+																				<b>Date</b>
+																			</p>
+																			<p>{e.date}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Location</b>
+																			</p>
+																			<p>{e.location}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Time</b>
+																			</p>
+																			<p>
+																				{e.startTime} - {e.endTime}
+																			</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Volunteers Needed</b>
+																			</p>
+																			<p>{e.volunteersNeeded}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Signed Up</b>
+																			</p>
+																			<p className="w-100">
+																				{e.volunteers.map((v) => {
+																					return <>{v}, </>;
+																				})}
+																			</p>
+																		</div>
+																	</div>
+																</div>
+															</Table>
+														</div>
+													);
+												})}
+										</div>
+									</div>
+								</div>
+							</Table>
+						</>
+						<>
+							<h2 className="mt-3">Tutoring</h2>
+							<p className="mb-2">Use the same buttons as above</p>
+							<Table
+								minHeight={"20vh"}
+								maxHeight={"85vh"}
+								bgColor={"rgba(0,0,0,0.2)"}
+								widthVal={"90%"}
 							>
-								<span className="DenyButton-shadow"></span>
-								<span className="DenyButton-edge"></span>
-								<span className="DenyButton-front text">Leave event</span>
-							</button>
-						</div>
-						{showSignUpModal ? (
-							<div id={`${styles.signUpModal}`}>
-								<div id={`${styles.signUpModalContent}`}>
-									<Image
-										src={"/img/close.svg"}
-										width={30}
-										height={30}
-										onClick={() => setShowSignUpModal(!showSignUpModal)}
-										id={`${styles.closeModal}`}
-										alt="Close modal"
-									/>
-									<h1>Sign Up</h1>
-									<p className="mb-2">
-										Enter email & password for member verification
-									</p>
-									<input
-										type="email"
-										placeholder="Email"
-										value={email}
-										onChange={(v) => setEmail(v.target.value)}
-									/>
-									<input
-										type="password"
-										placeholder="Password"
-										value={password}
-										onChange={(v) => setPassword(v.target.value)}
-									/>
-									<p className="mb-2">Volunteering or tutoring?</p>
-									<select
-										value={signUpModalDesicion}
-										onChange={(v) => {
-											if (v.target.value.length > 0) {
-												setSignUpModalDesicion(v.target.value);
-											} else {
-												setSignUpModalDesicion("Volunteering");
-											}
-										}}
+								<div className="d-flex justify-content-center w-100">
+									<div
+										className={`row w-100 ${styles.tableUpcomingEventsItem}`}
 									>
-										<option>Volunteering</option>
-										<option>Tutoring</option>
-									</select>
-									<p className="mb-2">Select event to sign up for</p>
-									<select
-										value={eventInput}
-										onChange={(v) => {
-											if (v.target.value.length > 0) {
-												setEventInput(v.target.value);
-											} else {
-												setEventInput("");
-											}
-										}}
-									>
-										<>
-											{signUpModalDesicion == "Volunteering" ? (
-												<>
-													{events
-														.filter((thing) => thing.isTutoring == false)
-														.map((e) => (
-															<option
-																value={e.eventName}
-																key={events.indexOf(e) + "di"}
-															>
-																{e.eventName}
-															</option>
-														))}
-												</>
-											) : (
-												<>
-													{events
-														.filter((thing) => thing.isTutoring == true)
-														.map((e) => (
-															<option
-																value={e.eventName}
-																key={events.indexOf(e) + "di"}
-															>
-																{e.eventName}
-															</option>
-														))}
-												</>
-											)}
-										</>
-									</select>
-									<button
-										className="LoadButton-pushable my-2"
-										onClick={() => addVolunteerDb()}
-									>
-										<span className="LoadButton-shadow"></span>
-										<span className="LoadButton-edge"></span>
-										<span className="LoadButton-front text">Submit</span>
-									</button>
-								</div>
-							</div>
-						) : (
-							<></>
-						)}
-						{showLeaveEventModal ? (
-							<div id={`${styles.signUpModal}`}>
-								<div id={`${styles.signUpModalContent}`}>
-									<Image
-										src={"/img/close.svg"}
-										width={30}
-										height={30}
-										onClick={() => setShowLeaveEventModal(!showLeaveEventModal)}
-										id={`${styles.closeModal}`}
-										alt="Close modal"
-									/>
-									<h1>Leave Event</h1>
-									<p className="mb-2">
-										Enter email & password for member verification
-									</p>
-									<input
-										type="email"
-										placeholder="Email"
-										value={email}
-										onChange={(v) => setEmail(v.target.value)}
-									/>
-									<input
-										type="password"
-										placeholder="Password"
-										value={password}
-										onChange={(v) => setPassword(v.target.value)}
-									/>
-									<p className="mb-2">Volunteering or tutoring?</p>
-									<select
-										value={leaveEventModalDesicion}
-										onChange={(v) => {
-											if (v.target.value.length > 0) {
-												setLeaveEventModalDesicion(v.target.value);
-											} else {
-												setLeaveEventModalDesicion("Volunteering");
-											}
-										}}
-									>
-										<option>Volunteering</option>
-										<option>Tutoring</option>
-									</select>
-									<p className="mb-2">Select event to leave</p>
-									<select
-										value={eventInput}
-										onChange={(v) => setEventInput(v.target.value)}
-									>
-										<>
-											{leaveEventModalDesicion == "Volunteering" ? (
-												<>
-													{events
-														.filter((thing) => thing.isTutoring == false)
-														.map((e) => (
-															<option
-																value={e.eventName}
-																key={events.indexOf(e) + "di"}
-															>
-																{e.eventName}
-															</option>
-														))}
-												</>
-											) : (
-												<>
-													{events
-														.filter((thing) => thing.isTutoring == true)
-														.map((e) => (
-															<option
-																value={e.eventName}
-																key={events.indexOf(e) + "di"}
-															>
-																{e.eventName}
-															</option>
-														))}
-												</>
-											)}
-										</>
-									</select>
-									<button
-										className="LoadButton-pushable my-2"
-										onClick={() => removeVolunteerDb()}
-									>
-										<span className="LoadButton-shadow"></span>
-										<span className="LoadButton-edge"></span>
-										<span className="LoadButton-front text">Submit</span>
-									</button>
-								</div>
-							</div>
-						) : (
-							<></>
-						)}
-						<Table
-							minHeight={"20vh"}
-							maxHeight={"85vh"}
-							bgColor={"rgba(0,0,0,0.2)"}
-							widthVal={"90%"}
-							// className="swipeFromRight"
-						>
-							<div className="d-flex justify-content-center w-100">
-								<div className={`row w-100 ${styles.tableUpcomingEventsItem}`}>
-									<div className={`col-lg-6`}>
-										{events
-											.filter((ee) => {
-												if (!isMobile()) {
-													return (
-														events
-															// Get rid of tutoring events
-															.filter((eee) => eee.isTutoring == false)
-															// Get even events in filtered list of events
-															.indexOf(ee) %
-															2 ==
-															0 && ee.isTutoring == false
-													);
-												} else {
-													let indexBreakpoint = Math.floor(
-														(events.filter((eee) => eee.isTutoring == false)
-															.length -
-															1) /
-															2
-													);
-													if (
-														events
-															.filter((eee) => eee.isTutoring == false)
-															.indexOf(ee) <= indexBreakpoint &&
-														ee.isTutoring == false
-													) {
-														return true;
-													} else {
-														return false;
-													}
-												}
-											})
-											.map((e) => {
-												return (
-													<div
-														className={`${styles.event} mb-2`}
-														key={events.indexOf(e) + "event"}
-													>
-														<h2>{e.eventName}</h2>
-														<Table
-															widthVal={"95%"}
-															bgColor="rgba(0,0,0,0.2)"
-															minHeight={"10vh"}
-															maxHeight={"40vh"}
-														>
-															<div className="d-flex justify-content-center w-100 align-items-center">
-																<div className={`${styles.eventCard}`}>
-																	<div className="">
-																		<p>
-																			<b>Date</b>
-																		</p>
-																		<p>{e.date}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Location</b>
-																		</p>
-																		<p>{e.location}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Time</b>
-																		</p>
-																		<p>{e.endTime}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Volunteers Needed</b>
-																		</p>
-																		<p>{e.volunteersNeeded}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Signed Up</b>
-																		</p>
-																		<p className="w-100">
-																			{e.volunteers.map((v) => {
-																				return <>{v}, </>;
-																			})}
-																		</p>
-																	</div>
-																</div>
-															</div>
-														</Table>
-													</div>
-												);
-											})}
-									</div>
-									<div className={`col-lg-6`}>
-										{events
-											.filter((ee) => {
-												if (!isMobile()) {
-													return (
-														events
-															// Get rid of tutoring events
-															.filter((eee) => eee.isTutoring == false)
-															// Get even events in filtered list of events
-															.indexOf(ee) %
-															2 ==
-															1 && ee.isTutoring == false
-													);
-												} else {
-													let indexBreakpoint = Math.floor(
-														(events.filter((eee) => eee.isTutoring == false)
-															.length -
-															1) /
-															2
-													);
-													console.log(indexBreakpoint);
-													console.log(
-														events.filter((eee) => eee.isTutoring == false)
-															.length
-													);
+										<div className={`col-lg-4`}>
+											{events
+												.filter((event) => {
+													if (!isMobile()) {
+														// Filter out events that are tutoring
+														const isTutoring = event.isTutoring == true;
 
-													if (
-														events
-															.filter((eee) => eee.isTutoring == false)
-															.indexOf(ee) > indexBreakpoint &&
-														ee.isTutoring == false
-													) {
-														return true;
-													} else {
-														return false;
-													}
-												}
-											})
-											.map((e) => {
-												return (
-													<div
-														className={`${styles.event} mb-2`}
-														key={events.indexOf(e) + "event"}
-													>
-														<h2>{e.eventName}</h2>
-														<Table
-															widthVal={"95%"}
-															bgColor="rgba(0,0,0,0.2)"
-															minHeight={"10vh"}
-															maxHeight={"40vh"}
-														>
-															<div className="d-flex justify-content-center w-100 align-items-center">
-																<div className={`${styles.eventCard}`}>
-																	<div className="">
-																		<p>
-																			<b>Date</b>
-																		</p>
-																		<p>{e.date}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Location</b>
-																		</p>
-																		<p>{e.location}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Time</b>
-																		</p>
-																		<p>
-																			{e.startTime} - {e.endTime}
-																		</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Volunteers Needed</b>
-																		</p>
-																		<p>{e.volunteersNeeded}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Signed Up</b>
-																		</p>
-																		<p className="w-100">
-																			{e.volunteers.map((v) => {
-																				return <>{v}, </>;
-																			})}
-																		</p>
-																	</div>
-																</div>
-															</div>
-														</Table>
-													</div>
-												);
-											})}
-									</div>
-								</div>
-							</div>
-						</Table>
-						<h2 className="mt-3">Tutoring</h2>
-						<p className="mb-2">Use the same buttons as above</p>
-						<Table
-							minHeight={"20vh"}
-							maxHeight={"85vh"}
-							bgColor={"rgba(0,0,0,0.2)"}
-							widthVal={"90%"}
-						>
-							<div className="d-flex justify-content-center w-100">
-								<div className={`row w-100 ${styles.tableUpcomingEventsItem}`}>
-									<div className={`col-lg-4`}>
-										{events
-											.filter((ee) => {
-												if (!isMobile()) {
-													return (
-														events
-															// Get rid of tutoring events
-															.filter((eee) => eee.isTutoring == true)
-															// Get even events in filtered list of events
-															.indexOf(ee) %
-															3 ==
-															0 && ee.isTutoring == true
-													);
-												} else {
-													let indexBreakpoint = Math.floor(
-														(events.filter((eee) => eee.isTutoring == true)
-															.length -
-															1) /
-															2
-													);
-													if (
-														events
-															.filter((eee) => eee.isTutoring == true)
-															.indexOf(ee) <= indexBreakpoint &&
-														ee.isTutoring == true
-													) {
-														return true;
-													} else {
-														return false;
-													}
-												}
-											})
-											.map((e) => {
-												return (
-													<div
-														className={`${styles.event} mb-2`}
-														key={events.indexOf(e) + "event"}
-													>
-														<h2>{e.eventName}</h2>
-														<Table
-															widthVal={"95%"}
-															bgColor="rgba(0,0,0,0.2)"
-															minHeight={"10vh"}
-															maxHeight={"40vh"}
-														>
-															<div className="d-flex justify-content-center w-100 align-items-center">
-																<div className={`${styles.eventCard}`}>
-																	<div className="">
-																		<p>
-																			<b>Date</b>
-																		</p>
-																		<p>{e.date}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Room</b>
-																		</p>
-																		<p>{e.location}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>End Time</b>
-																		</p>
-																		<p>{e.endTime}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Tutors Needed</b>
-																		</p>
-																		<p>{e.volunteersNeeded}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Host</b>
-																		</p>
-																		<p>{e.tutorHost}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Signed Up</b>
-																		</p>
-																		<p className="w-100">
-																			{e.volunteers.map((v) => {
-																				return <>{v}, </>;
-																			})}
-																		</p>
-																	</div>
-																</div>
-															</div>
-														</Table>
-													</div>
-												);
-											})}
-									</div>
-									<div className={`col-lg-4`}>
-										{events
-											.filter((ee) => {
-												if (!isMobile()) {
-													return (
-														events
-															// Get rid of tutoring events
-															.filter((eee) => eee.isTutoring == true)
-															// Get even events in filtered list of events
-															.indexOf(ee) %
-															3 ==
-															1 && ee.isTutoring == true
-													);
-												} else {
-													let indexBreakpoint = Math.floor(
-														(events.filter((eee) => eee.isTutoring == true)
-															.length -
-															1) /
-															2
-													);
-													if (
-														events
-															.filter((eee) => eee.isTutoring == true)
-															.indexOf(ee) > indexBreakpoint &&
-														ee.isTutoring == true
-													) {
-														return true;
-													} else {
-														return false;
-													}
-												}
-											})
-											.map((e) => {
-												return (
-													<div
-														className={`${styles.event} mb-2`}
-														key={events.indexOf(e) + "event"}
-													>
-														<h2>{e.eventName}</h2>
-														<Table
-															widthVal={"95%"}
-															bgColor="rgba(0,0,0,0.2)"
-															minHeight={"10vh"}
-															maxHeight={"40vh"}
-														>
-															<div className="d-flex justify-content-center w-100 align-items-center">
-																<div className={`${styles.eventCard}`}>
-																	<div className="">
-																		<p>
-																			<b>Date</b>
-																		</p>
-																		<p>{e.date}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Room</b>
-																		</p>
-																		<p>{e.location}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>End Time</b>
-																		</p>
-																		<p>{e.endTime}</p>
-																	</div>
+														// Filter out events that are in the past
+														const isNotInPast =
+															new Date(
+																parseInt(event.date.split("-")[0]),
+																parseInt(event.date.split("-")[1]) - 1,
+																parseInt(event.date.split("-")[2])
+															).getTime() >=
+															new Date().getTime() - 86400000;
 
-																	<div className="">
-																		<p>
-																			<b>Tutors Needed</b>
-																		</p>
-																		<p>{e.volunteersNeeded}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Host</b>
-																		</p>
-																		<p>{e.tutorHost}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Signed Up</b>
-																		</p>
-																		<p className="w-100">
-																			{e.volunteers.map((v) => {
-																				return <>{v}, </>;
-																			})}
-																		</p>
-																	</div>
-																</div>
-															</div>
-														</Table>
-													</div>
-												);
-											})}
-									</div>
-									<div className={`col-lg-4`}>
-										{events
-											.filter((ee) => {
-												if (!isMobile()) {
-													return (
-														events
-															// Get rid of tutoring events
-															.filter((eee) => eee.isTutoring == true)
-															// Get even events in filtered list of events
-															.indexOf(ee) %
-															3 ==
-															2 && ee.isTutoring == true
-													);
-												} else {
-													let indexBreakpoint = Math.floor(
-														(events.filter((eee) => eee.isTutoring == true)
-															.length -
-															1) /
-															2
-													);
-													if (
-														events
-															.filter((eee) => eee.isTutoring == true)
-															.indexOf(ee) > indexBreakpoint &&
-														ee.isTutoring == true
-													) {
-														return true;
+														const checkPast = (dat: string) => {
+															return (
+																new Date(
+																	parseInt(dat.split("-")[0]),
+																	parseInt(dat.split("-")[1]) - 1,
+																	parseInt(dat.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000
+															);
+														};
+
+														// Filter out events that are not tutoring and are not in the past
+														const isValidEvent = isTutoring && isNotInPast;
+
+														// Filter out events that are not tutoring and are not in the past
+														const isEvenIndex =
+															events
+																.filter(
+																	(event) =>
+																		event.isTutoring == true &&
+																		checkPast(event.date)
+																)
+																.indexOf(event) %
+																3 ==
+															0;
+
+														// Return events that are not tutoring and are not in the past and are on the even index
+														return isValidEvent && isEvenIndex;
 													} else {
-														return false;
+														const checkPast = (dat: string) => {
+															return (
+																new Date(
+																	parseInt(dat.split("-")[0]),
+																	parseInt(dat.split("-")[1]) - 1,
+																	parseInt(dat.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000
+															);
+														};
+
+														return (
+															events.indexOf(event) <
+																Math.ceil(events.length / 3) &&
+															checkPast(event.date) &&
+															event.isTutoring == true
+														);
 													}
-												}
-											})
-											.map((e) => {
-												return (
-													<div
-														className={`${styles.event} mb-2`}
-														key={events.indexOf(e) + "event"}
-													>
-														<h2>{e.eventName}</h2>
-														<Table
-															widthVal={"95%"}
-															bgColor="rgba(0,0,0,0.2)"
-															minHeight={"10vh"}
-															maxHeight={"40vh"}
+												})
+												.map((e) => {
+													return (
+														<div
+															className={`${styles.event} mb-2`}
+															key={events.indexOf(e) + "event"}
 														>
-															<div className="d-flex justify-content-center w-100 align-items-center">
-																<div className={`${styles.eventCard}`}>
-																	<div className="">
-																		<p>
-																			<b>Date</b>
-																		</p>
-																		<p>{e.date}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Room</b>
-																		</p>
-																		<p>{e.location}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>End Time</b>
-																		</p>
-																		<p>{e.endTime}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Tutors Needed</b>
-																		</p>
-																		<p>{e.volunteersNeeded}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Host</b>
-																		</p>
-																		<p>{e.tutorHost}</p>
-																	</div>
-																	<div className="">
-																		<p>
-																			<b>Signed Up</b>
-																		</p>
-																		<p className="w-100">
-																			{e.volunteers.map((v) => {
-																				return <>{v}, </>;
-																			})}
-																		</p>
+															<h2>{e.eventName}</h2>
+															<Table
+																widthVal={"95%"}
+																bgColor="rgba(0,0,0,0.2)"
+																minHeight={"10vh"}
+																maxHeight={"40vh"}
+															>
+																<div className="d-flex justify-content-center w-100 align-items-center">
+																	<div className={`${styles.eventCard}`}>
+																		<div className="">
+																			<p>
+																				<b>Date</b>
+																			</p>
+																			<p>{e.date}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Room</b>
+																			</p>
+																			<p>{e.location}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>End Time</b>
+																			</p>
+																			<p>{e.endTime}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Tutors Needed</b>
+																			</p>
+																			<p>{e.volunteersNeeded}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Host</b>
+																			</p>
+																			<p>{e.tutorHost}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Signed Up</b>
+																			</p>
+																			<p className="w-100">
+																				{e.volunteers.map((v) => {
+																					return <>{v}, </>;
+																				})}
+																			</p>
+																		</div>
 																	</div>
 																</div>
-															</div>
-														</Table>
-													</div>
-												);
-											})}
+															</Table>
+														</div>
+													);
+												})}
+										</div>
+										<div className={`col-lg-4`}>
+											{events
+												.filter((event) => {
+													if (!isMobile()) {
+														// Filter out events that are tutoring
+														const isTutoring = event.isTutoring == true;
+
+														// Filter out events that are in the past
+														const isNotInPast =
+															new Date(
+																parseInt(event.date.split("-")[0]),
+																parseInt(event.date.split("-")[1]) - 1,
+																parseInt(event.date.split("-")[2])
+															).getTime() >=
+															new Date().getTime() - 86400000;
+
+														const checkPast = (dat: string) => {
+															return (
+																new Date(
+																	parseInt(dat.split("-")[0]),
+																	parseInt(dat.split("-")[1]) - 1,
+																	parseInt(dat.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000
+															);
+														};
+
+														// Filter out events that are not tutoring and are not in the past
+														const isValidEvent = isTutoring && isNotInPast;
+
+														// Filter out events that are not tutoring and are not in the past
+														const isEvenIndex =
+															events
+																.filter(
+																	(event) =>
+																		event.isTutoring == true &&
+																		checkPast(event.date)
+																)
+																.indexOf(event) %
+																3 ==
+															1;
+
+														// Return events that are not tutoring and are not in the past and are on the even index
+														return isValidEvent && isEvenIndex;
+													} else {
+														const checkPast = (dat: string) => {
+															return (
+																new Date(
+																	parseInt(dat.split("-")[0]),
+																	parseInt(dat.split("-")[1]) - 1,
+																	parseInt(dat.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000
+															);
+														};
+
+														return (
+															events.indexOf(event) >=
+																Math.ceil(events.length / 3) &&
+															events.indexOf(event) <
+																Math.ceil(events.length / 3) * 2 &&
+															checkPast(event.date) &&
+															event.isTutoring == true
+														);
+													}
+												})
+												.map((e) => {
+													return (
+														<div
+															className={`${styles.event} mb-2`}
+															key={events.indexOf(e) + "event"}
+														>
+															<h2>{e.eventName}</h2>
+															<Table
+																widthVal={"95%"}
+																bgColor="rgba(0,0,0,0.2)"
+																minHeight={"10vh"}
+																maxHeight={"40vh"}
+															>
+																<div className="d-flex justify-content-center w-100 align-items-center">
+																	<div className={`${styles.eventCard}`}>
+																		<div className="">
+																			<p>
+																				<b>Date</b>
+																			</p>
+																			<p>{e.date}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Room</b>
+																			</p>
+																			<p>{e.location}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>End Time</b>
+																			</p>
+																			<p>{e.endTime}</p>
+																		</div>
+
+																		<div className="">
+																			<p>
+																				<b>Tutors Needed</b>
+																			</p>
+																			<p>{e.volunteersNeeded}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Host</b>
+																			</p>
+																			<p>{e.tutorHost}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Signed Up</b>
+																			</p>
+																			<p className="w-100">
+																				{e.volunteers.map((v) => {
+																					return <>{v}, </>;
+																				})}
+																			</p>
+																		</div>
+																	</div>
+																</div>
+															</Table>
+														</div>
+													);
+												})}
+										</div>
+										<div className={`col-lg-4`}>
+											{events
+												.filter((event) => {
+													if (!isMobile()) {
+														// Filter out events that are tutoring
+														const isTutoring = event.isTutoring == true;
+
+														// Filter out events that are in the past
+														const isNotInPast =
+															new Date(
+																parseInt(event.date.split("-")[0]),
+																parseInt(event.date.split("-")[1]) - 1,
+																parseInt(event.date.split("-")[2])
+															).getTime() >=
+															new Date().getTime() - 86400000;
+
+														const checkPast = (dat: string) => {
+															return (
+																new Date(
+																	parseInt(dat.split("-")[0]),
+																	parseInt(dat.split("-")[1]) - 1,
+																	parseInt(dat.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000
+															);
+														};
+
+														// Filter out events that are not tutoring and are not in the past
+														const isValidEvent = isTutoring && isNotInPast;
+
+														// Filter out events that are not tutoring and are not in the past
+														const isEvenIndex =
+															events
+																.filter(
+																	(event) =>
+																		event.isTutoring == true &&
+																		checkPast(event.date)
+																)
+																.indexOf(event) %
+																3 ==
+															2;
+
+														// Return events that are not tutoring and are not in the past and are on the even index
+														return isValidEvent && isEvenIndex;
+													} else {
+														const checkPast = (dat: string) => {
+															return (
+																new Date(
+																	parseInt(dat.split("-")[0]),
+																	parseInt(dat.split("-")[1]) - 1,
+																	parseInt(dat.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000
+															);
+														};
+
+														return (
+															events.indexOf(event) >=
+																Math.ceil(events.length / 3) * 2 &&
+															checkPast(event.date) &&
+															event.isTutoring == true
+														);
+													}
+												})
+												.map((e) => {
+													return (
+														<div
+															className={`${styles.event} mb-2`}
+															key={events.indexOf(e) + "event"}
+														>
+															<h2>{e.eventName}</h2>
+															<Table
+																widthVal={"95%"}
+																bgColor="rgba(0,0,0,0.2)"
+																minHeight={"10vh"}
+																maxHeight={"40vh"}
+															>
+																<div className="d-flex justify-content-center w-100 align-items-center">
+																	<div className={`${styles.eventCard}`}>
+																		<div className="">
+																			<p>
+																				<b>Date</b>
+																			</p>
+																			<p>{e.date}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Room</b>
+																			</p>
+																			<p>{e.location}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>End Time</b>
+																			</p>
+																			<p>{e.endTime}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Tutors Needed</b>
+																			</p>
+																			<p>{e.volunteersNeeded}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Host</b>
+																			</p>
+																			<p>{e.tutorHost}</p>
+																		</div>
+																		<div className="">
+																			<p>
+																				<b>Signed Up</b>
+																			</p>
+																			<p className="w-100">
+																				{e.volunteers.map((v) => {
+																					return <>{v}, </>;
+																				})}
+																			</p>
+																		</div>
+																	</div>
+																</div>
+															</Table>
+														</div>
+													);
+												})}
+										</div>
 									</div>
 								</div>
-							</div>
-						</Table>
+							</Table>
+						</>
 					</section>
 					{/* <section id={`${styles.SocialMedia}`} className="container-lg">
 						<h1 className="mb-3">Recent Posts</h1>
