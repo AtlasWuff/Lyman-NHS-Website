@@ -819,7 +819,10 @@ export default function Admin() {
 										</button>
 									</motion.div>
 									<div className="col-12 col-lg-6 d-flex align-items-center flex-column">
-										<h2>Events</h2>
+										<h2 className="mb-1">Events</h2>
+										<p className="mb-2">
+											If an event is red, it is from the past
+										</p>
 										<div className="d-flex flex-row justify-content-center align-items-center mb-2">
 											{!showTutoringEvents ? (
 												<button
@@ -891,6 +894,13 @@ export default function Admin() {
 													events.events
 														.filter((eventt) => eventt.isTutoring)
 														.map((event: eventProps) => {
+															const isEventOld: boolean =
+																new Date(
+																	parseInt(event.date.split("-")[0]),
+																	parseInt(event.date.split("-")[1]) - 1,
+																	parseInt(event.date.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000;
 															return (
 																<div
 																	className={`${styles.eventsItem}`}
@@ -902,7 +912,9 @@ export default function Admin() {
 																	<div className="d-flex align-items-center justify-content-center flex-row w-100 flex-wrap">
 																		<Collapsable
 																			initText={event.eventName}
-																			className="w-100"
+																			className={`w-100 ${
+																				!isEventOld ? "bg-danger" : ""
+																			}`}
 																		>
 																			<p>
 																				<b>Date:</b> {event.date}
@@ -962,6 +974,13 @@ export default function Admin() {
 												events.events
 													.filter((eventt) => !eventt.isTutoring)
 													.map((event: eventProps) => {
+														const isEventOld: boolean =
+															new Date(
+																parseInt(event.date.split("-")[0]),
+																parseInt(event.date.split("-")[1]) - 1,
+																parseInt(event.date.split("-")[2])
+															).getTime() >=
+															new Date().getTime() - 86400000;
 														return (
 															<div
 																className={`${styles.eventsItem}`}
@@ -970,10 +989,14 @@ export default function Admin() {
 																	events.events.indexOf(event as never)
 																}
 															>
-																<div className="d-flex align-items-center justify-content-center flex-row w-100 flex-wrap">
+																<div
+																	className={`d-flex align-items-center justify-content-center flex-row w-100 flex-wrap }`}
+																>
 																	<Collapsable
 																		initText={event.eventName}
-																		className="w-100"
+																		className={`w-100 ${
+																			!isEventOld ? "bg-danger" : ""
+																		}`}
 																	>
 																		<p>
 																			<b>Date:</b> {event.date}
@@ -1035,7 +1058,7 @@ export default function Admin() {
 							<section
 								className={`${styles.adminSection} container-sm text-center`}
 							>
-								<h1>Hours Managments</h1>
+								<h1>Hours Managment</h1>
 								<p>
 									New hours are <b>not</b> additive, it replaces the previous
 									value. Ensure all hours are what the member should have after
