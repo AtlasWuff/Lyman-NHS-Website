@@ -41,7 +41,22 @@ export default function Home() {
 	const [eventInput, setEventInput] = useState("");
 
 	useEffectOnce(() => {
-		getEventsAwait().then((e) => setEvents(e as Array<eventProps>));
+		getEventsAwait().then((e) => {
+			setEvents(e as Array<eventProps>);
+			setEventInput(
+				e
+					.filter((thing) => thing.isTutoring == false)
+					.filter(
+						(thing) =>
+							new Date(
+								parseInt(thing.date.split("-")[0]),
+								parseInt(thing.date.split("-")[1]) - 1,
+								parseInt(thing.date.split("-")[2])
+							).getTime() >=
+							new Date().getTime() - 86400000
+					)[0].eventName
+			);
+		});
 	});
 
 	const displayModal = async () => {
@@ -69,7 +84,7 @@ export default function Home() {
 			console.log(eventInput);
 			addEventVolunteers(eventInput, email, password).then((e) => {
 				if (e == true) {
-					alert("Successfully signed up for event");
+					alert(`Successfully signed up for event "${eventInput}"`);
 					setShowSignUpModal(!showSignUpModal);
 				} else {
 					console.log(e);
@@ -86,7 +101,7 @@ export default function Home() {
 		} else {
 			removeEventVolunteers(eventInput, email, password).then((e) => {
 				if (e == true) {
-					alert("Successfully left event");
+					alert(`Successfully left event "${eventInput}"`);
 					setShowLeaveEventModal(!showLeaveEventModal);
 				} else {
 					console.log(e);
@@ -143,19 +158,6 @@ export default function Home() {
 		useState<string>("Volunteering");
 	const [leaveEventModalDesicion, setLeaveEventModalDesicion] =
 		useState<string>("Volunteering");
-
-	// const [instaRecentPosts, setInstaRecentPosts] = useState<any[]>([]);
-	// useEffect(() => {
-	// 	axios
-	// 		.get(
-	// 			`https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username&access_token=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
-	// 		)
-
-	// 		.then((res) => {
-	// 			setInstaRecentPosts(res.data.data);
-	// 		})
-	// 		.catch((err) => console.log(err));
-	// }, []);
 
 	const [showOldTutoringEvents, setShowOldTutoringEvents] =
 		useState<boolean>(false);
@@ -335,6 +337,7 @@ export default function Home() {
 												} else {
 													setEventInput("");
 												}
+												console.log(v.target.value);
 											}}
 										>
 											<>
@@ -444,7 +447,14 @@ export default function Home() {
 										<p className="mb-2">Select event to leave</p>
 										<select
 											value={eventInput}
-											onChange={(v) => setEventInput(v.target.value)}
+											onChange={(v) => {
+												if (v.target.value.length > 0) {
+													setEventInput(v.target.value);
+												} else {
+													setEventInput("");
+												}
+												console.log(v.target.value);
+											}}
 										>
 											<>
 												{leaveEventModalDesicion == "Volunteering" ? (
