@@ -61,6 +61,7 @@ export interface eventProps {
 	volunteers: string[];
 	isTutoring: boolean;
 	tutorHost: string;
+	teachers: string;
 }
 
 export const didAccLogin = async (
@@ -349,6 +350,7 @@ export const addEvent = async ({
 	volunteers,
 	isTutoring,
 	tutorHost,
+	teachers,
 }: eventProps) => {
 	return new Promise<any>(async (resolve, reject) => {
 		try {
@@ -365,6 +367,7 @@ export const addEvent = async ({
 				volunteers,
 				isTutoring,
 				tutorHost,
+				teachers,
 			}).then((res) => {
 				console.log("Add event line 362");
 				alert(`Success!\nEvent ${eventName} has been added to the database.`);

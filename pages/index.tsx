@@ -971,6 +971,11 @@ export default function Home() {
 																			</p>
 																			<p>{e.tutorHost}</p>
 																		</div>
+																		<div>
+																			<p>
+																				<b>Teachers:</b> {e.teachers}
+																			</p>
+																		</div>
 																		<div className="">
 																			<p>
 																				<b>Signed Up</b>
@@ -1100,6 +1105,11 @@ export default function Home() {
 																			</p>
 																			<p>{e.tutorHost}</p>
 																		</div>
+																		<div>
+																			<p>
+																				<b>Teachers:</b> {e.teachers}
+																			</p>
+																		</div>
 																		<div className="">
 																			<p>
 																				<b>Signed Up</b>
@@ -1225,6 +1235,11 @@ export default function Home() {
 																				<b>Host</b>
 																			</p>
 																			<p>{e.tutorHost}</p>
+																		</div>
+																		<div>
+																			<p>
+																				<b>Teachers:</b> {e.teachers}
+																			</p>
 																		</div>
 																		<div className="">
 																			<p>

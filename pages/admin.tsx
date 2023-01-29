@@ -292,6 +292,7 @@ export default function Admin() {
 	const [events, setEvents] = useState<EventsStateProp>({ events: [] });
 	const [eventIsTutoring, setEventIsTutoring] = useState<boolean>(false);
 	const [tutoringHost, setTutoringHost] = useState<string>("N/A");
+	const [tutoringTeachers, setTutoringTeachers] = useState<string>("N/A");
 
 	/* Refresh accounts updating the state
 	 * @param {void}
@@ -355,6 +356,7 @@ export default function Admin() {
 			volunteers: eventVolunteersSignedUp,
 			isTutoring: eventIsTutoring,
 			tutorHost: tutoringHost,
+			teachers: tutoringTeachers,
 		}).then(async () => {
 			setEvents({
 				events: [
@@ -369,6 +371,7 @@ export default function Admin() {
 						volunteers: eventVolunteersSignedUp,
 						isTutoring: eventIsTutoring,
 						tutorHost: tutoringHost,
+						teachers: tutoringTeachers,
 					},
 				],
 			});
@@ -777,6 +780,19 @@ export default function Admin() {
 												}
 											/>
 										</div>
+										{eventIsTutoring ? (
+											<div className={`${styles.eventInput}`}>
+												<p>{"Teacher(s)"}</p>
+												<input
+													type="text"
+													onChange={(e) =>
+														setTutoringTeachers(e.target.value.trim())
+													}
+												/>
+											</div>
+										) : (
+											<></>
+										)}
 										{!eventIsTutoring ? (
 											<div className={`${styles.eventInput}`}>
 												<p>Start Time</p>
