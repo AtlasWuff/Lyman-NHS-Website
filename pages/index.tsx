@@ -456,7 +456,7 @@ export default function Home() {
 																	value={e.eventName}
 																	key={events.indexOf(e) + "di"}
 																>
-																	{e.eventName}
+																	{e.eventName + " - " + e.date}
 																</option>
 															))}
 													</>
@@ -572,7 +572,7 @@ export default function Home() {
 																	value={e.eventName}
 																	key={events.indexOf(e) + "di"}
 																>
-																	{e.eventName}
+																	{e.eventName + " - " + e.date}
 																</option>
 															))}
 													</>
