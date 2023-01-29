@@ -18,6 +18,9 @@ import {
 	addEvent,
 	deleteEvent,
 	deleteCollectionData,
+	getMessagesArray,
+	messageInterface,
+	deleteMessage,
 } from "../firebase";
 import * as EmailValidator from "email-validator";
 import { collection, addDoc, updateDoc } from "firebase/firestore";
@@ -77,12 +80,17 @@ export default function Admin() {
 		accounts: Array<AccInterface>;
 	}
 
+	interface msgs {
+		messages: Array<messageInterface>;
+	}
+
 	// States for the page
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isUserAdmin, setIsUserAdmin] = useState(false);
 	const [showLoading, setShowLoading] = useState(false);
 	const [accounts, setAccounts] = useState<Accounts>({ accounts: [] });
+	const [messages, setMessages] = useState<msgs>({ messages: [] });
 
 	// Table Loading states
 	const [pendingMemberTableLoading, setPendingMemberTableLoading] =
@@ -134,10 +142,16 @@ export default function Admin() {
 		const getEventAwait = async () => {
 			return await getEvents();
 		};
+		const getMessagesAwait = async () => {
+			return await getMessagesArray();
+		};
 		getAccAwait().then((res) => {
 			setAccounts({ accounts: res });
 			getEventAwait().then((res) => {
 				setEvents({ events: res });
+			});
+			getMessagesAwait().then((res) => {
+				setMessages({ messages: res });
 			});
 		});
 	}, []);
@@ -405,6 +419,13 @@ export default function Admin() {
 			accounts: [],
 		});
 		// await refreshAccounts();
+	};
+
+	const deleteMessageRefresh = async (name: string) => {
+		await deleteMessage(name);
+		setMessages({
+			messages: messages.messages.filter((message) => message.name !== name),
+		});
 	};
 
 	return (
@@ -1058,105 +1079,200 @@ export default function Admin() {
 							<section
 								className={`${styles.adminSection} container-sm text-center`}
 							>
-								<h1>Hours Managment</h1>
-								<p>
-									New hours are <b>not</b> additive, it replaces the previous
-									value. Ensure all hours are what the member should have after
-									clicking submit. Values shown in the dropdown are the members
-									current hours{" "}
-								</p>
-								<motion.div
-									animate={secondControls}
-									ref={secondRef}
-									transition={{ duration: 0.5, ease: [0.5, 0.01, -0.05, 0.9] }}
-									initial={{ scale: 0 }}
-									variants={{
-										visible: { scale: 1 },
-									}}
-									className="w-100 d-flex align-items-center justify-content-center flex-column container"
-								>
+								<div className="row">
 									<div
-										className={`flex-md-row flex-column d-flex text-white ${styles.eventInputHours} align-items-center justify-content-center `}
+										className="col-lg-6 d-flex align-items-center flex-column"
+										id={`${styles.pendingMembers}`}
 									>
-										<p className="pe-2">Member: </p>
-										<select
-											value={hoursName}
-											onChange={(v) => setHoursName(v.target.value)}
+										<h2>Hours Managment</h2>
+										<p>
+											New hours are <b>not</b> additive, it replaces the
+											previous value. Ensure all hours are what the member
+											should have after clicking submit. Values shown in the
+											dropdown are the members current hours{" "}
+										</p>
+										<motion.div
+											animate={secondControls}
+											ref={secondRef}
+											transition={{
+												duration: 0.5,
+												ease: [0.5, 0.01, -0.05, 0.9],
+											}}
+											initial={{ scale: 0 }}
+											variants={{
+												visible: { scale: 1 },
+											}}
+											className="w-100 d-flex align-items-center justify-content-center flex-column container"
 										>
-											<option value="Select a member">Select a member</option>
-											{accounts.accounts
-												.filter((e) => e.isVerified == true)
-												.map((e) => (
-													<option
-														value={e.firstName + " " + e.lastName}
-														key={accounts.accounts.indexOf(e) + "di"}
-													>
-														{e.firstName +
-															" " +
-															e.lastName +
-															" | Volunteer: " +
-															e.volunteerHours +
-															" Tutor: " +
-															e.tutoringHours}
+											<div
+												className={`flex-md-row flex-column d-flex text-white ${styles.eventInputHours} align-items-center justify-content-center `}
+											>
+												<p className="pe-2">Member: </p>
+												<select
+													value={hoursName}
+													onChange={(v) => setHoursName(v.target.value)}
+												>
+													<option value="Select a member">
+														Select a member
 													</option>
-												))}
-										</select>
-									</div>
+													{accounts.accounts
+														.filter((e) => e.isVerified == true)
+														.map((e) => (
+															<option
+																value={e.firstName + " " + e.lastName}
+																key={accounts.accounts.indexOf(e) + "di"}
+															>
+																{e.firstName +
+																	" " +
+																	e.lastName +
+																	" | Volunteer: " +
+																	e.volunteerHours +
+																	" Tutor: " +
+																	e.tutoringHours}
+															</option>
+														))}
+												</select>
+											</div>
 
-									<div className={`${styles.eventInput}`}>
-										<p>New Volunteer Hours</p>
-										<input
-											type="text"
-											onChange={(e) =>
-												setHoursNewVolunteerHours(e.target.value.trim())
-											}
-											value={hoursNewVolunteerHours}
-										/>
+											<div className={`${styles.eventInput}`}>
+												<p>New Volunteer Hours</p>
+												<input
+													type="text"
+													onChange={(e) =>
+														setHoursNewVolunteerHours(e.target.value.trim())
+													}
+													value={hoursNewVolunteerHours}
+												/>
+											</div>
+											<div className={`${styles.eventInput}`}>
+												<p>New Tutoring Hours</p>
+												<input
+													type="text"
+													onChange={(e) =>
+														setHoursNewTutoringHours(e.target.value.trim())
+													}
+													value={hoursNewTutoringHours}
+												/>
+											</div>
+											<button
+												className="ApproveButton-pushable mb-3"
+												onClick={async () => {
+													if (
+														hoursName == "" ||
+														hoursName.length <= 0 ||
+														hoursName == "Select a member"
+													) {
+														alert("Please select a member");
+														return;
+													} else if (
+														hoursNewVolunteerHours == "" ||
+														hoursNewVolunteerHours.length <= 0 ||
+														hoursNewTutoringHours == "" ||
+														hoursNewTutoringHours.length <= 0
+													) {
+														alert("Please enter a value for both fields");
+														return;
+													} else {
+														updateMember(hoursName, {
+															volunteerHours: hoursNewVolunteerHours,
+															tutoringHours: hoursNewTutoringHours,
+														}).then(() => {
+															alert("Updated");
+														});
+													}
+												}}
+											>
+												<span className="ApproveButton-shadow"></span>
+												<span className="ApproveButton-edge"></span>
+
+												<span className="ApproveButton-front text">Submit</span>
+											</button>
+										</motion.div>
 									</div>
-									<div className={`${styles.eventInput}`}>
-										<p>New Tutoring Hours</p>
-										<input
-											type="text"
-											onChange={(e) =>
-												setHoursNewTutoringHours(e.target.value.trim())
-											}
-											value={hoursNewTutoringHours}
-										/>
-									</div>
-									<button
-										className="ApproveButton-pushable mb-3"
-										onClick={async () => {
-											if (
-												hoursName == "" ||
-												hoursName.length <= 0 ||
-												hoursName == "Select a member"
-											) {
-												alert("Please select a member");
-												return;
-											} else if (
-												hoursNewVolunteerHours == "" ||
-												hoursNewVolunteerHours.length <= 0 ||
-												hoursNewTutoringHours == "" ||
-												hoursNewTutoringHours.length <= 0
-											) {
-												alert("Please enter a value for both fields");
-												return;
-											} else {
-												updateMember(hoursName, {
-													volunteerHours: hoursNewVolunteerHours,
-													tutoringHours: hoursNewTutoringHours,
-												}).then(() => {
-													alert("Updated");
-												});
-											}
-										}}
+									<div
+										className="col-lg-6 d-flex align-items-center flex-column"
+										id={`${styles.pendingMembers}`}
 									>
-										<span className="ApproveButton-shadow"></span>
-										<span className="ApproveButton-edge"></span>
+										<h2>New Messages</h2>
+										<p>
+											Messages from members whether that be unable to attend a
+											meeting or just a general message show up here. Im not
+											coding a response function so just message them on groupme
+											or something
+										</p>
+										<motion.div
+											animate={secondControls}
+											ref={secondRef}
+											transition={{
+												duration: 0.5,
+												ease: [0.5, 0.01, -0.05, 0.9],
+											}}
+											initial={{ scale: 0 }}
+											variants={{
+												visible: { scale: 1 },
+											}}
+											className="w-100 d-flex align-items-center justify-content-center flex-column container"
+										>
+											<Table maxHeight={"80vh"} minHeight={"20vh"}>
+												{messages.messages.length > 0 ? (
+													<>
+														<div className="d-flex flex-row align-items-center w-100">
+															{messages.messages.map((message, index) => {
+																return (
+																	<div
+																		key={index}
+																		className={`${styles.pendingMember} w-100`}
+																	>
+																		<div className="d-flex justify-content-between w-100 flex-row">
+																			<div
+																				className={`${styles.MemberItemText}`}
+																			>
+																				<Collapsable
+																					initText={message.name}
+																					className={`w-100 ${styles.memberItemThing}`}
+																				>
+																					<div className="d-flex flex-column">
+																						<p className="mb-0">
+																							{message.text}
+																						</p>
+																					</div>
+																				</Collapsable>
+																			</div>
+																			<div
+																				className="d-flex align-items-center justify-content-center flex-row"
+																				id={`${styles.eventDeleteButtonDiv}`}
+																			>
+																				<button
+																					className="DenyButton-pushable"
+																					onClick={() => {
+																						deleteMessageRefresh(message.name);
+																					}}
+																				>
+																					<span className="DenyButton-shadow"></span>
+																					<span className="DenyButton-edge"></span>
 
-										<span className="ApproveButton-front text">Submit</span>
-									</button>
-								</motion.div>
+																					<span className="DenyButton-front text">
+																						Delete
+																					</span>
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																);
+															})}
+														</div>
+													</>
+												) : (
+													<div className="w-100 d-flex justify-content-center align-items-center">
+														<p className="text-center">
+															<b>No messages to show</b>
+														</p>
+													</div>
+												)}
+											</Table>
+										</motion.div>
+									</div>
+								</div>
 							</section>
 						</div>
 					</motion.div>

@@ -49,6 +49,7 @@ const eventsDb = collection(db, "Events");
 console.log("Events db line 50");
 export const accountsDb = collection(db, "Accounts");
 console.log("Accounts db line 52");
+const messagesDb = collection(db, "Messages");
 
 export interface eventProps {
 	eventName: string;
@@ -743,6 +744,72 @@ export const deleteCollectionData = async (collectionName: string) => {
 		});
 
 		alert("Collection deleted. Click 'Refresh items' to see changes.");
+		resolve();
+	});
+};
+
+export interface messageInterface {
+	name: string;
+	text: string;
+}
+
+export const newMessage = async (
+	email: string,
+	password: string,
+	messageText: string
+) => {
+	return new Promise<void>(async (resolve, reject) => {
+		let querySnapshot: any;
+		try {
+			querySnapshot = await getDocs(accountsDb);
+		} catch (err) {
+			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
+		}
+		if ((await didAccLogin("", email, password, querySnapshot)) == false) {
+			alert("Incorrect email or password.");
+			reject();
+			return;
+		}
+		console.log(querySnapshot);
+		let name = await getNameFromEmail(email, querySnapshot);
+		console.log(name);
+		try {
+			let newMessageDoc = await doc(db, "Messages", name);
+			await setDoc(newMessageDoc, {
+				name: name,
+				text: messageText,
+			});
+			resolve();
+		} catch (err) {
+			console.log(err);
+			alert(
+				"Error: The database is likely at capacity, please try again tomorrow or message an officer."
+			);
+			reject();
+		}
+	});
+};
+
+export const getMessagesArray = async () => {
+	return new Promise<messageInterface[]>(async (resolve, reject) => {
+		let messages: messageInterface[] = [];
+		let querySnapshot = await getDocs(collection(db, "Messages"));
+		querySnapshot.forEach((doc: any) => {
+			messages.push({
+				name: doc.data().name,
+				text: doc.data().text,
+			});
+		});
+		resolve(messages);
+	});
+};
+
+export const deleteMessage = async (name: string) => {
+	return new Promise<void>(async (resolve, reject) => {
+		await deleteDoc(doc(db, "Messages", name));
 		resolve();
 	});
 };

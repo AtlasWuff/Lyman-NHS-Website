@@ -11,6 +11,8 @@ import {
 	addEventVolunteers,
 	removeEventVolunteers,
 	checkMemberHours,
+	getMessagesArray,
+	newMessage,
 } from "../firebase";
 import { useEffectOnce } from "usehooks-ts";
 import { InstagramEmbed } from "react-social-media-embed";
@@ -162,6 +164,12 @@ export default function Home() {
 	const [showOldTutoringEvents, setShowOldTutoringEvents] =
 		useState<boolean>(false);
 
+	const [displayMessageModal, setDisplayMessageModal] =
+		useState<boolean>(false);
+	const [message, setMessage] = useState<string>("");
+	const [messageEmail, setMessageEmail] = useState<string>("");
+	const [messagePassword, setMessagePassword] = useState<string>("");
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -252,6 +260,73 @@ export default function Home() {
 									<button
 										className="LoadButton-pushable my-2"
 										onClick={() => checkHours()}
+									>
+										<span className="LoadButton-shadow"></span>
+										<span className="LoadButton-edge"></span>
+										<span className="LoadButton-front text">Submit</span>
+									</button>
+								</div>
+							</div>
+						) : (
+							<></>
+						)}
+						<hr></hr>
+						<p>
+							Unable to attend a meeting or have any other problems? Send a
+							message below
+						</p>
+						<button
+							className="LoadButton-pushable mt-3"
+							onClick={(a) => setDisplayMessageModal(!displayMessageModal)}
+						>
+							<span className="LoadButton-shadow"></span>
+							<span className="LoadButton-edge"></span>
+							<span className="LoadButton-front text">Send a message</span>
+						</button>
+						{displayMessageModal ? (
+							<div id={`${styles.signUpModal}`}>
+								<div id={`${styles.signUpModalContent}`}>
+									<Image
+										src={"/img/close.svg"}
+										width={30}
+										height={30}
+										onClick={() => setDisplayMessageModal(!displayMessageModal)}
+										id={`${styles.closeModal}`}
+										alt="Close modal"
+									/>
+									<h1>Send a message</h1>
+									<p className="mb-2">
+										Enter email & password for member verification
+									</p>
+									<p>
+										Only one message per member can be stored, otherwise a new
+										message will replace their original
+									</p>
+									<input
+										type="email"
+										placeholder="Email"
+										value={messageEmail}
+										onChange={(v) => setMessageEmail(v.target.value)}
+									/>
+									<input
+										type="password"
+										placeholder="Password"
+										value={messagePassword}
+										onChange={(v) => setMessagePassword(v.target.value)}
+									/>
+									<input
+										type="text"
+										placeholder="Message"
+										value={message}
+										onChange={(v) => setMessage(v.target.value)}
+									/>
+
+									<button
+										className="LoadButton-pushable my-2"
+										onClick={async () => {
+											await newMessage(messageEmail, messagePassword, message);
+											alert("Message sent!");
+										}}
 									>
 										<span className="LoadButton-shadow"></span>
 										<span className="LoadButton-edge"></span>
