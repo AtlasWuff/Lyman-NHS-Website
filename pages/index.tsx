@@ -1237,7 +1237,7 @@ export default function Home() {
 																			<p>{e.tutorHost}</p>
 																		</div>
 																		<div>
-																			<>
+																			<p>
 																				<b>Teachers</b> {e.teachers}
 																			</p>
 																		</div>
