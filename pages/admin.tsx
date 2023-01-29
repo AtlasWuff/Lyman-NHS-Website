@@ -965,6 +965,9 @@ export default function Admin() {
 																				<b>End Time:</b> {event.endTime}
 																			</p>
 																			<p>
+																				<b>Teachers:</b> {event.teachers}
+																			</p>
+																			<p>
 																				<b>Tutors Needed: </b>
 																				{event.volunteersNeeded}
 																			</p>
