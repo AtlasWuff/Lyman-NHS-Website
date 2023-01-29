@@ -973,7 +973,7 @@ export default function Home() {
 																		</div>
 																		<div>
 																			<p>
-																				<b>Teachers:</b> {e.teachers}
+																				<b>Teachers</b> {e.teachers}
 																			</p>
 																		</div>
 																		<div className="">
@@ -1107,7 +1107,7 @@ export default function Home() {
 																		</div>
 																		<div>
 																			<p>
-																				<b>Teachers:</b> {e.teachers}
+																				<b>Teachers</b> {e.teachers}
 																			</p>
 																		</div>
 																		<div className="">
@@ -1238,7 +1238,8 @@ export default function Home() {
 																		</div>
 																		<div>
 																			<p>
-																				<b>Teachers:</b> {e.teachers}
+																				<b>Teachers</b>
+																				<p>{e.teachers}</p>
 																			</p>
 																		</div>
 																		<div className="">

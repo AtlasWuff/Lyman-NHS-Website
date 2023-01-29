@@ -354,7 +354,7 @@ export const addEvent = async ({
 }: eventProps) => {
 	return new Promise<any>(async (resolve, reject) => {
 		try {
-			let newEventDoc = doc(db, "Events", eventName.toLowerCase());
+			let newEventDoc = doc(db, "Events", eventName.toLowerCase() + " " + date);
 			console.log("Make doc 353");
 
 			const docRef = await setDoc(newEventDoc, {
@@ -386,7 +386,7 @@ export const addEvent = async ({
 export const deleteEvent = async (eventName: string, date: string) => {
 	return new Promise<any>(async (resolve, reject) => {
 		try {
-			await deleteDoc(doc(db, "Events", eventName.toLowerCase()));
+			await deleteDoc(doc(db, "Events", eventName.toLowerCase() + " " + date));
 			console.log("Delete doc line 383");
 			resolve(true);
 		} catch (err) {
