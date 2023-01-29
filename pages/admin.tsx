@@ -948,7 +948,9 @@ export default function Admin() {
 																>
 																	<div className="d-flex align-items-center justify-content-center flex-row w-100 flex-wrap">
 																		<Collapsable
-																			initText={event.eventName}
+																			initText={
+																				event.eventName + " - " + event.date
+																			}
 																			className={`w-100 ${
 																				!isEventOld ? "bg-danger" : ""
 																			}`}
