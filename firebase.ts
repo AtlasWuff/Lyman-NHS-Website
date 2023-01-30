@@ -267,7 +267,7 @@ export const addEventVolunteers = async (
 						db,
 						"Events",
 						eventName.toLowerCase() +
-							" - " +
+							" " +
 							getEventDateFromName(eventName.toLowerCase())
 					),
 					{
@@ -340,7 +340,7 @@ export const removeEventVolunteers = async (
 						db,
 						"Events",
 						eventName.toLowerCase() +
-							" - " +
+							" " +
 							getEventDateFromName(eventName.toLowerCase())
 					),
 					{
