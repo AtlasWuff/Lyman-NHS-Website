@@ -268,7 +268,7 @@ export const addEventVolunteers = async (
 						"Events",
 						eventName.toLowerCase() +
 							" " +
-							getEventDateFromName(eventName.toLowerCase())
+							(await getEventDateFromName(eventName.toLowerCase()))
 					),
 					{
 						volunteers: [...voluns, name],
@@ -341,7 +341,7 @@ export const removeEventVolunteers = async (
 						"Events",
 						eventName.toLowerCase() +
 							" " +
-							getEventDateFromName(eventName.toLowerCase())
+							(await getEventDateFromName(eventName.toLowerCase()))
 					),
 					{
 						volunteers: voluns.filter((volun) => volun !== namee),
