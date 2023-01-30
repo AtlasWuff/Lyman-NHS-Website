@@ -168,6 +168,37 @@ export const isPersonInVolunteers = async (
 	});
 };
 
+export const getEventDateFromName = async (eventName: string) => {
+	return new Promise<string>(async (resolve, reject) => {
+		let querySnapshot: any;
+		try {
+			querySnapshot = await getDocs(eventsDb);
+		} catch (err) {
+			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
+			reject(err);
+		}
+		if (querySnapshot.empty) {
+			alert("No events found");
+			resolve("");
+			return;
+		}
+
+		for (let i = 0; i < querySnapshot.size; i++) {
+			if (
+				querySnapshot.docs[i].data().eventName.toLowerCase() ==
+				eventName.toLowerCase()
+			) {
+				resolve(querySnapshot.docs[i].data().date);
+				return;
+			}
+		}
+		resolve("");
+	});
+};
+
 export const addEventVolunteers = async (
 	eventName: string,
 	email: string,
@@ -231,9 +262,18 @@ export const addEventVolunteers = async (
 					voluns = [];
 				}
 
-				await updateDoc(doc(db, "Events", eventName.toLowerCase()), {
-					volunteers: [...voluns, name],
-				});
+				await updateDoc(
+					doc(
+						db,
+						"Events",
+						eventName.toLowerCase() +
+							" - " +
+							getEventDateFromName(eventName.toLowerCase())
+					),
+					{
+						volunteers: [...voluns, name],
+					}
+				);
 				console.log("Update doc line 234");
 
 				resolve(true);
@@ -295,9 +335,18 @@ export const removeEventVolunteers = async (
 				let voluns = await getEventVolunteers(eventName);
 				let namee = await getNameFromEmail(email, querySnapshot);
 
-				await updateDoc(doc(db, "Events", eventName.toLowerCase()), {
-					volunteers: voluns.filter((volun) => volun !== namee),
-				});
+				await updateDoc(
+					doc(
+						db,
+						"Events",
+						eventName.toLowerCase() +
+							" - " +
+							getEventDateFromName(eventName.toLowerCase())
+					),
+					{
+						volunteers: voluns.filter((volun) => volun !== namee),
+					}
+				);
 				console.log("Update doc line 298");
 				resolve(true);
 			} catch (err) {
