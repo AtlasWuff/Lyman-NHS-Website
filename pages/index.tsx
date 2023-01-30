@@ -418,6 +418,7 @@ export default function Home() {
 											<>
 												{signUpModalDesicion == "Volunteering" ? (
 													<>
+														<option value="">Select an event</option>
 														{events
 															.filter((thing) => thing.isTutoring == false)
 															.filter(
@@ -440,6 +441,7 @@ export default function Home() {
 													</>
 												) : (
 													<>
+														<option value="">Select an event</option>
 														{events
 															.filter((thing) => thing.isTutoring == true)
 															.filter(
