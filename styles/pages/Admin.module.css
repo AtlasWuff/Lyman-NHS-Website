@@ -160,6 +160,18 @@
 	cursor: pointer;
 }
 
+select.eventInputHours {
+	width: auto;
+	text-align: center;
+	background-color: white;
+	border: 3px solid var(--border-color);
+	border-radius: 6px;
+	color: black;
+	/* margin-bottom: 0.5rem; */
+	padding: 0.25rem 0.25rem;
+	cursor: pointer;
+}
+
 .eventInput input[type="checkbox"] {
 	border-radius: 4px;
 	margin: 0px 0px;

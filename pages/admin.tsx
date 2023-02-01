@@ -430,6 +430,26 @@ export default function Admin() {
 			messages: messages.messages.filter((message) => message.name !== name),
 		});
 	};
+	interface tutoringPresetsInterface {
+		subject: string;
+		room: string;
+		teachers: string;
+		endTime: string;
+		tutorsNeeded: string;
+	}
+
+	const [tutoringPresets, setTutoringPresets] = useState<
+		tutoringPresetsInterface[]
+	>([]);
+	useEffect(() => {
+		// https request to https://json.extendsclass.com/bin/de5f28ec2add and make text to json
+		fetch("https://json.extendsclass.com/bin/de5f28ec2add")
+			.then((response) => response.json())
+			.then((data) => {
+				setTutoringPresets(data.tutoringEvents);
+				// console.log(data.tutoringEvents);
+			});
+	}, []);
 
 	return (
 		<motion.div
@@ -750,18 +770,61 @@ export default function Admin() {
 										id={`${styles.addEventForm}`}
 									>
 										<h2>Add Event</h2>
-										<div className={`${styles.eventInput} mt-2`}>
+										<p>Dont use {`"/"`} or it dies 😄</p>
+										<div className={`${styles.eventInput} mt-2 mb-2`}>
 											<p>Is this a tutoring event?</p>
 											<input
 												type="checkbox"
 												onChange={(e) => setEventIsTutoring(e.target.checked)}
 											/>
 										</div>
+										{eventIsTutoring ? (
+											<>
+												<div className={`${styles.eventInput} mb-1`}>
+													<p>Event Presets</p>
+													<select className={styles.eventInputHours}>
+														{/* // map tutoringPresets */}
+														{tutoringPresets.map((preset) => {
+															return (
+																<option
+																	// value={preset}
+																	onClick={() => {
+																		setEventName(preset.subject);
+																		setEventLocation(preset.room);
+																		setTutoringTeachers(preset.teachers);
+																		setEventEndTime(preset.endTime);
+																		setEventVolunteersNeeded(
+																			preset.tutorsNeeded
+																		);
+																	}}
+																	key={preset.subject}
+																>
+																	{preset.subject} - {preset.teachers}
+																</option>
+															);
+														})}
+													</select>
+												</div>
+												<p>
+													To edit the presets, modify{" "}
+													<a
+														href="https://extendsclass.com/jsonstorage/de5f28ec2add"
+														className="hoverUnderlineAnim mb-2"
+													>
+														this
+													</a>
+													, key is {`"nhs"`}
+												</p>
+											</>
+										) : (
+											<></>
+										)}
 										<div className={`${styles.eventInput}`}>
 											<p>{eventIsTutoring ? "Subject" : "Event Name"}</p>
 											<input
 												type="text"
 												onChange={(e) => setEventName(e.target.value.trim())}
+												value={eventName}
 											/>
 										</div>
 										<div className={`${styles.eventInput}`}>
@@ -769,6 +832,7 @@ export default function Admin() {
 											<input
 												type="date"
 												onChange={(e) => setEventDate(e.target.value.trim())}
+												value={eventDate}
 											/>
 										</div>
 										<div className={`${styles.eventInput}`}>
@@ -778,6 +842,7 @@ export default function Admin() {
 												onChange={(e) =>
 													setEventLocation(e.target.value.trim())
 												}
+												value={eventLocation}
 											/>
 										</div>
 										{eventIsTutoring ? (
@@ -788,6 +853,7 @@ export default function Admin() {
 													onChange={(e) =>
 														setTutoringTeachers(e.target.value.trim())
 													}
+													value={tutoringTeachers}
 												/>
 											</div>
 										) : (
@@ -801,6 +867,7 @@ export default function Admin() {
 													onChange={(e) =>
 														setEventStartTime(e.target.value.trim())
 													}
+													value={eventStartTime}
 												/>
 											</div>
 										) : (
@@ -812,6 +879,7 @@ export default function Admin() {
 											<input
 												type="text"
 												onChange={(e) => setEventEndTime(e.target.value.trim())}
+												value={eventEndTime}
 											/>
 										</div>
 										<div
@@ -825,6 +893,7 @@ export default function Admin() {
 												onChange={(e) =>
 													setEventVolunteersNeeded(e.target.value.trim())
 												}
+												value={eventVolunteersNeeded}
 											/>
 										</div>
 										{eventIsTutoring ? (
@@ -835,6 +904,7 @@ export default function Admin() {
 													onChange={(e) =>
 														setTutoringHost(e.target.value.trim())
 													}
+													value={tutoringHost}
 												/>
 											</div>
 										) : (
