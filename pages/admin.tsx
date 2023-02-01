@@ -811,6 +811,8 @@ export default function Admin() {
 													<a
 														href="https://extendsclass.com/jsonstorage/de5f28ec2add"
 														className="hoverUnderlineAnim mb-2"
+														target={"_blank"}
+														rel="noreferrer"
 													>
 														this
 													</a>
@@ -1262,7 +1264,6 @@ export default function Admin() {
 														hoursName.length <= 0 ||
 														hoursName == "Select a member"
 													) {
-														alert("Please select a member");
 														return;
 													} else if (
 														hoursNewVolunteerHours < 0 ||
