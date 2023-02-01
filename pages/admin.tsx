@@ -1235,9 +1235,11 @@ export default function Admin() {
 												<input
 													type="number"
 													onChange={(e) =>
-														setHoursNewVolunteerHours(e.target.value.trim())
+														setHoursNewVolunteerHours(
+															e.target.value as unknown as number
+														)
 													}
-													value={hoursNewVolunteerHours}
+													value={hoursNewVolunteerHours as unknown as string}
 												/>
 											</div>
 											<div className={`${styles.eventInput}`}>
@@ -1245,9 +1247,11 @@ export default function Admin() {
 												<input
 													type="number"
 													onChange={(e) =>
-														setHoursNewTutoringHours(e.target.value.trim())
+														setHoursNewTutoringHours(
+															e.target.value as unknown as number
+														)
 													}
-													value={hoursNewTutoringHours}
+													value={hoursNewTutoringHours as unknown as string}
 												/>
 											</div>
 											<button
@@ -1261,10 +1265,8 @@ export default function Admin() {
 														alert("Please select a member");
 														return;
 													} else if (
-														hoursNewVolunteerHours == "" ||
-														hoursNewVolunteerHours.length <= 0 ||
-														hoursNewTutoringHours == "" ||
-														hoursNewTutoringHours.length <= 0
+														hoursNewVolunteerHours < 0 ||
+														hoursNewTutoringHours < 0
 													) {
 														alert("Please enter a value for both fields");
 														return;
