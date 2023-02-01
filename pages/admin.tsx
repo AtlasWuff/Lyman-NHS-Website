@@ -1264,6 +1264,7 @@ export default function Admin() {
 														hoursName.length <= 0 ||
 														hoursName == "Select a member"
 													) {
+														alert("Please select a member");
 														return;
 													} else if (
 														hoursNewVolunteerHours < 0 ||
