@@ -400,8 +400,9 @@ export default function Admin() {
 	};
 
 	const [hoursName, setHoursName] = useState("");
-	const [hoursNewVolunteerHours, setHoursNewVolunteerHours] = useState("");
-	const [hoursNewTutoringHours, setHoursNewTutoringHours] = useState("");
+	const [hoursNewVolunteerHours, setHoursNewVolunteerHours] =
+		useState<Number>(0);
+	const [hoursNewTutoringHours, setHoursNewTutoringHours] = useState<Number>(0);
 
 	const [showTutoringEvents, setShowTutoringEvents] = useState<boolean>(false);
 
@@ -1212,6 +1213,10 @@ export default function Admin() {
 															<option
 																value={e.firstName + " " + e.lastName}
 																key={accounts.accounts.indexOf(e) + "di"}
+																onClick={() => {
+																	setHoursNewTutoringHours(e.tutoringHours);
+																	setHoursNewVolunteerHours(e.volunteerHours);
+																}}
 															>
 																{e.firstName +
 																	" " +
@@ -1228,7 +1233,7 @@ export default function Admin() {
 											<div className={`${styles.eventInput}`}>
 												<p>New Volunteer Hours</p>
 												<input
-													type="text"
+													type="number"
 													onChange={(e) =>
 														setHoursNewVolunteerHours(e.target.value.trim())
 													}
@@ -1238,7 +1243,7 @@ export default function Admin() {
 											<div className={`${styles.eventInput}`}>
 												<p>New Tutoring Hours</p>
 												<input
-													type="text"
+													type="number"
 													onChange={(e) =>
 														setHoursNewTutoringHours(e.target.value.trim())
 													}
