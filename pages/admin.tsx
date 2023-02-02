@@ -781,24 +781,31 @@ export default function Admin() {
 										</div>
 										{eventIsTutoring ? (
 											<>
-												<div className={`${styles.eventInput} mb-1`}>
+												<div className={`${styles.eventInput} mb-2`}>
 													<p>Event Presets</p>
-													<select className={styles.eventInputHours}>
+													<select
+														className={styles.eventInputHours}
+														onChange={(e) => {
+															let ee = e.target.value.split(",");
+															setEventName(ee[0]);
+															setEventLocation(ee[1]);
+															setTutoringTeachers(ee[2]);
+															setEventEndTime(ee[3]);
+															setEventVolunteersNeeded(ee[4]);
+														}}
+													>
 														{/* // map tutoringPresets */}
 														{tutoringPresets.map((preset) => {
 															return (
 																<option
-																	// value={preset}
-																	onClick={() => {
-																		setEventName(preset.subject);
-																		setEventLocation(preset.room);
-																		setTutoringTeachers(preset.teachers);
-																		setEventEndTime(preset.endTime);
-																		setEventVolunteersNeeded(
-																			preset.tutorsNeeded
-																		);
-																	}}
 																	key={preset.subject}
+																	value={[
+																		preset.subject,
+																		preset.room,
+																		preset.teachers,
+																		preset.endTime,
+																		preset.tutorsNeeded,
+																	]}
 																>
 																	{preset.subject} - {preset.teachers}
 																</option>
@@ -818,6 +825,7 @@ export default function Admin() {
 													</a>
 													, key is {`"nhs"`}
 												</p>
+												<p>Dont use {`","`} or it also dies 😎</p>
 											</>
 										) : (
 											<></>
