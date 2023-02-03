@@ -270,75 +270,156 @@ export default function Home() {
 						) : (
 							<></>
 						)}
+
 						<hr></hr>
-						<p>
-							Unable to attend a meeting or have any other problems? Send a
-							message below
-						</p>
-						<button
-							className="LoadButton-pushable mt-3"
-							onClick={(a) => setDisplayMessageModal(!displayMessageModal)}
-						>
-							<span className="LoadButton-shadow"></span>
-							<span className="LoadButton-edge"></span>
-							<span className="LoadButton-front text">Send a message</span>
-						</button>
-						{displayMessageModal ? (
-							<div id={`${styles.signUpModal}`}>
-								<div id={`${styles.signUpModalContent}`}>
-									<Image
-										src={"/img/close.svg"}
-										width={30}
-										height={30}
-										onClick={() => setDisplayMessageModal(!displayMessageModal)}
-										id={`${styles.closeModal}`}
-										alt="Close modal"
-									/>
-									<h1>Send a message</h1>
-									<p className="mb-2">
-										Enter email & password for member verification
-									</p>
-									<p>
-										Only one message per member can be stored, otherwise a new
-										message will replace their original
-									</p>
-									<input
-										type="email"
-										placeholder="Email"
-										value={messageEmail}
-										onChange={(v) => setMessageEmail(v.target.value)}
-									/>
-									<input
-										type="password"
-										placeholder="Password"
-										value={messagePassword}
-										onChange={(v) => setMessagePassword(v.target.value)}
-									/>
-									<input
-										type="text"
-										placeholder="Message"
-										value={message}
-										onChange={(v) => setMessage(v.target.value)}
-									/>
+						<div className="row align-items-center justify-content-center container-md px-md-5">
+							<div className="col-md-6 col-12">
+								<p>
+									Unable to attend a meeting or have any other problems? Send a
+									message below
+								</p>
+								<button
+									className="LoadButton-pushable mt-md-3 mt-1 mb-2"
+									onClick={(a) => setDisplayMessageModal(!displayMessageModal)}
+								>
+									<span className="LoadButton-shadow"></span>
+									<span className="LoadButton-edge"></span>
+									<span className="LoadButton-front text">Send a message</span>
+								</button>
+								{displayMessageModal ? (
+									<div id={`${styles.signUpModal}`}>
+										<div id={`${styles.signUpModalContent}`}>
+											<Image
+												src={"/img/close.svg"}
+												width={30}
+												height={30}
+												onClick={() =>
+													setDisplayMessageModal(!displayMessageModal)
+												}
+												id={`${styles.closeModal}`}
+												alt="Close modal"
+											/>
+											<h1>Send a message</h1>
+											<p className="mb-2">
+												Enter email & password for member verification
+											</p>
+											<p>
+												Only one message per member can be stored, otherwise a
+												new message will replace their original
+											</p>
+											<input
+												type="email"
+												placeholder="Email"
+												value={messageEmail}
+												onChange={(v) => setMessageEmail(v.target.value)}
+											/>
+											<input
+												type="password"
+												placeholder="Password"
+												value={messagePassword}
+												onChange={(v) => setMessagePassword(v.target.value)}
+											/>
+											<input
+												type="text"
+												placeholder="Message"
+												value={message}
+												onChange={(v) => setMessage(v.target.value)}
+											/>
 
-									<button
-										className="LoadButton-pushable my-2"
-										onClick={async () => {
-											await newMessage(messageEmail, messagePassword, message);
-											alert("Message sent!");
-										}}
-									>
-										<span className="LoadButton-shadow"></span>
-										<span className="LoadButton-edge"></span>
-										<span className="LoadButton-front text">Submit</span>
-									</button>
-								</div>
+											<button
+												className="LoadButton-pushable my-2"
+												onClick={async () => {
+													await newMessage(
+														messageEmail,
+														messagePassword,
+														message
+													);
+													alert("Message sent!");
+												}}
+											>
+												<span className="LoadButton-shadow"></span>
+												<span className="LoadButton-edge"></span>
+												<span className="LoadButton-front text">Submit</span>
+											</button>
+										</div>
+									</div>
+								) : (
+									<></>
+								)}
 							</div>
-						) : (
-							<></>
-						)}
-					</section>
+							<div className="col-md-6 col-12">
+								<p>Just attended an event? Click the button to request hours</p>
+								<button
+									className="LoadButton-pushable mt-md-3 mt-1"
+									onClick={(a) => setDisplayMessageModal(!displayMessageModal)}
+								>
+									<span className="LoadButton-shadow"></span>
+									<span className="LoadButton-edge"></span>
+									<span className="LoadButton-front text">Request hours</span>
+								</button>
+								{displayMessageModal ? (
+									<div id={`${styles.signUpModal}`}>
+										<div id={`${styles.signUpModalContent}`}>
+											<Image
+												src={"/img/close.svg"}
+												width={30}
+												height={30}
+												onClick={() =>
+													setDisplayMessageModal(!displayMessageModal)
+												}
+												id={`${styles.closeModal}`}
+												alt="Close modal"
+											/>
+											<h1>Send a message</h1>
+											<p className="mb-2">
+												Enter email & password for member verification
+											</p>
+											<p>
+												Only one message per member can be stored, otherwise a
+												new message will replace their original
+											</p>
+											<input
+												type="email"
+												placeholder="Email"
+												value={messageEmail}
+												onChange={(v) => setMessageEmail(v.target.value)}
+											/>
+											<input
+												type="password"
+												placeholder="Password"
+												value={messagePassword}
+												onChange={(v) => setMessagePassword(v.target.value)}
+											/>
+											<input
+												type="text"
+												placeholder="Message"
+												value={message}
+												onChange={(v) => setMessage(v.target.value)}
+											/>
 
+											<button
+												className="LoadButton-pushable my-2"
+												onClick={async () => {
+													await newMessage(
+														messageEmail,
+														messagePassword,
+														message
+													);
+													alert("Message sent!");
+												}}
+											>
+												<span className="LoadButton-shadow"></span>
+												<span className="LoadButton-edge"></span>
+												<span className="LoadButton-front text">Submit</span>
+											</button>
+										</div>
+									</div>
+								) : (
+									<></>
+								)}
+							</div>
+						</div>
+					</section>
 					<section id={`${styles.UpcomingEvents}`} className="container-lg">
 						<h1 className="mb-0">Upcoming Events</h1>
 						<>
@@ -1265,37 +1346,6 @@ export default function Home() {
 							</Table>
 						</>
 					</section>
-					{/* <section id={`${styles.SocialMedia}`} className="container-lg">
-						<h1 className="mb-3">Recent Posts</h1>
-						<Table
-							minHeight={"20vh"}
-							maxHeight={"85vh"}
-							bgColor={"rgba(0,0,0,0.2)"}
-							widthVal={"90%"}
-						>
-							<div className="row d-flex justify-content-center w-100">
-								<div className="d-xl-flex justify-content-xl-center col-xl-6">
-									<div style={{ display: "flex", justifyContent: "center" }}>
-										<InstagramEmbed
-											url="https://www.instagram.com/p/Cl6g18quwVd/"
-											width={328}
-											captioned
-										/>
-									</div>
-								</div>
-								<div className="d-xl-flex justify-content-xl-center col-xl-6">
-									<div style={{ display: "flex", justifyContent: "center" }}>
-										<InstagramEmbed
-											url="https://www.instagram.com/p/ClOorpmOs-8/"
-											width={328}
-											captioned
-										/>
-									</div>
-								</div>
-							</div>
-						</Table>
-					</section> */}
-					{/* <section id={`${styles.People}`}></section> */}
 				</div>
 			</main>
 		</motion.div>
