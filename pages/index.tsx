@@ -13,6 +13,7 @@ import {
 	checkMemberHours,
 	getMessagesArray,
 	newMessage,
+	newHoursRequest,
 } from "../firebase";
 import { useEffectOnce } from "usehooks-ts";
 import { InstagramEmbed } from "react-social-media-embed";
@@ -169,6 +170,18 @@ export default function Home() {
 	const [message, setMessage] = useState<string>("");
 	const [messageEmail, setMessageEmail] = useState<string>("");
 	const [messagePassword, setMessagePassword] = useState<string>("");
+
+	const [displayReqHoursModal, setDisplayReqHoursModal] =
+		useState<boolean>(false);
+	const [reqHoursEmail, setReqHoursEmail] = useState<string>("");
+	const [reqHoursPassword, setReqHoursPassword] = useState<string>("");
+	const [reqHoursEventName, setReqHoursEventName] = useState<string>("");
+	const [reqHoursArriveTime, setReqHoursArriveTime] = useState<string>("");
+	const [reqHoursLeaveTime, setReqHoursLeaveTime] = useState<string>("");
+	const [reqHoursVolunteerHours, setReqHoursVolunteerHours] =
+		useState<number>(0);
+	const [reqHoursTutorHours, setReqHoursTutorHours] = useState<number>(0);
+	const [reqHoursIsTutoring, setReqHoursIsTutoring] = useState<boolean>(false);
 
 	return (
 		<motion.div
@@ -351,13 +364,15 @@ export default function Home() {
 								<p>Just attended an event? Click the button to request hours</p>
 								<button
 									className="LoadButton-pushable mt-md-3 mt-1"
-									onClick={(a) => setDisplayMessageModal(!displayMessageModal)}
+									onClick={(a) =>
+										setDisplayReqHoursModal(!displayReqHoursModal)
+									}
 								>
 									<span className="LoadButton-shadow"></span>
 									<span className="LoadButton-edge"></span>
 									<span className="LoadButton-front text">Request hours</span>
 								</button>
-								{displayMessageModal ? (
+								{displayReqHoursModal ? (
 									<div id={`${styles.signUpModal}`}>
 										<div id={`${styles.signUpModalContent}`}>
 											<Image
@@ -365,47 +380,100 @@ export default function Home() {
 												width={30}
 												height={30}
 												onClick={() =>
-													setDisplayMessageModal(!displayMessageModal)
+													setDisplayReqHoursModal(!displayReqHoursModal)
 												}
 												id={`${styles.closeModal}`}
 												alt="Close modal"
 											/>
-											<h1>Send a message</h1>
+											<h1>Request Hours</h1>
 											<p className="mb-2">
 												Enter email & password for member verification
 											</p>
-											<p>
-												Only one message per member can be stored, otherwise a
-												new message will replace their original
-											</p>
+											<div className="d-flex justify-content-center w-100	 flex-row mb-2">
+												<p className="text-nowrap me-2">
+													Is this a tutoring event?
+												</p>
+												<input
+													type="checkbox"
+													onChange={(v) => {
+														if (!reqHoursIsTutoring) {
+															setReqHoursVolunteerHours(0);
+														} else if (reqHoursIsTutoring) {
+															setReqHoursTutorHours(0);
+														}
+														setReqHoursIsTutoring(v.target.checked);
+													}}
+													className={styles.eventInput}
+												></input>
+											</div>
+
 											<input
 												type="email"
 												placeholder="Email"
-												value={messageEmail}
-												onChange={(v) => setMessageEmail(v.target.value)}
+												value={reqHoursEmail}
+												onChange={(v) => setReqHoursEmail(v.target.value)}
 											/>
 											<input
 												type="password"
 												placeholder="Password"
-												value={messagePassword}
-												onChange={(v) => setMessagePassword(v.target.value)}
+												value={reqHoursPassword}
+												onChange={(v) => setReqHoursPassword(v.target.value)}
 											/>
 											<input
 												type="text"
-												placeholder="Message"
-												value={message}
-												onChange={(v) => setMessage(v.target.value)}
+												placeholder="Event Name"
+												value={reqHoursEventName}
+												onChange={(v) => setReqHoursEventName(v.target.value)}
+											/>
+											<input
+												type="text"
+												placeholder="Arrival Time"
+												value={reqHoursArriveTime}
+												onChange={(v) => setReqHoursArriveTime(v.target.value)}
+											/>
+											<input
+												type="text"
+												placeholder="Departure Time"
+												value={reqHoursLeaveTime}
+												onChange={(v) => setReqHoursLeaveTime(v.target.value)}
 											/>
 
+											{!reqHoursIsTutoring ? (
+												<input
+													type="number"
+													placeholder="Total hours volunteered"
+													value={reqHoursVolunteerHours}
+													onChange={(v) =>
+														setReqHoursVolunteerHours(
+															v.target.value as unknown as number
+														)
+													}
+												/>
+											) : (
+												<input
+													type="number"
+													placeholder="Total hours tutored"
+													value={reqHoursTutorHours}
+													onChange={(v) =>
+														setReqHoursTutorHours(
+															v.target.value as unknown as number
+														)
+													}
+												/>
+											)}
 											<button
 												className="LoadButton-pushable my-2"
 												onClick={async () => {
-													await newMessage(
-														messageEmail,
-														messagePassword,
-														message
-													);
-													alert("Message sent!");
+													await newHoursRequest({
+														email: reqHoursEmail,
+														password: reqHoursPassword,
+														eventName: reqHoursEventName,
+														arriveTime: reqHoursArriveTime,
+														leaveTime: reqHoursLeaveTime,
+														addVolunteerHours: reqHoursVolunteerHours,
+														addTutoringHours: reqHoursTutorHours,
+													});
+													alert("Request sent!");
 												}}
 											>
 												<span className="LoadButton-shadow"></span>

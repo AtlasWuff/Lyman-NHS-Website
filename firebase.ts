@@ -50,6 +50,7 @@ console.log("Events db line 50");
 export const accountsDb = collection(db, "Accounts");
 console.log("Accounts db line 52");
 const messagesDb = collection(db, "Messages");
+const requestsDb = collection(db, "Requests");
 
 export interface eventProps {
 	eventName: string;
@@ -862,6 +863,173 @@ export const getMessagesArray = async () => {
 export const deleteMessage = async (name: string) => {
 	return new Promise<void>(async (resolve, reject) => {
 		await deleteDoc(doc(db, "Messages", name));
+		resolve();
+	});
+};
+
+interface newHoursRequestProps {
+	email: string;
+	password: string;
+	eventName: string;
+	arriveTime: string;
+	leaveTime: string;
+	addVolunteerHours: number;
+	addTutoringHours: number;
+}
+
+export const newHoursRequest = async ({
+	email,
+	password,
+	eventName,
+	arriveTime,
+	leaveTime,
+	addVolunteerHours,
+	addTutoringHours,
+}: newHoursRequestProps) => {
+	return new Promise<void>(async (resolve, reject) => {
+		let querySnapshot: any;
+		try {
+			querySnapshot = await getDocs(accountsDb);
+		} catch (err) {
+			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
+		}
+		if ((await didAccLogin("", email, password, querySnapshot)) == false) {
+			alert("Incorrect email or password.");
+			reject();
+			return;
+		}
+		let name = await getNameFromEmail(email, querySnapshot);
+		let newHoursRequestDoc = await doc(
+			db,
+			"Hours Requests",
+			name + " - " + eventName
+		);
+		await setDoc(newHoursRequestDoc, {
+			name: name,
+			eventName: eventName,
+			arriveTime: arriveTime,
+			leaveTime: leaveTime,
+			addVolunteerHours: addVolunteerHours,
+			addTutoringHours: addTutoringHours,
+		});
+		resolve();
+	});
+};
+
+export interface mapableHoursRequestProps {
+	name: string;
+	eventName: string;
+	arriveTime: string;
+	leaveTime: string;
+	addVolunteerHours: number;
+	addTutoringHours: number;
+}
+
+export const getHoursRequestsArray = async () => {
+	return new Promise<mapableHoursRequestProps[]>(async (resolve, reject) => {
+		let hoursRequests: mapableHoursRequestProps[] = [];
+		let querySnapshot = await getDocs(collection(db, "Hours Requests"));
+		querySnapshot.forEach((doc: any) => {
+			hoursRequests.push({
+				name: doc.data().name,
+				eventName: doc.data().eventName,
+				arriveTime: doc.data().arriveTime,
+				leaveTime: doc.data().leaveTime,
+				addVolunteerHours: doc.data().addVolunteerHours,
+				addTutoringHours: doc.data().addTutoringHours,
+			});
+		});
+		resolve(hoursRequests);
+	});
+};
+
+export const approveHoursRequest = async (name: string, eventName: string) => {
+	return new Promise<void>(async (resolve, reject) => {
+		let querySnapshot: any;
+		try {
+			querySnapshot = await getDocs(accountsDb);
+		} catch (err) {
+			console.log(err);
+			alert(
+				"Error: The database is likely at read capacity, please try again tomorrow."
+			);
+		}
+		let hoursRequests = await getHoursRequestsArray();
+		let hoursRequest: mapableHoursRequestProps;
+		console.log(hoursRequests);
+		for (let i = 0; i < hoursRequests.length; i++) {
+			if (
+				hoursRequests[i].name == name &&
+				hoursRequests[i].eventName == eventName
+			) {
+				// console.log("found");
+				hoursRequest = hoursRequests[i];
+				let nameOfPerson = hoursRequest.name;
+				let hoursToAdd = hoursRequest.addVolunteerHours as unknown as number;
+				let tutoringHoursToAdd =
+					hoursRequest.addTutoringHours as unknown as number;
+				let foundAccount = false;
+				let count = 0;
+				querySnapshot.forEach(async (docc: any) => {
+					if (
+						docc.data().firstName + " " + docc.data().lastName ==
+						nameOfPerson
+					) {
+						// console.log("found");
+						foundAccount = true;
+						let newHours = Number(
+							parseInt(docc.data().volunteerHours) + Number(hoursToAdd)
+						);
+						let newTutoringHours = Number(
+							parseInt(docc.data().tutoringHours) + Number(tutoringHoursToAdd)
+						);
+						console.log(newHours);
+						console.log(newTutoringHours);
+						await updateDoc(
+							doc(
+								db,
+								"Accounts",
+								(
+									docc.data().firstName +
+									" " +
+									docc.data().lastName
+								).toLowerCase()
+							),
+							{
+								volunteerHours: newHours,
+								tutoringHours: newTutoringHours,
+							}
+						);
+						await deleteDoc(
+							doc(db, "Hours Requests", name + " - " + eventName)
+						);
+						alert("Hours Request Approved");
+
+						resolve();
+					}
+					count++;
+
+					if (count == querySnapshot.size && !foundAccount) {
+						alert("Error: Account not found.");
+						reject();
+					}
+				});
+				// if (!foundAccount) {
+				// 	alert("Error: Account not found.");
+				// 	reject();
+				// }
+				break;
+			}
+		}
+	});
+};
+
+export const denyHoursRequest = async (name: string, eventName: string) => {
+	return new Promise<void>(async (resolve, reject) => {
+		await deleteDoc(doc(db, "Hours Requests", name + " - " + eventName));
 		resolve();
 	});
 };

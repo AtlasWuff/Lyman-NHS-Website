@@ -21,6 +21,10 @@ import {
 	getMessagesArray,
 	messageInterface,
 	deleteMessage,
+	mapableHoursRequestProps,
+	getHoursRequestsArray,
+	approveHoursRequest,
+	denyHoursRequest,
 } from "../firebase";
 import * as EmailValidator from "email-validator";
 import { collection, addDoc, updateDoc } from "firebase/firestore";
@@ -91,6 +95,9 @@ export default function Admin() {
 	const [showLoading, setShowLoading] = useState(false);
 	const [accounts, setAccounts] = useState<Accounts>({ accounts: [] });
 	const [messages, setMessages] = useState<msgs>({ messages: [] });
+	const [hourRequests, setHourRequests] = useState<mapableHoursRequestProps[]>(
+		[]
+	);
 
 	// Table Loading states
 	const [pendingMemberTableLoading, setPendingMemberTableLoading] =
@@ -145,6 +152,9 @@ export default function Admin() {
 		const getMessagesAwait = async () => {
 			return await getMessagesArray();
 		};
+		const getHourRequests = async () => {
+			return await getHoursRequestsArray();
+		};
 		getAccAwait().then((res) => {
 			setAccounts({ accounts: res });
 			getEventAwait().then((res) => {
@@ -152,6 +162,9 @@ export default function Admin() {
 			});
 			getMessagesAwait().then((res) => {
 				setMessages({ messages: res });
+			});
+			getHourRequests().then((res) => {
+				setHourRequests(res);
 			});
 		});
 	}, []);
@@ -220,6 +233,24 @@ export default function Admin() {
 		});
 	};
 
+	const refreshMessages = async () => {
+		return new Promise(async (resolve, reject) => {
+			await getMessagesArray().then((res) => {
+				setMessages({ messages: res });
+				resolve(res);
+			});
+		});
+	};
+
+	const refreshHourRequests = async () => {
+		return new Promise(async (resolve, reject) => {
+			await getHoursRequestsArray().then((res) => {
+				setHourRequests(res);
+				resolve(res);
+			});
+		});
+	};
+
 	/* Export member list to spreadsheet
 	 * @param {accounts}? (
 ? (
@@ -282,17 +313,17 @@ export default function Admin() {
 		events: Array<eventProps>;
 	}
 
-	const [eventName, setEventName] = useState("N/A");
-	const [eventDate, setEventDate] = useState("N/A");
-	const [eventLocation, setEventLocation] = useState("N/A");
-	const [eventStartTime, setEventStartTime] = useState("N/A");
-	const [eventEndTime, setEventEndTime] = useState("N/A");
-	const [eventVolunteersNeeded, setEventVolunteersNeeded] = useState("N/A");
+	const [eventName, setEventName] = useState("");
+	const [eventDate, setEventDate] = useState("");
+	const [eventLocation, setEventLocation] = useState("");
+	const [eventStartTime, setEventStartTime] = useState("");
+	const [eventEndTime, setEventEndTime] = useState("");
+	const [eventVolunteersNeeded, setEventVolunteersNeeded] = useState("");
 	const [eventVolunteersSignedUp, setEventVolunteersSignedUp] = useState([]);
 	const [events, setEvents] = useState<EventsStateProp>({ events: [] });
 	const [eventIsTutoring, setEventIsTutoring] = useState<boolean>(false);
-	const [tutoringHost, setTutoringHost] = useState<string>("N/A");
-	const [tutoringTeachers, setTutoringTeachers] = useState<string>("N/A");
+	const [tutoringHost, setTutoringHost] = useState<string>("");
+	const [tutoringTeachers, setTutoringTeachers] = useState<string>("");
 
 	/* Refresh accounts updating the state
 	 * @param {void}
@@ -485,6 +516,8 @@ export default function Admin() {
 									onClick={async () => {
 										await refreshAccounts();
 										await refreshEvents();
+										await refreshMessages();
+										await refreshHourRequests();
 										// deleteRefItem(loadItemsButtonRef);
 									}}
 									ref={loadItemsButtonRef}
@@ -1374,6 +1407,146 @@ export default function Admin() {
 													<div className="w-100 d-flex justify-content-center align-items-center">
 														<p className="text-center">
 															<b>No messages to show</b>
+														</p>
+													</div>
+												)}
+											</Table>
+										</motion.div>
+									</div>
+								</div>
+							</section>
+							<section
+								className={`${styles.adminSection} container-sm text-center`}
+							>
+								<div className="row justify-content-center">
+									<div
+										className="col-lg-6 d-flex align-items-center flex-column"
+										id={`${styles.pendingMembers}`}
+									>
+										<h2>Hour Requests</h2>
+										<p>
+											Members send requests that require approval before their
+											event hours get added to their account. View them here.
+										</p>
+										<motion.div
+											animate={secondControls}
+											ref={secondRef}
+											transition={{
+												duration: 0.5,
+												ease: [0.5, 0.01, -0.05, 0.9],
+											}}
+											initial={{ scale: 0 }}
+											variants={{
+												visible: { scale: 1 },
+											}}
+											className="w-100 d-flex align-items-center justify-content-center flex-column container"
+										>
+											<Table maxHeight={"80vh"} minHeight={"20vh"}>
+												{hourRequests.length > 0 ? (
+													<>
+														{hourRequests.map((request, index) => {
+															return (
+																<div
+																	key={index}
+																	className={`${styles.pendingMember} w-100`}
+																>
+																	<div className="d-flex justify-content-between w-100 flex-row">
+																		<div className={`${styles.MemberItemText}`}>
+																			<Collapsable
+																				initText={
+																					request.name +
+																					" - " +
+																					request.eventName
+																				}
+																				className={`w-100 ${styles.memberItemThing}`}
+																			>
+																				<div className="d-flex flex-column">
+																					<p className="mb-0">
+																						<b>Arrival: </b>
+																						{request.arriveTime}
+																					</p>
+																					<p className="mb-0">
+																						<b>Departure: </b>
+																						{request.leaveTime}
+																					</p>
+																					{(request.addTutoringHours as unknown as string) ==
+																						"0" ||
+																					request.addTutoringHours == 0 ? (
+																						<p className="mb-0">
+																							<b>Volunteer Hours: </b>
+																							{request.addVolunteerHours}
+																						</p>
+																					) : (
+																						<p className="mb-0">
+																							<b>Tutoring Hours: </b>
+																							{request.addTutoringHours}
+																						</p>
+																					)}
+																				</div>
+																			</Collapsable>
+																		</div>
+																		<div
+																			className="d-flex align-items-center justify-content-center flex-row"
+																			id={`${styles.eventDeleteButtonDiv}`}
+																		>
+																			<button
+																				className="ApproveButton-pushable me-md-2 me-1"
+																				onClick={async () => {
+																					await approveHoursRequest(
+																						request.name,
+																						request.eventName
+																					);
+																					setHourRequests(
+																						hourRequests.filter(
+																							(r) =>
+																								r.name !== request.name &&
+																								r.eventName !==
+																									request.eventName
+																						)
+																					);
+																				}}
+																			>
+																				<span className="ApproveButton-shadow"></span>
+																				<span className="ApproveButton-edge"></span>
+
+																				<span className="ApproveButton-front text">
+																					Approve
+																				</span>
+																			</button>
+																			<button
+																				className="DenyButton-pushable"
+																				onClick={async () => {
+																					await denyHoursRequest(
+																						request.name,
+																						request.eventName
+																					);
+																					setHourRequests(
+																						hourRequests.filter(
+																							(r) =>
+																								r.name !== request.name &&
+																								r.eventName !==
+																									request.eventName
+																						)
+																					);
+																				}}
+																			>
+																				<span className="DenyButton-shadow"></span>
+																				<span className="DenyButton-edge"></span>
+
+																				<span className="DenyButton-front text">
+																					Deny
+																				</span>
+																			</button>
+																		</div>
+																	</div>
+																</div>
+															);
+														})}
+													</>
+												) : (
+													<div className="w-100 d-flex justify-content-center align-items-center">
+														<p className="text-center">
+															<b>No requests to show</b>
 														</p>
 													</div>
 												)}

@@ -181,7 +181,7 @@
 	align-items: center;
 }
 
-#signUpModal * {
+#signUpModal *:not([type="checkbox"]) {
 	color: var(--font-color-normal);
 }
 
@@ -206,7 +206,7 @@
 	text-align: center;
 }
 
-#signUpModalContent input {
+#signUpModalContent input:not([type="checkbox"]) {
 	width: 100%;
 	text-align: center;
 	background-color: white;
@@ -286,4 +286,31 @@
 	height: 2px;
 	margin: 0.75rem 0 !important;
 	max-width: 650px;
+}
+
+.eventInput[type="checkbox"] {
+	border-radius: 4px !important;
+	margin: 0px 0px !important;
+	border: 3px solid black !important;
+	height: 25px !important;
+	width: 25px !important;
+	transition: transform 0.5s ease, background-color 0.5s ease-in-out,
+		opacity 0.5s ease-in-out !important;
+	background-color: red !important;
+	cursor: pointer !important;
+	position: relative !important;
+	appearance: none;
+	text-align: left;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	border-radius: 8px;
+	background-color: white;
+	margin: 8px 0px;
+	border: 3px solid black;
+	width: 100%;
+}
+
+.eventInput[type="checkbox"]:checked {
+	transform: rotate(360deg) !important;
+	background-color: green !important;
 }

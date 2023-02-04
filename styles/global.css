@@ -203,6 +203,19 @@ a:hover {
 	transform-origin: bottom left;
 }
 
+hr {
+	margin-bottom: 1rem !important;
+	--col: var(--cyber-yellow);
+	opacity: 1;
+	color: var(--col);
+	background-color: var(--col);
+	border-color: var(--col);
+	width: 80%;
+	height: 2px;
+	margin: 0.75rem 0 !important;
+	max-width: 650px;
+}
+
 /* NOT STOLEN BUTTON */
 
 .LoadButton-pushable {
