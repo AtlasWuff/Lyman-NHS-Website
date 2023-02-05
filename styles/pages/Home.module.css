@@ -181,7 +181,7 @@
 	align-items: center;
 }
 
-#signUpModal *:not([type="checkbox"]) {
+#signUpModal *:not(input) {
 	color: var(--font-color-normal);
 }
 
