@@ -92,7 +92,7 @@ export default function Table({
 					<div className={`${styles.arrow}`}>
 						{/* // eslint-disable-next-line react/jsx-no-undef */}
 						<Image
-							src="/img/downarrow.svg"
+							src="/img/arrowdown.svg"
 							alt="Arrow down"
 							width={25}
 							height={25}
