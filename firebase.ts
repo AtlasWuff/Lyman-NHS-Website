@@ -887,6 +887,17 @@ export const newHoursRequest = async ({
 	addTutoringHours,
 }: newHoursRequestProps) => {
 	return new Promise<void>(async (resolve, reject) => {
+		if (
+			email == "" ||
+			password == "" ||
+			eventName == "" ||
+			arriveTime == "" ||
+			leaveTime == ""
+		) {
+			alert("Please fill out all fields.");
+			reject();
+			return;
+		}
 		let querySnapshot: any;
 		try {
 			querySnapshot = await getDocs(accountsDb);

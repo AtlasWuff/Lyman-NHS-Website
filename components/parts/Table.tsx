@@ -1,5 +1,6 @@
 // Imports
 import * as React from "react";
+import Image from "next/image";
 
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -18,6 +19,7 @@ interface Props {
 	showLoading?: boolean;
 	className?: string;
 	children?: React.ReactNode;
+	useArrow?: boolean;
 }
 
 // Page
@@ -29,6 +31,7 @@ export default function Table({
 	showLoading,
 	className,
 	children,
+	useArrow = false,
 }: Props) {
 	const controls = useAnimation();
 	const [ref, inView] = useInView();
@@ -38,10 +41,34 @@ export default function Table({
 			controls.start("visible");
 		}
 	}, [controls, inView]);
+
+	const tableDiv = React.useRef<HTMLDivElement>(null);
+
+	function isOverflown(element: HTMLDivElement) {
+		if (!element) return false;
+
+		return (
+			element.scrollHeight > element.clientHeight ||
+			element.scrollWidth > element.clientWidth
+		);
+	}
+
+	const [showArrow, setShowArrow] = React.useState<boolean>(false);
+
+	React.useEffect(() => {
+		if (tableDiv.current) {
+			if (isOverflown(tableDiv.current)) {
+				setShowArrow(true);
+				console.log("overflown");
+			} else {
+				setShowArrow(false);
+			}
+		}
+	}, [tableDiv]);
 	return (
 		<>
 			<motion.div
-				className={`${styles.TableWrapper} ${className}`}
+				className={`${styles.TableWrapper} ${className} position-relative`}
 				style={{ width: widthVal }}
 				animate={controls}
 				ref={ref}
@@ -61,6 +88,17 @@ export default function Table({
 				>
 					{children}
 				</div>
+				{useArrow ? (
+					<div className={`${styles.arrow}`}>
+						{/* // eslint-disable-next-line react/jsx-no-undef */}
+						<Image
+							src="/img/downarrow.svg"
+							alt="Arrow down"
+							width={25}
+							height={25}
+						/>
+					</div>
+				) : null}
 			</motion.div>
 		</>
 	);

@@ -39,3 +39,32 @@
 	background-color: var(--bg-color-primary);
 	border-radius: 16px;
 }
+
+.arrow {
+	position: absolute;
+	bottom: 10px;
+	right: 20px;
+	animation: arrow 1s infinite ease-in-out;
+	border-radius: 50%;
+	background-color: rgba(53, 162, 239, 0.8);
+	border: 2px solid var(--border-color);
+}
+
+@media screen and (max-width: 768px) {
+	.arrow {
+		bottom: 8px;
+		right: 5px;
+	}
+}
+
+@keyframes arrow {
+	0% {
+		transform: translateY(-3px);
+	}
+	50% {
+		transform: translateY(3px);
+	}
+	100% {
+		transform: translateY(-3px);
+	}
+}

@@ -287,7 +287,7 @@ export default function Home() {
 						<hr></hr>
 						<div className="row align-items-center justify-content-center container-md px-md-5">
 							<div className="col-md-6 col-12">
-								<p>
+								<p className="mb-md-0 mb-2">
 									Unable to attend a meeting or have any other problems? Send a
 									message below
 								</p>
@@ -361,7 +361,9 @@ export default function Home() {
 								)}
 							</div>
 							<div className="col-md-6 col-12">
-								<p>Just attended an event? Click the button to request hours</p>
+								<p className="mb-md-0 mb-2">
+									Just attended an event? Click the button to request hours
+								</p>
 								<button
 									className="LoadButton-pushable mt-md-3 mt-1"
 									onClick={(a) =>
@@ -437,7 +439,7 @@ export default function Home() {
 												value={reqHoursLeaveTime}
 												onChange={(v) => setReqHoursLeaveTime(v.target.value)}
 											/>
-
+											<p className="mb-2">Total hours attended</p>
 											{!reqHoursIsTutoring ? (
 												<input
 													type="number"
@@ -749,6 +751,7 @@ export default function Home() {
 								bgColor={"rgba(0,0,0,0.2)"}
 								widthVal={"90%"}
 								// className="swipeFromRight"
+								useArrow
 							>
 								<div className="d-flex justify-content-center w-100">
 									<div
@@ -1008,6 +1011,7 @@ export default function Home() {
 								maxHeight={"85vh"}
 								bgColor={"rgba(0,0,0,0.2)"}
 								widthVal={"90%"}
+								useArrow
 							>
 								<div className="d-flex justify-content-center w-100">
 									<div

@@ -540,6 +540,7 @@ export default function Admin() {
 											maxHeight={"80vh"}
 											minHeight={"20vh"}
 											bgColor={"rgba(0,0,0,0.2)"}
+											useArrow
 										>
 											{/* Maps through all accounts that are pending and displays them */}
 											{/* If there are no pending accounts, display a message */}
@@ -640,6 +641,7 @@ export default function Admin() {
 											minHeight={"20vh"}
 											maxHeight={"80vh"}
 											bgColor={"rgba(0,0,0,0.2)"}
+											useArrow
 										>
 											{/* Maps through the accounts array and displays the accounts that are approved */}
 											{/* If there are no approved accounts, it will display a message */}
@@ -1039,6 +1041,7 @@ export default function Admin() {
 											minHeight={"20vh"}
 											maxHeight={"80vh"}
 											bgColor={"rgba(0,0,0,0.2)"}
+											useArrow
 										>
 											{showTutoringEvents ? (
 												events.events.length > 0 ? (
@@ -1354,7 +1357,7 @@ export default function Admin() {
 											}}
 											className="w-100 d-flex align-items-center justify-content-center flex-column container"
 										>
-											<Table maxHeight={"80vh"} minHeight={"20vh"}>
+											<Table maxHeight={"80vh"} minHeight={"20vh"} useArrow>
 												{messages.messages.length > 0 ? (
 													<>
 														<div className="d-flex flex-row align-items-center w-100">
@@ -1441,7 +1444,7 @@ export default function Admin() {
 											}}
 											className="w-100 d-flex align-items-center justify-content-center flex-column container"
 										>
-											<Table maxHeight={"80vh"} minHeight={"20vh"}>
+											<Table maxHeight={"80vh"} minHeight={"20vh"} useArrow>
 												{hourRequests.length > 0 ? (
 													<>
 														{hourRequests.map((request, index) => {
