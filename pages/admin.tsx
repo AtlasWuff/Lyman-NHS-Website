@@ -353,18 +353,18 @@ export default function Admin() {
 			eventName == "" ||
 			eventDate == "" ||
 			eventLocation == "" ||
-			eventStartTime == "" ||
+			// eventStartTime == "" ||
 			eventEndTime == "" ||
 			eventVolunteersNeeded == "" ||
-			tutoringHost == "" ||
+			// tutoringHost == "" ||
 			eventName == undefined ||
 			eventDate == undefined ||
 			eventLocation == undefined ||
-			eventStartTime == undefined ||
+			// eventStartTime == undefined ||
 			eventEndTime == undefined ||
 			eventVolunteersNeeded == undefined ||
-			eventIsTutoring == undefined ||
-			tutoringHost == undefined
+			eventIsTutoring == undefined
+			// tutoringHost == undefined
 		) {
 			alert("Please fill out all fields");
 			return;
