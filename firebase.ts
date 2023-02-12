@@ -617,6 +617,12 @@ export const newAccount = async ({
 	tutoringHours,
 }: newAccountProps) => {
 	return new Promise<boolean>(async (resolve, reject) => {
+		email = email.trim();
+		password = password.trim();
+		firstName = firstName.trim();
+		lastName = lastName.trim();
+		grade = grade.toString().trim();
+
 		if (
 			email == "" ||
 			password == "" ||
@@ -633,7 +639,7 @@ export const newAccount = async ({
 			alert("Please fill out all fields.");
 
 			return;
-		} else if (grade > 12 || grade < 9) {
+		} else if (parseInt(grade) > 12 || parseInt(grade) < 9) {
 			reject(false);
 			alert("Please enter a valid grade.");
 
