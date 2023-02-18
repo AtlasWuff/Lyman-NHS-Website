@@ -116,7 +116,7 @@ export default function CreateAccount() {
 								<div className={`${styles.loginInput}`}>
 									<p>Password</p>
 									<input
-										type="password"
+										type="text"
 										onChange={(e) => setPassword(e.target.value)}
 										value={password}
 									/>
