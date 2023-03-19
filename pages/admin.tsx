@@ -472,16 +472,25 @@ export default function Admin() {
 
 	const [tutoringPresets, setTutoringPresets] = useState<
 		tutoringPresetsInterface[]
-	>([]);
-	useEffect(() => {
-		// https request to https://json.extendsclass.com/bin/de5f28ec2add and make text to json
-		fetch("https://json.extendsclass.com/bin/de5f28ec2add")
-			.then((response) => response.json())
-			.then((data) => {
-				setTutoringPresets(data.tutoringEvents);
-				// console.log(data.tutoringEvents);
-			});
-	}, []);
+	>([
+		// {
+		// 	subject: "DB no worky",
+		// 	room: "",
+		// 	teachers: "😿",
+		// 	endTime: "",
+		// 	tutorsNeeded: "",
+		// },
+	]);
+
+	// useEffect(() => {
+	// 	// https request to https://json.extendsclass.com/bin/de5f28ec2add and make text to json
+	// 	fetch("https://json.extendsclass.com/bin/de5f28ec2add")
+	// 		.then((response) => response.json())
+	// 		.then((data) => {
+	// 			setTutoringPresets(data.tutoringEvents);
+	// 			// console.log(data.tutoringEvents);
+	// 		});
+	// }, []);
 
 	return (
 		<motion.div
@@ -805,18 +814,49 @@ export default function Admin() {
 										className="col-12 col-lg-6 container-md"
 										id={`${styles.addEventForm}`}
 									>
-										<h2>Add Event</h2>
-										<p>Dont use {`"/"`} or it dies 😄</p>
-										<div className={`${styles.eventInput} mt-2 mb-2`}>
+										<h2 className="mb-1">Add Event</h2>
+										<p>
+											Dont use {eventIsTutoring ? `"," "/"` : `"/"`} or the
+											website breaks
+										</p>
+										<div className={`${styles.eventInput} mt-1 mb-1`}>
 											<p>Is this a tutoring event?</p>
 											<input
 												type="checkbox"
-												onChange={(e) => setEventIsTutoring(e.target.checked)}
+												onChange={async (e) => {
+													setEventIsTutoring(e.target.checked);
+													// try {
+													// 	fetch(
+													// 		"https://json.extendsclass.com/bin/de5f28ec2add"
+													// 	)
+													// 		.then((response) => response.json())
+													// 		.then((data) => {
+													// 			setTutoringPresets(data.tutoringEvents);
+													// 			console.log(data.tutoringEvents);
+													// 		});
+													// } catch (e) {
+													// 	console.log(e);
+													// }
+													// If fetch(https://json.extendsclass.com/bin/de5f28ec2add) works set the state to the data.tutoringEvents
+													if (!e.target.checked) return;
+													let a = await fetch(
+														"https://json.extendsclass.com/bin/de5f28ec2add"
+													);
+													if (a.ok) {
+														setTutoringPresets(
+															await a.json().then((data) => data.tutoringEvents)
+														);
+													} else {
+														alert(
+															"Error fetching tutoring presets. The database holding the presets might be out of requests, try again later."
+														);
+													}
+												}}
 											/>
 										</div>
 										{eventIsTutoring ? (
 											<>
-												<div className={`${styles.eventInput} mb-2`}>
+												<div className={`${styles.eventInput} mb-1`}>
 													<p>Event Presets</p>
 													<select
 														className={styles.eventInputHours}
@@ -852,15 +892,14 @@ export default function Admin() {
 													To edit the presets, modify{" "}
 													<a
 														href="https://extendsclass.com/jsonstorage/de5f28ec2add"
-														className="hoverUnderlineAnim mb-2"
+														className="hoverUnderlineAnim mb-1"
 														target={"_blank"}
 														rel="noreferrer"
 													>
 														this
 													</a>
-													, key is {`"nhs"`}
+													, the key is {`"nhs"`}
 												</p>
-												<p>Dont use {`","`} or it also dies 😎</p>
 											</>
 										) : (
 											<></>
