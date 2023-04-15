@@ -76,7 +76,7 @@ export default function CreateAccount() {
 						tweenDuration={1000}
 					/>
 					{/* <Laser /> */}
-					<Gifs />
+					{/* <Gifs /> */}
 					<div
 						className="d-flex w-100 justify-content-center align-items-center position-absolute top-0 left-0"
 						id={styles.discoball}
