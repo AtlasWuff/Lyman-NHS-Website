@@ -643,7 +643,7 @@ export default function Admin() {
 											<span className="LoadButton-edge"></span>
 
 											<span className="LoadButton-front text">
-												Export to CSV
+												Export to table
 											</span>
 										</button>
 										<Table

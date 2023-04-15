@@ -75,7 +75,7 @@ export default function CreateAccount() {
 						run={isConfettiExploding}
 						tweenDuration={1000}
 					/>
-					{/* <Laser />
+					{/* <Laser /> */}
 					<Gifs />
 					<div
 						className="d-flex w-100 justify-content-center align-items-center position-absolute top-0 left-0"
@@ -87,7 +87,7 @@ export default function CreateAccount() {
 							width={"100"}
 							height={"150"}
 						/>
-					</div> */}
+					</div>
 				</div>
 			) : (
 				<> </>
