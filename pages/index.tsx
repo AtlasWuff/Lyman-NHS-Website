@@ -60,6 +60,7 @@ export default function Home() {
 					)[0].eventName
 			);
 		});
+		console.log(events);
 	});
 
 	const displayModal = async () => {
@@ -757,248 +758,306 @@ export default function Home() {
 									<div
 										className={`row w-100 ${styles.tableUpcomingEventsItem}`}
 									>
-										<div className={`col-lg-6`}>
-											{events
-												.filter((event) => {
-													if (!isMobile()) {
-														// Filter out events that are tutoring
-														const isTutoring = event.isTutoring == false;
+										{events.filter((event) => {
+											if (!isMobile()) {
+												// Filter out events that are tutoring
+												const isTutoring = event.isTutoring == false;
 
-														// Filter out events that are in the past
-														const isNotInPast =
-															new Date(
-																parseInt(event.date.split("-")[0]),
-																parseInt(event.date.split("-")[1]) - 1,
-																parseInt(event.date.split("-")[2])
-															).getTime() >=
-															new Date().getTime() - 86400000;
+												// Filter out events that are in the past
+												const isNotInPast =
+													new Date(
+														parseInt(event.date.split("-")[0]),
+														parseInt(event.date.split("-")[1]) - 1,
+														parseInt(event.date.split("-")[2])
+													).getTime() >=
+													new Date().getTime() - 86400000;
 
-														const checkPast = (dat: string) => {
-															return (
-																new Date(
-																	parseInt(dat.split("-")[0]),
-																	parseInt(dat.split("-")[1]) - 1,
-																	parseInt(dat.split("-")[2])
-																).getTime() >=
-																new Date().getTime() - 86400000
-															);
-														};
-
-														// Filter out events that are not tutoring and are not in the past
-														const isValidEvent = isTutoring && isNotInPast;
-
-														// Filter out events that are not tutoring and are not in the past
-														const isEvenIndex =
-															events
-																.filter(
-																	(event) =>
-																		event.isTutoring == false &&
-																		checkPast(event.date)
-																)
-																.indexOf(event) %
-																2 ==
-															0;
-
-														// Return events that are not tutoring and are not in the past and are on the even index
-														return isValidEvent && isEvenIndex;
-													} else {
-														const checkPast = (dat: string) => {
-															return (
-																new Date(
-																	parseInt(dat.split("-")[0]),
-																	parseInt(dat.split("-")[1]) - 1,
-																	parseInt(dat.split("-")[2])
-																).getTime() >=
-																new Date().getTime() - 86400000
-															);
-														};
-
-														return (
-															events.indexOf(event) <=
-																Math.ceil(events.length / 2) &&
-															checkPast(event.date) &&
-															event.isTutoring == false
-														);
-													}
-												})
-												.map((e) => {
+												const checkPast = (dat: string) => {
 													return (
-														<div
-															className={`${styles.event} mb-2`}
-															key={events.indexOf(e) + "event"}
-														>
-															<h2>{e.eventName}</h2>
-															<Table
-																widthVal={"95%"}
-																bgColor="rgba(0,0,0,0.2)"
-																minHeight={"10vh"}
-																maxHeight={"40vh"}
-															>
-																<div className="d-flex justify-content-center w-100 align-items-center">
-																	<div className={`${styles.eventCard}`}>
-																		<div className="">
-																			<p>
-																				<b>Date</b>
-																			</p>
-																			<p>{e.date}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Location</b>
-																			</p>
-																			<p>{e.location}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Time</b>
-																			</p>
-																			<p>{e.endTime}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Volunteers Needed</b>
-																			</p>
-																			<p>{e.volunteersNeeded}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Signed Up</b>
-																			</p>
-																			<p className="w-100">
-																				{e.volunteers.map((v) => {
-																					return <>{v}, </>;
-																				})}
-																			</p>
-																		</div>
-																	</div>
-																</div>
-															</Table>
-														</div>
+														new Date(
+															parseInt(dat.split("-")[0]),
+															parseInt(dat.split("-")[1]) - 1,
+															parseInt(dat.split("-")[2])
+														).getTime() >=
+														new Date().getTime() - 86400000
 													);
-												})}
-										</div>
-										<div className={`col-lg-6`}>
-											{events
-												.filter((event) => {
-													if (!isMobile()) {
-														// Filter out events that are tutoring
-														const isTutoring = event.isTutoring == false;
+												};
 
-														// Filter out events that are in the past
-														const isNotInPast =
-															new Date(
-																parseInt(event.date.split("-")[0]),
-																parseInt(event.date.split("-")[1]) - 1,
-																parseInt(event.date.split("-")[2])
-															).getTime() >=
-															new Date().getTime() - 86400000;
+												// Filter out events that are not tutoring and are not in the past
+												const isValidEvent = isTutoring && isNotInPast;
 
-														const checkPast = (dat: string) => {
-															return (
-																new Date(
-																	parseInt(dat.split("-")[0]),
-																	parseInt(dat.split("-")[1]) - 1,
-																	parseInt(dat.split("-")[2])
-																).getTime() >=
-																new Date().getTime() - 86400000
-															);
-														};
-
-														// Filter out events that are not tutoring and are not in the past
-														const isValidEvent = isTutoring && isNotInPast;
-
-														// Filter out events that are not tutoring and are not in the past
-														const isEvenIndex =
-															events
-																.filter(
-																	(event) =>
-																		event.isTutoring == false &&
-																		checkPast(event.date)
-																)
-																.indexOf(event) %
-																2 ==
-															1;
-
-														// Return events that are not tutoring and are not in the past and are on the even index
-														return isValidEvent && isEvenIndex;
-													} else {
-														const checkPast = (dat: string) => {
-															return (
-																new Date(
-																	parseInt(dat.split("-")[0]),
-																	parseInt(dat.split("-")[1]) - 1,
-																	parseInt(dat.split("-")[2])
-																).getTime() >=
-																new Date().getTime() - 86400000
-															);
-														};
-
-														return (
-															events.indexOf(event) >
-																Math.ceil(events.length / 2) &&
-															checkPast(event.date) &&
-															event.isTutoring == false
-														);
-													}
-												})
-												.map((e) => {
+												// Filter out events that are not tutoring and are not in the past
+												// Return events that are not tutoring and are not in the past and are on the even index
+												return isValidEvent;
+											} else {
+												const checkPast = (dat: string) => {
 													return (
-														<div
-															className={`${styles.event} mb-2`}
-															key={events.indexOf(e) + "event"}
-														>
-															<h2>{e.eventName}</h2>
-															<Table
-																widthVal={"95%"}
-																bgColor="rgba(0,0,0,0.2)"
-																minHeight={"10vh"}
-																maxHeight={"40vh"}
-															>
-																<div className="d-flex justify-content-center w-100 align-items-center">
-																	<div className={`${styles.eventCard}`}>
-																		<div className="">
-																			<p>
-																				<b>Date</b>
-																			</p>
-																			<p>{e.date}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Location</b>
-																			</p>
-																			<p>{e.location}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Time</b>
-																			</p>
-																			<p>
-																				{e.startTime} - {e.endTime}
-																			</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Volunteers Needed</b>
-																			</p>
-																			<p>{e.volunteersNeeded}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Signed Up</b>
-																			</p>
-																			<p className="w-100">
-																				{e.volunteers.map((v) => {
-																					return <>{v}, </>;
-																				})}
-																			</p>
-																		</div>
-																	</div>
-																</div>
-															</Table>
-														</div>
+														new Date(
+															parseInt(dat.split("-")[0]),
+															parseInt(dat.split("-")[1]) - 1,
+															parseInt(dat.split("-")[2])
+														).getTime() >=
+														new Date().getTime() - 86400000
 													);
-												})}
-										</div>
+												};
+
+												return (
+													events.indexOf(event) <=
+														Math.ceil(events.length / 2) &&
+													checkPast(event.date) &&
+													event.isTutoring == false
+												);
+											}
+										}).length > 0 ? (
+											<>
+												<div className={`col-lg-6`}>
+													{events
+														.filter((event) => {
+															if (!isMobile()) {
+																// Filter out events that are tutoring
+																const isTutoring = event.isTutoring == false;
+
+																// Filter out events that are in the past
+																const isNotInPast =
+																	new Date(
+																		parseInt(event.date.split("-")[0]),
+																		parseInt(event.date.split("-")[1]) - 1,
+																		parseInt(event.date.split("-")[2])
+																	).getTime() >=
+																	new Date().getTime() - 86400000;
+
+																const checkPast = (dat: string) => {
+																	return (
+																		new Date(
+																			parseInt(dat.split("-")[0]),
+																			parseInt(dat.split("-")[1]) - 1,
+																			parseInt(dat.split("-")[2])
+																		).getTime() >=
+																		new Date().getTime() - 86400000
+																	);
+																};
+
+																// Filter out events that are not tutoring and are not in the past
+																const isValidEvent = isTutoring && isNotInPast;
+
+																// Filter out events that are not tutoring and are not in the past
+																const isEvenIndex =
+																	events
+																		.filter(
+																			(event) =>
+																				event.isTutoring == false &&
+																				checkPast(event.date)
+																		)
+																		.indexOf(event) %
+																		2 ==
+																	0;
+
+																// Return events that are not tutoring and are not in the past and are on the even index
+																return isValidEvent && isEvenIndex;
+															} else {
+																const checkPast = (dat: string) => {
+																	return (
+																		new Date(
+																			parseInt(dat.split("-")[0]),
+																			parseInt(dat.split("-")[1]) - 1,
+																			parseInt(dat.split("-")[2])
+																		).getTime() >=
+																		new Date().getTime() - 86400000
+																	);
+																};
+
+																return (
+																	checkPast(event.date) &&
+																	event.isTutoring == false
+																);
+															}
+														})
+														.map((e) => {
+															return (
+																<div
+																	className={`${styles.event} mb-2`}
+																	key={events.indexOf(e) + "event"}
+																>
+																	<h2>{e.eventName}</h2>
+																	<Table
+																		widthVal={"95%"}
+																		bgColor="rgba(0,0,0,0.2)"
+																		minHeight={"10vh"}
+																		maxHeight={"40vh"}
+																	>
+																		<div className="d-flex justify-content-center w-100 align-items-center">
+																			<div className={`${styles.eventCard}`}>
+																				<div className="">
+																					<p>
+																						<b>Date</b>
+																					</p>
+																					<p>{e.date}</p>
+																				</div>
+																				<div className="">
+																					<p>
+																						<b>Location</b>
+																					</p>
+																					<p>{e.location}</p>
+																				</div>
+																				<div className="">
+																					<p>
+																						<b>Time</b>
+																					</p>
+																					<p>{e.endTime}</p>
+																				</div>
+																				<div className="">
+																					<p>
+																						<b>Volunteers Needed</b>
+																					</p>
+																					<p>{e.volunteersNeeded}</p>
+																				</div>
+																				<div className="">
+																					<p>
+																						<b>Signed Up</b>
+																					</p>
+																					<p className="w-100">
+																						{e.volunteers.map((v) => {
+																							return <>{v}, </>;
+																						})}
+																					</p>
+																				</div>
+																			</div>
+																		</div>
+																	</Table>
+																</div>
+															);
+														})}
+												</div>
+												<div className={`col-lg-6`}>
+													{events
+														.filter((event) => {
+															if (!isMobile()) {
+																// Filter out events that are tutoring
+																const isTutoring = event.isTutoring == false;
+
+																// Filter out events that are in the past
+																const isNotInPast =
+																	new Date(
+																		parseInt(event.date.split("-")[0]),
+																		parseInt(event.date.split("-")[1]) - 1,
+																		parseInt(event.date.split("-")[2])
+																	).getTime() >=
+																	new Date().getTime() - 86400000;
+
+																const checkPast = (dat: string) => {
+																	return (
+																		new Date(
+																			parseInt(dat.split("-")[0]),
+																			parseInt(dat.split("-")[1]) - 1,
+																			parseInt(dat.split("-")[2])
+																		).getTime() >=
+																		new Date().getTime() - 86400000
+																	);
+																};
+
+																// Filter out events that are not tutoring and are not in the past
+																const isValidEvent = isTutoring && isNotInPast;
+
+																// Filter out events that are not tutoring and are not in the past
+																const isEvenIndex =
+																	events
+																		.filter(
+																			(event) =>
+																				event.isTutoring == false &&
+																				checkPast(event.date)
+																		)
+																		.indexOf(event) %
+																		2 ==
+																	1;
+
+																// Return events that are not tutoring and are not in the past and are on the even index
+																return isValidEvent && isEvenIndex;
+															} else {
+																const checkPast = (dat: string) => {
+																	return (
+																		new Date(
+																			parseInt(dat.split("-")[0]),
+																			parseInt(dat.split("-")[1]) - 1,
+																			parseInt(dat.split("-")[2])
+																		).getTime() >=
+																		new Date().getTime() - 86400000
+																	);
+																};
+
+																return (
+																	events.indexOf(event) >
+																		Math.ceil(events.length / 2) &&
+																	checkPast(event.date) &&
+																	event.isTutoring == false
+																);
+															}
+														})
+														.map((e) => {
+															return (
+																<div
+																	className={`${styles.event} mb-2`}
+																	key={events.indexOf(e) + "event"}
+																>
+																	<h2>{e.eventName}</h2>
+																	<Table
+																		widthVal={"95%"}
+																		bgColor="rgba(0,0,0,0.2)"
+																		minHeight={"10vh"}
+																		maxHeight={"40vh"}
+																	>
+																		<div className="d-flex justify-content-center w-100 align-items-center">
+																			<div className={`${styles.eventCard}`}>
+																				<div className="">
+																					<p>
+																						<b>Date</b>
+																					</p>
+																					<p>{e.date}</p>
+																				</div>
+																				<div className="">
+																					<p>
+																						<b>Location</b>
+																					</p>
+																					<p>{e.location}</p>
+																				</div>
+																				<div className="">
+																					<p>
+																						<b>Time</b>
+																					</p>
+																					<p>
+																						{e.startTime} - {e.endTime}
+																					</p>
+																				</div>
+																				<div className="">
+																					<p>
+																						<b>Volunteers Needed</b>
+																					</p>
+																					<p>{e.volunteersNeeded}</p>
+																				</div>
+																				<div className="">
+																					<p>
+																						<b>Signed Up</b>
+																					</p>
+																					<p className="w-100">
+																						{e.volunteers.map((v) => {
+																							return <>{v}, </>;
+																						})}
+																					</p>
+																				</div>
+																			</div>
+																		</div>
+																	</Table>
+																</div>
+															);
+														})}
+												</div>
+											</>
+										) : (
+											<div className="w-100 h-100 d-flex justify-content-center align-items-center">
+												<p>
+													<b>No volunteer events have been created yet</b>
+												</p>
+											</div>
+										)}
 									</div>
 								</div>
 							</Table>
@@ -1014,406 +1073,459 @@ export default function Home() {
 								useArrow
 							>
 								<div className="d-flex justify-content-center w-100">
-									<div
-										className={`row w-100 ${styles.tableUpcomingEventsItem}`}
-									>
-										<div className={`col-lg-4`}>
-											{events
-												.filter((event) => {
-													if (!isMobile()) {
-														// Filter out events that are tutoring
-														const isTutoring = event.isTutoring == true;
+									{events.filter((event) => {
+										if (!isMobile()) {
+											// Filter out events that are tutoring
+											const isTutoring = event.isTutoring == true;
 
-														// Filter out events that are in the past
-														const isNotInPast =
-															new Date(
-																parseInt(event.date.split("-")[0]),
-																parseInt(event.date.split("-")[1]) - 1,
-																parseInt(event.date.split("-")[2])
-															).getTime() >=
-															new Date().getTime() - 86400000;
+											// Filter out events that are in the past
+											const isNotInPast =
+												new Date(
+													parseInt(event.date.split("-")[0]),
+													parseInt(event.date.split("-")[1]) - 1,
+													parseInt(event.date.split("-")[2])
+												).getTime() >=
+												new Date().getTime() - 86400000;
 
-														const checkPast = (dat: string) => {
-															return (
+											const checkPast = (dat: string) => {
+												return (
+													new Date(
+														parseInt(dat.split("-")[0]),
+														parseInt(dat.split("-")[1]) - 1,
+														parseInt(dat.split("-")[2])
+													).getTime() >=
+													new Date().getTime() - 86400000
+												);
+											};
+
+											// Filter out events that are not tutoring and are not in the past
+											const isValidEvent = isTutoring && isNotInPast;
+
+											// Filter out events that are not tutoring and are not in the past
+											// Return events that are not tutoring and are not in the past and are on the even index
+											return isValidEvent;
+										} else {
+											const checkPast = (dat: string) => {
+												return (
+													new Date(
+														parseInt(dat.split("-")[0]),
+														parseInt(dat.split("-")[1]) - 1,
+														parseInt(dat.split("-")[2])
+													).getTime() >=
+													new Date().getTime() - 86400000
+												);
+											};
+
+											return checkPast(event.date) && event.isTutoring == false;
+										}
+									}).length > 0 ? (
+										<div
+											className={`row w-100 ${styles.tableUpcomingEventsItem}`}
+										>
+											<div className={`col-lg-4`}>
+												{events
+													.filter((event) => {
+														if (!isMobile()) {
+															// Filter out events that are tutoring
+															const isTutoring = event.isTutoring == true;
+
+															// Filter out events that are in the past
+															const isNotInPast =
 																new Date(
-																	parseInt(dat.split("-")[0]),
-																	parseInt(dat.split("-")[1]) - 1,
-																	parseInt(dat.split("-")[2])
+																	parseInt(event.date.split("-")[0]),
+																	parseInt(event.date.split("-")[1]) - 1,
+																	parseInt(event.date.split("-")[2])
 																).getTime() >=
-																new Date().getTime() - 86400000
-															);
-														};
+																new Date().getTime() - 86400000;
 
-														// Filter out events that are not tutoring and are not in the past
-														const isValidEvent = isTutoring && isNotInPast;
+															const checkPast = (dat: string) => {
+																return (
+																	new Date(
+																		parseInt(dat.split("-")[0]),
+																		parseInt(dat.split("-")[1]) - 1,
+																		parseInt(dat.split("-")[2])
+																	).getTime() >=
+																	new Date().getTime() - 86400000
+																);
+															};
 
-														// Filter out events that are not tutoring and are not in the past
-														const isEvenIndex =
-															events
-																.filter(
-																	(event) =>
-																		event.isTutoring == true &&
-																		checkPast(event.date)
-																)
-																.indexOf(event) %
-																3 ==
-															0;
+															// Filter out events that are not tutoring and are not in the past
+															const isValidEvent = isTutoring && isNotInPast;
 
-														// Return events that are not tutoring and are not in the past and are on the even index
-														return isValidEvent && isEvenIndex;
-													} else {
-														const checkPast = (dat: string) => {
+															// Filter out events that are not tutoring and are not in the past
+															const isEvenIndex =
+																events
+																	.filter(
+																		(event) =>
+																			event.isTutoring == true &&
+																			checkPast(event.date)
+																	)
+																	.indexOf(event) %
+																	3 ==
+																0;
+
+															// Return events that are not tutoring and are not in the past and are on the even index
+															return isValidEvent && isEvenIndex;
+														} else {
+															const checkPast = (dat: string) => {
+																return (
+																	new Date(
+																		parseInt(dat.split("-")[0]),
+																		parseInt(dat.split("-")[1]) - 1,
+																		parseInt(dat.split("-")[2])
+																	).getTime() >=
+																	new Date().getTime() - 86400000
+																);
+															};
+
 															return (
-																new Date(
-																	parseInt(dat.split("-")[0]),
-																	parseInt(dat.split("-")[1]) - 1,
-																	parseInt(dat.split("-")[2])
-																).getTime() >=
-																new Date().getTime() - 86400000
+																events.indexOf(event) <
+																	Math.ceil(events.length / 3) &&
+																checkPast(event.date) &&
+																event.isTutoring == true
 															);
-														};
-
+														}
+													})
+													.map((e) => {
 														return (
-															events.indexOf(event) <
-																Math.ceil(events.length / 3) &&
-															checkPast(event.date) &&
-															event.isTutoring == true
-														);
-													}
-												})
-												.map((e) => {
-													return (
-														<div
-															className={`${styles.event} mb-2`}
-															key={events.indexOf(e) + "event"}
-														>
-															<h2>{e.eventName}</h2>
-															<Table
-																widthVal={"95%"}
-																bgColor="rgba(0,0,0,0.2)"
-																minHeight={"10vh"}
-																maxHeight={"40vh"}
+															<div
+																className={`${styles.event} mb-2`}
+																key={events.indexOf(e) + "event"}
 															>
-																<div className="d-flex justify-content-center w-100 align-items-center">
-																	<div className={`${styles.eventCard}`}>
-																		<div className="">
-																			<p>
-																				<b>Date</b>
-																			</p>
-																			<p>{e.date}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Room</b>
-																			</p>
-																			<p>{e.location}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>End Time</b>
-																			</p>
-																			<p>{e.endTime}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Tutors Needed</b>
-																			</p>
-																			<p>{e.volunteersNeeded}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Host</b>
-																			</p>
-																			<p>{e.tutorHost}</p>
-																		</div>
-																		<div>
-																			<p>
-																				<b>Teachers</b> {e.teachers}
-																			</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Signed Up</b>
-																			</p>
-																			<p className="w-100">
-																				{e.volunteers.map((v) => {
-																					return <>{v}, </>;
-																				})}
-																			</p>
+																<h2>{e.eventName}</h2>
+																<Table
+																	widthVal={"95%"}
+																	bgColor="rgba(0,0,0,0.2)"
+																	minHeight={"10vh"}
+																	maxHeight={"40vh"}
+																>
+																	<div className="d-flex justify-content-center w-100 align-items-center">
+																		<div className={`${styles.eventCard}`}>
+																			<div className="">
+																				<p>
+																					<b>Date</b>
+																				</p>
+																				<p>{e.date}</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>Room</b>
+																				</p>
+																				<p>{e.location}</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>End Time</b>
+																				</p>
+																				<p>{e.endTime}</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>Tutors Needed</b>
+																				</p>
+																				<p>{e.volunteersNeeded}</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>Host</b>
+																				</p>
+																				<p>{e.tutorHost}</p>
+																			</div>
+																			<div>
+																				<p>
+																					<b>Teachers</b> {e.teachers}
+																				</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>Signed Up</b>
+																				</p>
+																				<p className="w-100">
+																					{e.volunteers.map((v) => {
+																						return <>{v}, </>;
+																					})}
+																				</p>
+																			</div>
 																		</div>
 																	</div>
-																</div>
-															</Table>
-														</div>
-													);
-												})}
-										</div>
-										<div className={`col-lg-4`}>
-											{events
-												.filter((event) => {
-													if (!isMobile()) {
-														// Filter out events that are tutoring
-														const isTutoring = event.isTutoring == true;
-
-														// Filter out events that are in the past
-														const isNotInPast =
-															new Date(
-																parseInt(event.date.split("-")[0]),
-																parseInt(event.date.split("-")[1]) - 1,
-																parseInt(event.date.split("-")[2])
-															).getTime() >=
-															new Date().getTime() - 86400000;
-
-														const checkPast = (dat: string) => {
-															return (
-																new Date(
-																	parseInt(dat.split("-")[0]),
-																	parseInt(dat.split("-")[1]) - 1,
-																	parseInt(dat.split("-")[2])
-																).getTime() >=
-																new Date().getTime() - 86400000
-															);
-														};
-
-														// Filter out events that are not tutoring and are not in the past
-														const isValidEvent = isTutoring && isNotInPast;
-
-														// Filter out events that are not tutoring and are not in the past
-														const isEvenIndex =
-															events
-																.filter(
-																	(event) =>
-																		event.isTutoring == true &&
-																		checkPast(event.date)
-																)
-																.indexOf(event) %
-																3 ==
-															1;
-
-														// Return events that are not tutoring and are not in the past and are on the even index
-														return isValidEvent && isEvenIndex;
-													} else {
-														const checkPast = (dat: string) => {
-															return (
-																new Date(
-																	parseInt(dat.split("-")[0]),
-																	parseInt(dat.split("-")[1]) - 1,
-																	parseInt(dat.split("-")[2])
-																).getTime() >=
-																new Date().getTime() - 86400000
-															);
-														};
-
-														return (
-															events.indexOf(event) >=
-																Math.ceil(events.length / 3) &&
-															events.indexOf(event) <
-																Math.ceil(events.length / 3) * 2 &&
-															checkPast(event.date) &&
-															event.isTutoring == true
+																</Table>
+															</div>
 														);
-													}
-												})
-												.map((e) => {
-													return (
-														<div
-															className={`${styles.event} mb-2`}
-															key={events.indexOf(e) + "event"}
-														>
-															<h2>{e.eventName}</h2>
-															<Table
-																widthVal={"95%"}
-																bgColor="rgba(0,0,0,0.2)"
-																minHeight={"10vh"}
-																maxHeight={"40vh"}
-															>
-																<div className="d-flex justify-content-center w-100 align-items-center">
-																	<div className={`${styles.eventCard}`}>
-																		<div className="">
-																			<p>
-																				<b>Date</b>
-																			</p>
-																			<p>{e.date}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Room</b>
-																			</p>
-																			<p>{e.location}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>End Time</b>
-																			</p>
-																			<p>{e.endTime}</p>
-																		</div>
+													})}
+											</div>
+											<div className={`col-lg-4`}>
+												{events
+													.filter((event) => {
+														if (!isMobile()) {
+															// Filter out events that are tutoring
+															const isTutoring = event.isTutoring == true;
 
-																		<div className="">
-																			<p>
-																				<b>Tutors Needed</b>
-																			</p>
-																			<p>{e.volunteersNeeded}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Host</b>
-																			</p>
-																			<p>{e.tutorHost}</p>
-																		</div>
-																		<div>
-																			<p>
-																				<b>Teachers</b> {e.teachers}
-																			</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Signed Up</b>
-																			</p>
-																			<p className="w-100">
-																				{e.volunteers.map((v) => {
-																					return <>{v}, </>;
-																				})}
-																			</p>
+															// Filter out events that are in the past
+															const isNotInPast =
+																new Date(
+																	parseInt(event.date.split("-")[0]),
+																	parseInt(event.date.split("-")[1]) - 1,
+																	parseInt(event.date.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000;
+
+															const checkPast = (dat: string) => {
+																return (
+																	new Date(
+																		parseInt(dat.split("-")[0]),
+																		parseInt(dat.split("-")[1]) - 1,
+																		parseInt(dat.split("-")[2])
+																	).getTime() >=
+																	new Date().getTime() - 86400000
+																);
+															};
+
+															// Filter out events that are not tutoring and are not in the past
+															const isValidEvent = isTutoring && isNotInPast;
+
+															// Filter out events that are not tutoring and are not in the past
+															const isEvenIndex =
+																events
+																	.filter(
+																		(event) =>
+																			event.isTutoring == true &&
+																			checkPast(event.date)
+																	)
+																	.indexOf(event) %
+																	3 ==
+																1;
+
+															// Return events that are not tutoring and are not in the past and are on the even index
+															return isValidEvent && isEvenIndex;
+														} else {
+															const checkPast = (dat: string) => {
+																return (
+																	new Date(
+																		parseInt(dat.split("-")[0]),
+																		parseInt(dat.split("-")[1]) - 1,
+																		parseInt(dat.split("-")[2])
+																	).getTime() >=
+																	new Date().getTime() - 86400000
+																);
+															};
+
+															return (
+																events.indexOf(event) >=
+																	Math.ceil(events.length / 3) &&
+																events.indexOf(event) <
+																	Math.ceil(events.length / 3) * 2 &&
+																checkPast(event.date) &&
+																event.isTutoring == true
+															);
+														}
+													})
+													.map((e) => {
+														return (
+															<div
+																className={`${styles.event} mb-2`}
+																key={events.indexOf(e) + "event"}
+															>
+																<h2>{e.eventName}</h2>
+																<Table
+																	widthVal={"95%"}
+																	bgColor="rgba(0,0,0,0.2)"
+																	minHeight={"10vh"}
+																	maxHeight={"40vh"}
+																>
+																	<div className="d-flex justify-content-center w-100 align-items-center">
+																		<div className={`${styles.eventCard}`}>
+																			<div className="">
+																				<p>
+																					<b>Date</b>
+																				</p>
+																				<p>{e.date}</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>Room</b>
+																				</p>
+																				<p>{e.location}</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>End Time</b>
+																				</p>
+																				<p>{e.endTime}</p>
+																			</div>
+
+																			<div className="">
+																				<p>
+																					<b>Tutors Needed</b>
+																				</p>
+																				<p>{e.volunteersNeeded}</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>Host</b>
+																				</p>
+																				<p>{e.tutorHost}</p>
+																			</div>
+																			<div>
+																				<p>
+																					<b>Teachers</b> {e.teachers}
+																				</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>Signed Up</b>
+																				</p>
+																				<p className="w-100">
+																					{e.volunteers.map((v) => {
+																						return <>{v}, </>;
+																					})}
+																				</p>
+																			</div>
 																		</div>
 																	</div>
-																</div>
-															</Table>
-														</div>
-													);
-												})}
-										</div>
-										<div className={`col-lg-4`}>
-											{events
-												.filter((event) => {
-													if (!isMobile()) {
-														// Filter out events that are tutoring
-														const isTutoring = event.isTutoring == true;
-
-														// Filter out events that are in the past
-														const isNotInPast =
-															new Date(
-																parseInt(event.date.split("-")[0]),
-																parseInt(event.date.split("-")[1]) - 1,
-																parseInt(event.date.split("-")[2])
-															).getTime() >=
-															new Date().getTime() - 86400000;
-
-														const checkPast = (dat: string) => {
-															return (
-																new Date(
-																	parseInt(dat.split("-")[0]),
-																	parseInt(dat.split("-")[1]) - 1,
-																	parseInt(dat.split("-")[2])
-																).getTime() >=
-																new Date().getTime() - 86400000
-															);
-														};
-
-														// Filter out events that are not tutoring and are not in the past
-														const isValidEvent = isTutoring && isNotInPast;
-
-														// Filter out events that are not tutoring and are not in the past
-														const isEvenIndex =
-															events
-																.filter(
-																	(event) =>
-																		event.isTutoring == true &&
-																		checkPast(event.date)
-																)
-																.indexOf(event) %
-																3 ==
-															2;
-
-														// Return events that are not tutoring and are not in the past and are on the even index
-														return isValidEvent && isEvenIndex;
-													} else {
-														const checkPast = (dat: string) => {
-															return (
-																new Date(
-																	parseInt(dat.split("-")[0]),
-																	parseInt(dat.split("-")[1]) - 1,
-																	parseInt(dat.split("-")[2])
-																).getTime() >=
-																new Date().getTime() - 86400000
-															);
-														};
-
-														return (
-															events.indexOf(event) >=
-																Math.ceil(events.length / 3) * 2 &&
-															checkPast(event.date) &&
-															event.isTutoring == true
+																</Table>
+															</div>
 														);
-													}
-												})
-												.map((e) => {
-													return (
-														<div
-															className={`${styles.event} mb-2`}
-															key={events.indexOf(e) + "event"}
-														>
-															<h2>{e.eventName}</h2>
-															<Table
-																widthVal={"95%"}
-																bgColor="rgba(0,0,0,0.2)"
-																minHeight={"10vh"}
-																maxHeight={"40vh"}
+													})}
+											</div>
+											<div className={`col-lg-4`}>
+												{events
+													.filter((event) => {
+														if (!isMobile()) {
+															// Filter out events that are tutoring
+															const isTutoring = event.isTutoring == true;
+
+															// Filter out events that are in the past
+															const isNotInPast =
+																new Date(
+																	parseInt(event.date.split("-")[0]),
+																	parseInt(event.date.split("-")[1]) - 1,
+																	parseInt(event.date.split("-")[2])
+																).getTime() >=
+																new Date().getTime() - 86400000;
+
+															const checkPast = (dat: string) => {
+																return (
+																	new Date(
+																		parseInt(dat.split("-")[0]),
+																		parseInt(dat.split("-")[1]) - 1,
+																		parseInt(dat.split("-")[2])
+																	).getTime() >=
+																	new Date().getTime() - 86400000
+																);
+															};
+
+															// Filter out events that are not tutoring and are not in the past
+															const isValidEvent = isTutoring && isNotInPast;
+
+															// Filter out events that are not tutoring and are not in the past
+															const isEvenIndex =
+																events
+																	.filter(
+																		(event) =>
+																			event.isTutoring == true &&
+																			checkPast(event.date)
+																	)
+																	.indexOf(event) %
+																	3 ==
+																2;
+
+															// Return events that are not tutoring and are not in the past and are on the even index
+															return isValidEvent && isEvenIndex;
+														} else {
+															const checkPast = (dat: string) => {
+																return (
+																	new Date(
+																		parseInt(dat.split("-")[0]),
+																		parseInt(dat.split("-")[1]) - 1,
+																		parseInt(dat.split("-")[2])
+																	).getTime() >=
+																	new Date().getTime() - 86400000
+																);
+															};
+
+															return (
+																events.indexOf(event) >=
+																	Math.ceil(events.length / 3) * 2 &&
+																checkPast(event.date) &&
+																event.isTutoring == true
+															);
+														}
+													})
+													.map((e) => {
+														return (
+															<div
+																className={`${styles.event} mb-2`}
+																key={events.indexOf(e) + "event"}
 															>
-																<div className="d-flex justify-content-center w-100 align-items-center">
-																	<div className={`${styles.eventCard}`}>
-																		<div className="">
-																			<p>
-																				<b>Date</b>
-																			</p>
-																			<p>{e.date}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Room</b>
-																			</p>
-																			<p>{e.location}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>End Time</b>
-																			</p>
-																			<p>{e.endTime}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Tutors Needed</b>
-																			</p>
-																			<p>{e.volunteersNeeded}</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Host</b>
-																			</p>
-																			<p>{e.tutorHost}</p>
-																		</div>
-																		<div>
-																			<p>
-																				<b>Teachers</b> {e.teachers}
-																			</p>
-																		</div>
-																		<div className="">
-																			<p>
-																				<b>Signed Up</b>
-																			</p>
-																			<p className="w-100">
-																				{e.volunteers.map((v) => {
-																					return <>{v}, </>;
-																				})}
-																			</p>
+																<h2>{e.eventName}</h2>
+																<Table
+																	widthVal={"95%"}
+																	bgColor="rgba(0,0,0,0.2)"
+																	minHeight={"10vh"}
+																	maxHeight={"40vh"}
+																>
+																	<div className="d-flex justify-content-center w-100 align-items-center">
+																		<div className={`${styles.eventCard}`}>
+																			<div className="">
+																				<p>
+																					<b>Date</b>
+																				</p>
+																				<p>{e.date}</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>Room</b>
+																				</p>
+																				<p>{e.location}</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>End Time</b>
+																				</p>
+																				<p>{e.endTime}</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>Tutors Needed</b>
+																				</p>
+																				<p>{e.volunteersNeeded}</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>Host</b>
+																				</p>
+																				<p>{e.tutorHost}</p>
+																			</div>
+																			<div>
+																				<p>
+																					<b>Teachers</b> {e.teachers}
+																				</p>
+																			</div>
+																			<div className="">
+																				<p>
+																					<b>Signed Up</b>
+																				</p>
+																				<p className="w-100">
+																					{e.volunteers.map((v) => {
+																						return <>{v}, </>;
+																					})}
+																				</p>
+																			</div>
 																		</div>
 																	</div>
-																</div>
-															</Table>
-														</div>
-													);
-												})}
+																</Table>
+															</div>
+														);
+													})}
+											</div>
 										</div>
-									</div>
+									) : (
+										<div className="w-100 h-100 d-flex justify-content-center align-items-center">
+											<p>
+												<b>No tutoring events have been created yet</b>
+											</p>
+										</div>
+									)}
 								</div>
 							</Table>
 						</>

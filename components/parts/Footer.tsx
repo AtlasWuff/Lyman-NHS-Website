@@ -57,7 +57,7 @@ export default function Footer({}: Props) {
 							alt=""
 						/>
 					</a>
-					<a
+					{/* <a
 						href="https://linkedin.com/in/Joshua-EW"
 						target="_blank"
 						rel="noreferrer"
@@ -68,7 +68,7 @@ export default function Footer({}: Props) {
 							height={30}
 							alt=""
 						/>
-					</a>
+					</a> */}
 					<a
 						href="https://www.instagram.com/tachanks_/"
 						target="_blank"
