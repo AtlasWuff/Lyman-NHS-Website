@@ -653,6 +653,10 @@ export const newAccount = async ({
 			reject(false);
 			alert("Please enter a password with at least 8 characters.");
 			return;
+		} else if (email.includes("@student")) {
+			reject(false);
+			alert("Please enter a non-student email.");
+			return;
 		}
 		// give me what is said above but all in one if statement and a alert saying "Please enter a password without any special characters."
 		const specialChars = [
