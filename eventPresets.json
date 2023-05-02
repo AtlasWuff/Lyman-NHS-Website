@@ -8,7 +8,7 @@
 			"tutorsNeeded": "3"
 		},
 		{
-			"subject": "Alegebra 1",
+			"subject": "Algebra 1",
 			"room": "4-202",
 			"teachers": "Frye",
 			"endTime": "3:00pm",
@@ -37,7 +37,7 @@
 		},
 		{
 			"subject": "Precalculus",
-			"room": "IDK",
+			"room": "4-002",
 			"teachers": "Cox",
 			"endTime": "3:00pm",
 			"tutorsNeeded": "3"
@@ -62,6 +62,34 @@
 			"teachers": "Pollard",
 			"endTime": "3:00pm",
 			"tutorsNeeded": "3"
+		},
+        {
+			"subject": "Algebra 1",
+			"room": "4-208",
+			"teachers": "Horrobin",
+			"endTime": "3:00pm",
+			"tutorsNeeded": "5"
+		},
+        {
+			"subject": "Algebra 1",
+			"room": "4-207",
+			"teachers": "Moran",
+			"endTime": "3:00pm",
+			"tutorsNeeded": "5"
+		},
+        {
+			"subject": "Algebra 2",
+			"room": "4-206",
+			"teachers": "Dills",
+			"endTime": "3:00pm",
+			"tutorsNeeded": "5"
+		},
+        {
+			"subject": "Precalc",
+			"room": "4-003",
+			"teachers": "Locke",
+			"endTime": "3:00pm",
+			"tutorsNeeded": "5"
 		}
 	]
 }
