@@ -33,6 +33,7 @@ import Confetti from "react-confetti";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useWindowSize } from "usehooks-ts";
+import tutoringEventsss from "../eventPresets.json";
 
 // CSS imports
 import styles from "../styles/pages/Admin.module.css";
@@ -846,10 +847,25 @@ export default function Admin() {
 														setTutoringPresets(
 															await a.json().then((data) => data.tutoringEvents)
 														);
-													} else {
-														alert(
-															"Error fetching tutoring presets. The database holding the presets might be out of requests, try again later."
+														console.log(
+															"Fetched tutoring presets from database"
 														);
+													} else {
+														// console.log(
+														// 	await a.json().then((data) => data.tutoringEvents)
+														// );
+														// console.log(tutoringEventsss.tutoringEvents);
+														// console.log(
+														// 	tutoringEventsss.tutoringEvents ==
+														// 		(await a
+														// 			.json()
+														// 			.then((data) => data.tutoringEvents))
+														// );
+														// alert(
+														// 	"Error fetching tutoring presets. The database holding the presets might be out of requests, try again later."
+														// );
+														setTutoringPresets(tutoringEventsss.tutoringEvents);
+														console.log("Used fallback tutoring presets");
 													}
 												}}
 											/>
