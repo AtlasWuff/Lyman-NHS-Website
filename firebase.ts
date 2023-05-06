@@ -9,6 +9,8 @@ import {
 	updateDoc,
 } from "firebase/firestore";
 import * as EmailValidator from "email-validator";
+import { uuid } from "uuidv4";
+var HTTPS = require("https");
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -423,6 +425,40 @@ export const addEvent = async ({
 				alert(`Success!\nEvent ${eventName} has been added to the database.`);
 				resolve(true);
 			});
+
+			// ! GroupMe send message
+			if (isTutoring) {
+				reject();
+				return;
+			}
+
+			let messagee = `A new volunteering event has been added!\n\nEvent Name: ${eventName}\nDate: ${date}\nLocation: ${location}\nStart Time: ${startTime}\nEnd Time: ${endTime}\nVolunteers Needed: ${volunteersNeeded}\n\nTo sign up for this event, go to https://lymannhs.netlify.app/`;
+			let url = `https://api.groupme.com/v3/groups/93971222/messages?text=${messagee}&source_guid=${uuid()}`;
+			let botId = "bab5899a1b58b4e354baae79d8";
+			let options = {
+				hostname: "api.groupme.com",
+				path: "/v3/bots/post",
+				method: "POST",
+			};
+			let body = {
+				bot_id: botId,
+				text: messagee,
+			};
+			var botReq = HTTPS.request(options, function (res: any) {
+				if (res.statusCode == 202) {
+					//neat
+				} else {
+					console.log("rejecting bad status code " + res.statusCode);
+				}
+			});
+
+			botReq.on("error", function (err: any) {
+				console.log("error posting message " + JSON.stringify(err));
+			});
+			botReq.on("timeout", function (err: any) {
+				console.log("timeout posting message " + JSON.stringify(err));
+			});
+			botReq.end(JSON.stringify(body));
 		} catch (err) {
 			console.log(err);
 			alert(
