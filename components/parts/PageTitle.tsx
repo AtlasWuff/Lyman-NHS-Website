@@ -30,7 +30,13 @@ export default function PageTitle({ title, children }: Props) {
 			</section>
 			<div className={`${styles.waveWrap}`}>
 				<div className={`${styles.wave}`}>
-					<Image src={`/img/wave2.svg`} fill alt="" draggable={false} />
+					<Image
+						src={`/img/wave2.svg`}
+						fill
+						alt=""
+						draggable={false}
+						className="min-vw-100"
+					/>
 				</div>
 			</div>
 		</>
