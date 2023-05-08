@@ -143,6 +143,8 @@ export default function CreateAccount() {
 									<p>Grade</p>
 									<input
 										type="number"
+										min="9"
+										max="12"
 										value={grade}
 										onChange={(e) => setGrade(e.target.value)}
 									/>
