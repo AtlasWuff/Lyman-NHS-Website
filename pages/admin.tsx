@@ -1368,8 +1368,8 @@ export default function Admin() {
 														alert("Please select a member");
 														return;
 													} else if (
-														hoursNewVolunteerHours <= 0 ||
-														hoursNewTutoringHours <= 0
+														hoursNewVolunteerHours < 0 ||
+														hoursNewTutoringHours < 0
 													) {
 														alert("Please enter a value for both fields");
 														return;
