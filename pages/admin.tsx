@@ -1557,9 +1557,9 @@ export default function Admin() {
 																					setHourRequests(
 																						hourRequests.filter(
 																							(r) =>
-																								r.eventName !==
+																								r.eventName !=
 																									request.eventName &&
-																								r.name !== request.name
+																								r.name != request.name
 																						)
 																					);
 																					// console.log(hourRequests);
@@ -1582,9 +1582,9 @@ export default function Admin() {
 																					setHourRequests(
 																						hourRequests.filter(
 																							(r) =>
-																								r.eventName !==
+																								r.eventName !=
 																									request.eventName &&
-																								r.name !== request.name
+																								r.name != request.name
 																						)
 																					);
 																					// console.log(hourRequests);
