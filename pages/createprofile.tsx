@@ -109,7 +109,7 @@ export default function CreateAccount() {
 									<p>Email</p>
 									<input
 										type="email"
-										onChange={(e) => setEmail(e.target.value)}
+										onChange={(e) => setEmail(e.target.value.trim())}
 										value={email}
 									/>
 								</div>
@@ -117,7 +117,7 @@ export default function CreateAccount() {
 									<p>Password</p>
 									<input
 										type="text"
-										onChange={(e) => setPassword(e.target.value)}
+										onChange={(e) => setPassword(e.target.value.trim())}
 										value={password}
 									/>
 								</div>
@@ -128,7 +128,7 @@ export default function CreateAccount() {
 									<input
 										type="text"
 										value={firstName}
-										onChange={(e) => setFirstName(e.target.value)}
+										onChange={(e) => setFirstName(e.target.value.trim())}
 									/>
 								</div>
 								<div className={`${styles.loginInput}`}>
@@ -136,7 +136,7 @@ export default function CreateAccount() {
 									<input
 										type="text"
 										value={lastName}
-										onChange={(e) => setLastName(e.target.value)}
+										onChange={(e) => setLastName(e.target.value.trim())}
 									/>
 								</div>
 								<div className={`${styles.loginInput}`}>
@@ -146,7 +146,7 @@ export default function CreateAccount() {
 										min="9"
 										max="12"
 										value={grade}
-										onChange={(e) => setGrade(e.target.value)}
+										onChange={(e) => setGrade(e.target.value.trim())}
 									/>
 								</div>
 								<div className={`${styles.loginButton}`}>
