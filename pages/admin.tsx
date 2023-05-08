@@ -138,7 +138,9 @@ export default function Admin() {
 	 * @param {void}
 	 * @return {Promise}
 	 */
-
+	const getHourRequests = async () => {
+		return await getHoursRequestsArray();
+	};
 	/* Get accounts on page load
 	 * @param {void}
 	 * @return {void}
@@ -1562,6 +1564,11 @@ export default function Admin() {
 																								r.name != request.name
 																						)
 																					);
+																					await getHourRequests().then(
+																						(res) => {
+																							setHourRequests(res);
+																						}
+																					);
 																					// console.log(hourRequests);
 																				}}
 																			>
@@ -1586,6 +1593,11 @@ export default function Admin() {
 																									request.eventName &&
 																								r.name != request.name
 																						)
+																					);
+																					await getHourRequests().then(
+																						(res) => {
+																							setHourRequests(res);
+																						}
 																					);
 																					// console.log(hourRequests);
 																				}}
