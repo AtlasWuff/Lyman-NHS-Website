@@ -263,13 +263,15 @@ export default function Home() {
 										type="email"
 										placeholder="Email"
 										value={hourCheckEmail}
-										onChange={(v) => setHourCheckEmail(v.target.value)}
+										onChange={(v) => setHourCheckEmail(v.target.value.trim())}
 									/>
 									<input
 										type="password"
 										placeholder="Password"
 										value={hourCheckPassword}
-										onChange={(v) => setHourCheckPassword(v.target.value)}
+										onChange={(v) =>
+											setHourCheckPassword(v.target.value.trim())
+										}
 									/>
 									<button
 										className="LoadButton-pushable my-2"
@@ -325,19 +327,21 @@ export default function Home() {
 												type="email"
 												placeholder="Email"
 												value={messageEmail}
-												onChange={(v) => setMessageEmail(v.target.value)}
+												onChange={(v) => setMessageEmail(v.target.value.trim())}
 											/>
 											<input
 												type="password"
 												placeholder="Password"
 												value={messagePassword}
-												onChange={(v) => setMessagePassword(v.target.value)}
+												onChange={(v) =>
+													setMessagePassword(v.target.value.trim())
+												}
 											/>
 											<input
 												type="text"
 												placeholder="Message"
 												value={message}
-												onChange={(v) => setMessage(v.target.value)}
+												onChange={(v) => setMessage(v.target.value.trim())}
 											/>
 
 											<button
@@ -392,6 +396,10 @@ export default function Home() {
 											<p className="mb-2">
 												Enter email & password for member verification
 											</p>
+											<p className="mb-2">
+												Only one request per event can be stored, otherwise it
+												will replace the original
+											</p>
 											<div className="d-flex justify-content-center w-100	 flex-row mb-2">
 												<p className="text-nowrap me-2">
 													Is this a tutoring event?
@@ -414,31 +422,41 @@ export default function Home() {
 												type="email"
 												placeholder="Email"
 												value={reqHoursEmail}
-												onChange={(v) => setReqHoursEmail(v.target.value)}
+												onChange={(v) =>
+													setReqHoursEmail(v.target.value.trim())
+												}
 											/>
 											<input
 												type="password"
 												placeholder="Password"
 												value={reqHoursPassword}
-												onChange={(v) => setReqHoursPassword(v.target.value)}
+												onChange={(v) =>
+													setReqHoursPassword(v.target.value.trim())
+												}
 											/>
 											<input
 												type="text"
 												placeholder="Event Name"
 												value={reqHoursEventName}
-												onChange={(v) => setReqHoursEventName(v.target.value)}
+												onChange={(v) =>
+													setReqHoursEventName(v.target.value.trim())
+												}
 											/>
 											<input
 												type="text"
 												placeholder="Arrival Time"
 												value={reqHoursArriveTime}
-												onChange={(v) => setReqHoursArriveTime(v.target.value)}
+												onChange={(v) =>
+													setReqHoursArriveTime(v.target.value.trim())
+												}
 											/>
 											<input
 												type="text"
 												placeholder="Departure Time"
 												value={reqHoursLeaveTime}
-												onChange={(v) => setReqHoursLeaveTime(v.target.value)}
+												onChange={(v) =>
+													setReqHoursLeaveTime(v.target.value.trim())
+												}
 											/>
 											<p className="mb-2">Total hours attended</p>
 											{!reqHoursIsTutoring ? (
@@ -448,7 +466,7 @@ export default function Home() {
 													value={reqHoursVolunteerHours}
 													onChange={(v) =>
 														setReqHoursVolunteerHours(
-															v.target.value as unknown as number
+															v.target.value.trim() as unknown as number
 														)
 													}
 												/>
@@ -459,7 +477,7 @@ export default function Home() {
 													value={reqHoursTutorHours}
 													onChange={(v) =>
 														setReqHoursTutorHours(
-															v.target.value as unknown as number
+															v.target.value.trim() as unknown as number
 														)
 													}
 												/>
@@ -533,20 +551,20 @@ export default function Home() {
 											type="email"
 											placeholder="Email"
 											value={email}
-											onChange={(v) => setEmail(v.target.value)}
+											onChange={(v) => setEmail(v.target.value.trim())}
 										/>
 										<input
 											type="password"
 											placeholder="Password"
 											value={password}
-											onChange={(v) => setPassword(v.target.value)}
+											onChange={(v) => setPassword(v.target.value.trim())}
 										/>
 										<p className="mb-2">Volunteering or tutoring?</p>
 										<select
 											value={signUpModalDesicion}
 											onChange={(v) => {
-												if (v.target.value.length > 0) {
-													setSignUpModalDesicion(v.target.value);
+												if (v.target.value.trim().length > 0) {
+													setSignUpModalDesicion(v.target.value.trim());
 												} else {
 													setSignUpModalDesicion("Volunteering");
 												}
@@ -559,12 +577,12 @@ export default function Home() {
 										<select
 											value={eventInput}
 											onChange={(v) => {
-												if (v.target.value.length > 0) {
-													setEventInput(v.target.value);
+												if (v.target.value.trim().length > 0) {
+													setEventInput(v.target.value.trim());
 												} else {
 													setEventInput("");
 												}
-												console.log(v.target.value);
+												console.log(v.target.value.trim());
 											}}
 										>
 											<>
@@ -651,20 +669,20 @@ export default function Home() {
 											type="email"
 											placeholder="Email"
 											value={email}
-											onChange={(v) => setEmail(v.target.value)}
+											onChange={(v) => setEmail(v.target.value.trim())}
 										/>
 										<input
 											type="password"
 											placeholder="Password"
 											value={password}
-											onChange={(v) => setPassword(v.target.value)}
+											onChange={(v) => setPassword(v.target.value.trim())}
 										/>
 										<p className="mb-2">Volunteering or tutoring?</p>
 										<select
 											value={leaveEventModalDesicion}
 											onChange={(v) => {
-												if (v.target.value.length > 0) {
-													setLeaveEventModalDesicion(v.target.value);
+												if (v.target.value.trim().length > 0) {
+													setLeaveEventModalDesicion(v.target.value.trim());
 												} else {
 													setLeaveEventModalDesicion("Volunteering");
 												}
@@ -677,12 +695,12 @@ export default function Home() {
 										<select
 											value={eventInput}
 											onChange={(v) => {
-												if (v.target.value.length > 0) {
-													setEventInput(v.target.value);
+												if (v.target.value.trim().length > 0) {
+													setEventInput(v.target.value.trim());
 												} else {
 													setEventInput("");
 												}
-												console.log(v.target.value);
+												console.log(v.target.value.trim());
 											}}
 										>
 											<>

@@ -1366,8 +1366,8 @@ export default function Admin() {
 														alert("Please select a member");
 														return;
 													} else if (
-														hoursNewVolunteerHours < 0 ||
-														hoursNewTutoringHours < 0
+														hoursNewVolunteerHours <= 0 ||
+														hoursNewTutoringHours <= 0
 													) {
 														alert("Please enter a value for both fields");
 														return;
@@ -1557,11 +1557,12 @@ export default function Admin() {
 																					setHourRequests(
 																						hourRequests.filter(
 																							(r) =>
-																								r.name !== request.name &&
 																								r.eventName !==
-																									request.eventName
+																									request.eventName &&
+																								r.name !== request.name
 																						)
 																					);
+																					// console.log(hourRequests);
 																				}}
 																			>
 																				<span className="ApproveButton-shadow"></span>
@@ -1581,11 +1582,12 @@ export default function Admin() {
 																					setHourRequests(
 																						hourRequests.filter(
 																							(r) =>
-																								r.name !== request.name &&
 																								r.eventName !==
-																									request.eventName
+																									request.eventName &&
+																								r.name !== request.name
 																						)
 																					);
+																					// console.log(hourRequests);
 																				}}
 																			>
 																				<span className="DenyButton-shadow"></span>
