@@ -921,7 +921,9 @@ export default function Home() {
 																					<p>
 																						<b>Time</b>
 																					</p>
-																					<p>{e.endTime}</p>
+																					<p>
+																						{e.startTime} - {e.endTime}
+																					</p>
 																				</div>
 																				<div className="">
 																					<p>
