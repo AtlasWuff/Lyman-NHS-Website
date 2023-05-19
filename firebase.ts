@@ -839,6 +839,11 @@ export const deleteCollectionData = async (collectionName: string) => {
 		var collectionRef = collection(db, collectionName);
 		let querySnapshot = await getDocs(collectionRef);
 		querySnapshot.forEach(async (docy: any) => {
+			// if doc name includes stone dont delete
+			if (docy.id.includes("brittany stone")) {
+				alert("Account with last name 'stone' found. Skipping.");
+				return;
+			}
 			await deleteDoc(doc(db, collectionName, docy.id));
 		});
 
