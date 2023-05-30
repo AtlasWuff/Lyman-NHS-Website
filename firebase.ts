@@ -409,6 +409,18 @@ export const addEvent = async ({
 			let newEventDoc = doc(db, "Events", eventName.toLowerCase() + " " + date);
 			console.log("Make doc 353");
 
+			// for every parameter replace all _ with spaces
+			eventName = eventName.replaceAll("_", " ");
+			location = location.replaceAll("_", " ");
+			startTime = startTime.replaceAll("_", " ");
+			endTime = endTime.replaceAll("_", " ");
+			tutorHost = tutorHost.replaceAll("_", " ");
+			teachers = teachers.replaceAll("_", " ");
+			eventName = eventName.replaceAll("-", " ");
+			location = location.replaceAll("-", " ");
+			tutorHost = tutorHost.replaceAll("-", " ");
+			teachers = teachers.replaceAll("-", " ");
+
 			const docRef = await setDoc(newEventDoc, {
 				eventName,
 				date,
