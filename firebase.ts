@@ -406,9 +406,6 @@ export const addEvent = async ({
 }: eventProps) => {
 	return new Promise<any>(async (resolve, reject) => {
 		try {
-			let newEventDoc = doc(db, "Events", eventName.toLowerCase() + " " + date);
-			console.log("Make doc 353");
-
 			// for every parameter replace all _ with spaces
 			eventName = eventName.replaceAll("_", " ");
 			location = location.replaceAll("_", " ");
@@ -420,6 +417,8 @@ export const addEvent = async ({
 			location = location.replaceAll("-", " ");
 			tutorHost = tutorHost.replaceAll("-", " ");
 			teachers = teachers.replaceAll("-", " ");
+			let newEventDoc = doc(db, "Events", eventName.toLowerCase() + " " + date);
+			console.log("Make doc 353");
 
 			const docRef = await setDoc(newEventDoc, {
 				eventName,
