@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 // Imports
 import Head from "next/head";
 import Link from "next/link";
@@ -539,9 +540,8 @@ export default function Admin() {
 									<span className="LoadButton-front text">Refresh Items</span>
 								</button>
 								<p>
-									Note: If something doesn&apos;t let you type a space, type it
-									as you would normally but without spaces and then insert the
-									spaces in after typing it out
+									<b>Note: </b>Use "_" or "-" instead of spaces for anything you
+									can't put spaces in
 								</p>
 								<div className="row">
 									<div
