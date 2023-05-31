@@ -35,7 +35,7 @@ export default function PageTitle({ title, children }: Props) {
 						fill
 						alt=""
 						draggable={false}
-						className="min-vw-100"
+						className="min-vw-100 h-auto"
 					/>
 				</div>
 			</div>
