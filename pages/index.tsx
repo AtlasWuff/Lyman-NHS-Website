@@ -1135,7 +1135,7 @@ export default function Home() {
 												);
 											};
 
-											return checkPast(event.date) && event.isTutoring == false;
+											return checkPast(event.date) && event.isTutoring == true;
 										}
 									}).length > 0 ? (
 										<div
