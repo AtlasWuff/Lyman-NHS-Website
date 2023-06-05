@@ -820,10 +820,9 @@ export default function Home() {
 												};
 
 												return (
-													events.indexOf(event) <=
-														Math.ceil(events.length / 2) &&
-													checkPast(event.date) &&
-													event.isTutoring == false
+													// events.indexOf(event) <=
+													// 	Math.ceil(events.length / 2) &&
+													checkPast(event.date) && event.isTutoring == false
 												);
 											}
 										}).length > 0 ? (
