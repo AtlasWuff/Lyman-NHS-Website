@@ -29,6 +29,7 @@ import styles from "../styles/pages/Home.module.css";
 import ReactTypingEffect from "react-typing-effect";
 import PageTitle from "../components/parts/PageTitle";
 import Table from "../components/parts/Table";
+import SecLayout from "../components/_seclayout";
 
 // Page
 export default function Home() {
@@ -185,7 +186,7 @@ export default function Home() {
 	const [reqHoursIsTutoring, setReqHoursIsTutoring] = useState<boolean>(false);
 
 	return (
-		<>
+		<SecLayout>
 			{/* Meta tags */}
 			<Head>
 				<title>Lyman NHS</title>
@@ -1559,6 +1560,6 @@ export default function Home() {
 					</section>
 				</div>
 			</main>
-		</>
+		</SecLayout>
 	);
 }

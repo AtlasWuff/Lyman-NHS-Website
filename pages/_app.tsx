@@ -22,9 +22,9 @@ export default function App({ Component, pageProps, router }: AppProps) {
 
 			<Layout>
 				<AnimatePresence mode="wait" initial={true}>
-					<SecLayout>
-						<Component {...pageProps} key={router.asPath} />
-					</SecLayout>
+					{/* <SecLayout> */}
+					<Component {...pageProps} key={router.asPath} />
+					{/* </SecLayout> */}
 				</AnimatePresence>
 			</Layout>
 		</>

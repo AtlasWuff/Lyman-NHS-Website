@@ -46,6 +46,7 @@ import Collapsable from "../components/parts/Collapsable";
 import { data } from "jquery";
 import Gifs from "../components/funny/Gifs";
 import Laser from "../components/funny/Laser";
+import SecLayout from "../components/_seclayout";
 
 // Interface for function
 interface AdminProps {
@@ -497,7 +498,7 @@ export default function Admin() {
 	// }, []);
 
 	return (
-		<>
+		<SecLayout>
 			{/* Meta tags */}
 			<Head>
 				<title>Lyman NHS</title>
@@ -1670,6 +1671,6 @@ export default function Admin() {
 					</>
 				)}
 			</main>
-		</>
+		</SecLayout>
 	);
 }

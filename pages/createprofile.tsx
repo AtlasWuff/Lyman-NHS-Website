@@ -18,6 +18,7 @@ import styles from "../styles/pages/CreateAccount.module.css";
 import PageTitle from "../components/parts/PageTitle";
 import Laser from "../components/funny/Laser";
 import Gifs from "../components/funny/Gifs";
+import SecLayout from "../components/_seclayout";
 
 // Page
 export default function CreateAccount() {
@@ -46,7 +47,7 @@ export default function CreateAccount() {
 	];
 
 	return (
-		<>
+		<SecLayout>
 			{/* Meta tags */}
 			<Head>
 				<title>Lyman NHS</title>
@@ -182,6 +183,6 @@ export default function CreateAccount() {
 					</AnimatePresence>
 				</div>
 			</main>
-		</>
+		</SecLayout>
 	);
 }
