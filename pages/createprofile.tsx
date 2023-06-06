@@ -46,11 +46,7 @@ export default function CreateAccount() {
 	];
 
 	return (
-		<motion.div
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			exit={{ opacity: 0 }}
-		>
+		<>
 			{/* Meta tags */}
 			<Head>
 				<title>Lyman NHS</title>
@@ -186,6 +182,6 @@ export default function CreateAccount() {
 					</AnimatePresence>
 				</div>
 			</main>
-		</motion.div>
+		</>
 	);
 }

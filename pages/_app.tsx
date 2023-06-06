@@ -5,11 +5,12 @@ import "../styles/global.css";
 
 // Layout component defining global components
 import Layout from "../components/_layout";
+import SecLayout from "../components/_seclayout";
 import Script from "next/script";
 import type { AppProps } from "next/app";
 import { AnimatePresence } from "framer-motion";
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps, router }: AppProps) {
 	return (
 		// Inside the layout is the corresponding page
 		// Layout applies any components that are common to all pages
@@ -20,8 +21,10 @@ export default function App({ Component, pageProps }: AppProps) {
 			></Script>
 
 			<Layout>
-				<AnimatePresence mode="wait" exitBeforeEnter>
-					<Component {...pageProps} />
+				<AnimatePresence mode="wait" initial={true}>
+					<SecLayout>
+						<Component {...pageProps} key={router.asPath} />
+					</SecLayout>
 				</AnimatePresence>
 			</Layout>
 		</>

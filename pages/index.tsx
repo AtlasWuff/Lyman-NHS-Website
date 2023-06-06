@@ -185,11 +185,7 @@ export default function Home() {
 	const [reqHoursIsTutoring, setReqHoursIsTutoring] = useState<boolean>(false);
 
 	return (
-		<motion.div
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			exit={{ opacity: 0 }}
-		>
+		<>
 			{/* Meta tags */}
 			<Head>
 				<title>Lyman NHS</title>
@@ -1563,6 +1559,6 @@ export default function Home() {
 					</section>
 				</div>
 			</main>
-		</motion.div>
+		</>
 	);
 }
