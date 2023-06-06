@@ -820,9 +820,10 @@ export default function Home() {
 												};
 
 												return (
-													// events.indexOf(event) <=
-													// 	Math.ceil(events.length / 2) &&
-													checkPast(event.date) && event.isTutoring == false
+													events.indexOf(event) <=
+														Math.ceil(events.length / 2 - 1) &&
+													checkPast(event.date) &&
+													event.isTutoring == false
 												);
 											}
 										}).length > 0 ? (
@@ -1005,7 +1006,7 @@ export default function Home() {
 
 																return (
 																	events.indexOf(event) >
-																		Math.ceil(events.length / 2) &&
+																		Math.ceil(events.length / 2 - 1) &&
 																	checkPast(event.date) &&
 																	event.isTutoring == false
 																);
