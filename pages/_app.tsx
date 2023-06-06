@@ -9,6 +9,7 @@ import SecLayout from "../components/_seclayout";
 import Script from "next/script";
 import type { AppProps } from "next/app";
 import { AnimatePresence } from "framer-motion";
+import Footer from "../components/parts/Footer";
 
 export default function App({ Component, pageProps, router }: AppProps) {
 	return (
@@ -24,6 +25,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
 				<AnimatePresence mode="wait" initial={true}>
 					{/* <SecLayout> */}
 					<Component {...pageProps} key={router.asPath} />
+					<Footer />
 					{/* </SecLayout> */}
 				</AnimatePresence>
 			</Layout>

@@ -5,7 +5,6 @@ import * as React from "react";
 
 // Component imports
 import Navbar from "./parts/Navbar";
-import Footer from "./parts/Footer";
 
 // Interface to define props
 interface Props {
@@ -53,7 +52,6 @@ export default function Layout({ children }: Props) {
 
 			<Navbar />
 			{children}
-			<Footer />
 		</>
 	);
 }
