@@ -820,7 +820,12 @@ export default function Home() {
 												};
 
 												return (
-													events.indexOf(event) <=
+													events
+														.filter(
+															(er: any) =>
+																checkPast(er.date) && er.isTutoring == false
+														)
+														.indexOf(event) <=
 														Math.ceil(events.length / 2 - 1) &&
 													checkPast(event.date) &&
 													event.isTutoring == false
@@ -1005,7 +1010,13 @@ export default function Home() {
 																};
 
 																return (
-																	events.indexOf(event) >
+																	events
+																		.filter(
+																			(er: any) =>
+																				checkPast(er.date) &&
+																				er.isTutoring == false
+																		)
+																		.indexOf(event) >
 																		Math.ceil(events.length / 2 - 1) &&
 																	checkPast(event.date) &&
 																	event.isTutoring == false
