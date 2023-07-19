@@ -392,6 +392,23 @@ export const getEvents = async () => {
 	});
 };
 
+function addSpaceBeforeCapitalLetters(str: string): string {
+	let result = str[0]; // First letter is always added without a space
+
+	for (let i = 1; i < str.length; i++) {
+		// Check if the current character is a capital letter
+		if (str[i] === str[i].toUpperCase()) {
+			// Check if it's not the first word or if the previous character is not a space
+			if (str[i - 1] !== " " && str[i - 1] !== undefined) {
+				result += " ";
+			}
+		}
+		result += str[i];
+	}
+
+	return result;
+}
+
 export const addEvent = async ({
 	eventName,
 	date,
@@ -417,6 +434,14 @@ export const addEvent = async ({
 			location = location.replaceAll("-", " ");
 			tutorHost = tutorHost.replaceAll("-", " ");
 			teachers = teachers.replaceAll("-", " ");
+			// Add a space to every paramerer that has a capital letter so RedBlue becomes Red Blue and RedBluGreen becomes Red Blu Green
+			eventName = addSpaceBeforeCapitalLetters(eventName);
+			location = addSpaceBeforeCapitalLetters(location);
+			startTime = addSpaceBeforeCapitalLetters(startTime);
+			endTime = addSpaceBeforeCapitalLetters(endTime);
+			tutorHost = addSpaceBeforeCapitalLetters(tutorHost);
+			teachers = addSpaceBeforeCapitalLetters(teachers);
+
 			let newEventDoc = doc(db, "Events", eventName.toLowerCase() + " " + date);
 			console.log("Make doc 353");
 
