@@ -137,7 +137,7 @@ export default function CreateAccount() {
 									/>
 								</div>
 								<div className={`${styles.loginInput}`}>
-									<p>Grade for the 23-24 year</p>
+									<p>Grade</p>
 									<input
 										type="number"
 										min="9"
