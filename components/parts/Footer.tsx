@@ -23,7 +23,7 @@ export default function Footer({}: Props) {
 						rel="noreferrer"
 						className="hoverUnderlineAnim"
 					>
-						Josh
+						someone
 					</a>
 				</p>
 				<p>
