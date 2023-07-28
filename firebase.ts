@@ -393,11 +393,43 @@ export const getEvents = async () => {
 };
 
 function addSpaceBeforeCapitalLetters(str: string): string {
+	let letters = [
+		"A",
+		"B",
+		"C",
+		"D",
+		"E",
+		"F",
+		"G",
+		"H",
+		"I",
+		"J",
+		"K",
+		"L",
+		"M",
+		"N",
+		"O",
+		"P",
+		"Q",
+		"R",
+		"S",
+		"T",
+		"U",
+		"V",
+		"W",
+		"X",
+		"Y",
+		"Z",
+	];
+
 	let result = str[0]; // First letter is always added without a space
 
 	for (let i = 1; i < str.length; i++) {
 		// Check if the current character is a capital letter
-		if (str[i] === str[i].toUpperCase()) {
+		if (
+			str[i] === str[i].toUpperCase() &&
+			letters.includes(str[i].toUpperCase())
+		) {
 			// Check if it's not the first word or if the previous character is not a space
 			if (str[i - 1] !== " " && str[i - 1] !== undefined) {
 				result += " ";
