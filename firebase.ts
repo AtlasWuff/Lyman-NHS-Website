@@ -437,8 +437,8 @@ export const addEvent = async ({
 			// Add a space to every paramerer that has a capital letter so RedBlue becomes Red Blue and RedBluGreen becomes Red Blu Green
 			eventName = addSpaceBeforeCapitalLetters(eventName);
 			location = addSpaceBeforeCapitalLetters(location);
-			startTime = addSpaceBeforeCapitalLetters(startTime);
-			endTime = addSpaceBeforeCapitalLetters(endTime);
+			//startTime = addSpaceBeforeCapitalLetters(startTime);
+			//endTime = addSpaceBeforeCapitalLetters(endTime);
 			tutorHost = addSpaceBeforeCapitalLetters(tutorHost);
 			teachers = addSpaceBeforeCapitalLetters(teachers);
 
