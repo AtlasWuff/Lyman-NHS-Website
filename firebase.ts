@@ -442,6 +442,17 @@ export const addEvent = async ({
 			tutorHost = addSpaceBeforeCapitalLetters(tutorHost);
 			teachers = addSpaceBeforeCapitalLetters(teachers);
 
+			eventName = eventName == undefined ? "" : eventName;
+			date = date == undefined ? "" : date;
+			location = location == undefined ? "" : location;
+			startTime = startTime == undefined ? "" : startTime;
+			endTime = endTime == undefined ? "" : endTime;
+			volunteersNeeded = volunteersNeeded == undefined ? "" : volunteersNeeded;
+			volunteers = volunteers == undefined ? [] : volunteers;
+			isTutoring = isTutoring == undefined ? false : isTutoring;
+			tutorHost = tutorHost == undefined ? "" : tutorHost;
+			teachers = teachers == undefined ? "" : teachers;
+
 			let newEventDoc = doc(db, "Events", eventName.toLowerCase() + " " + date);
 			console.log("Make doc 353");
 
