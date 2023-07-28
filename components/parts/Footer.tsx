@@ -28,7 +28,7 @@ export default function Footer({}: Props) {
 				</p>
 				<p>
 					<a
-						href="mailto: joshuaew06@gmail.com"
+						href="mailto: 5924000077@student.myscps.us"
 						target="_blank"
 						rel="noreferrer"
 						className="hoverUnderlineAnim"
@@ -57,18 +57,6 @@ export default function Footer({}: Props) {
 							alt=""
 						/>
 					</a>
-					{/* <a
-						href="https://linkedin.com/in/Joshua-EW"
-						target="_blank"
-						rel="noreferrer"
-					>
-						<Image
-							src="/img/socials/linkedin.svg"
-							width={30}
-							height={30}
-							alt=""
-						/>
-					</a> */}
 					<a
 						href="https://www.instagram.com/tachanks_/"
 						target="_blank"
