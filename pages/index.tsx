@@ -338,7 +338,7 @@ export default function Home() {
 												type="text"
 												placeholder="Message"
 												value={message}
-												onChange={(v) => setMessage(v.target.value.trim())}
+												// onChange={(v) => setMessage(v.target.value.trim())}
 											/>
 
 											<button
