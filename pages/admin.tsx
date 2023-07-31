@@ -928,7 +928,7 @@ export default function Admin() {
 											<p>{eventIsTutoring ? "Subject" : "Event Name"}</p>
 											<input
 												type="text"
-												// onChange={(e) => setEventName(e.target.value.trim())}
+												onChange={(e) => setEventName(e.target.value)}
 												value={eventName}
 											/>
 										</div>
@@ -936,7 +936,7 @@ export default function Admin() {
 											<p>Date</p>
 											<input
 												type="date"
-												//onChange={(e) => setEventDate(e.target.value.trim())}
+												onChange={(e) => setEventDate(e.target.value)}
 												value={eventDate}
 											/>
 										</div>
@@ -944,9 +944,7 @@ export default function Admin() {
 											<p>{eventIsTutoring ? "Room" : "Location"}</p>
 											<input
 												type="text"
-												// onChange={(e) =>
-												// 	setEventLocation(e.target.value.trim())
-												// }
+												onChange={(e) => setEventLocation(e.target.value)}
 												value={eventLocation}
 											/>
 										</div>
@@ -955,9 +953,7 @@ export default function Admin() {
 												<p>{"Teacher(s)"}</p>
 												<input
 													type="text"
-													// onChange={(e) =>
-													// 	setTutoringTeachers(e.target.value.trim())
-													// }
+													onChange={(e) => setTutoringTeachers(e.target.value)}
 													value={tutoringTeachers}
 												/>
 											</div>
@@ -969,9 +965,7 @@ export default function Admin() {
 												<p>Start Time</p>
 												<input
 													type="text"
-													// onChange={(e) =>
-													// 	setEventStartTime(e.target.value.trim())
-													// }
+													onChange={(e) => setEventStartTime(e.target.value)}
 													value={eventStartTime}
 												/>
 											</div>
@@ -983,7 +977,7 @@ export default function Admin() {
 											<p>End Time</p>
 											<input
 												type="text"
-												// onChange={(e) => setEventEndTime(e.target.value.trim())}
+												onChange={(e) => setEventEndTime(e.target.value)}
 												value={eventEndTime}
 											/>
 										</div>
@@ -995,9 +989,9 @@ export default function Admin() {
 											<p>{eventIsTutoring ? "Tutors" : "Volunteers"} Needed</p>
 											<input
 												type="text"
-												// onChange={(e) =>
-												// 	setEventVolunteersNeeded(e.target.value.trim())
-												// }
+												onChange={(e) =>
+													setEventVolunteersNeeded(e.target.value)
+												}
 												value={eventVolunteersNeeded}
 											/>
 										</div>
@@ -1006,9 +1000,7 @@ export default function Admin() {
 												<p>Tutoring Host</p>
 												<input
 													type="text"
-													// onChange={(e) =>
-													// 	setTutoringHost(e.target.value.trim())
-													// }
+													onChange={(e) => setTutoringHost(e.target.value)}
 													value={tutoringHost}
 												/>
 											</div>
@@ -1647,13 +1639,13 @@ export default function Admin() {
 									type="email"
 									placeholder="Email"
 									className={`${styles.passInput}`}
-									//onChange={(e) => setEmail(e.target.value.trim())}
+									onChange={(e) => setEmail(e.target.value)}
 								/>
 								<input
 									type="password"
 									placeholder="Password"
 									className={`${styles.passInput}`}
-									//onChange={(e) => setPassword(e.target.value.trim())}
+									onChange={(e) => setPassword(e.target.value)}
 								/>
 
 								<button

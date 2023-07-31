@@ -260,15 +260,13 @@ export default function Home() {
 										type="email"
 										placeholder="Email"
 										value={hourCheckEmail}
-										onChange={(v) => setHourCheckEmail(v.target.value.trim())}
+										onChange={(v) => setHourCheckEmail(v.target.value)}
 									/>
 									<input
 										type="password"
 										placeholder="Password"
 										value={hourCheckPassword}
-										onChange={(v) =>
-											setHourCheckPassword(v.target.value.trim())
-										}
+										onChange={(v) => setHourCheckPassword(v.target.value)}
 									/>
 									<button
 										className="LoadButton-pushable my-2"
@@ -324,21 +322,19 @@ export default function Home() {
 												type="email"
 												placeholder="Email"
 												value={messageEmail}
-												onChange={(v) => setMessageEmail(v.target.value.trim())}
+												onChange={(v) => setMessageEmail(v.target.value)}
 											/>
 											<input
 												type="password"
 												placeholder="Password"
 												value={messagePassword}
-												onChange={(v) =>
-													setMessagePassword(v.target.value.trim())
-												}
+												onChange={(v) => setMessagePassword(v.target.value)}
 											/>
 											<input
 												type="text"
 												placeholder="Message"
 												value={message}
-												// onChange={(v) => setMessage(v.target.value.trim())}
+												onChange={(v) => setMessage(v.target.value)}
 											/>
 
 											<button
@@ -419,41 +415,31 @@ export default function Home() {
 												type="email"
 												placeholder="Email"
 												value={reqHoursEmail}
-												onChange={(v) =>
-													setReqHoursEmail(v.target.value.trim())
-												}
+												onChange={(v) => setReqHoursEmail(v.target.value)}
 											/>
 											<input
 												type="password"
 												placeholder="Password"
 												value={reqHoursPassword}
-												onChange={(v) =>
-													setReqHoursPassword(v.target.value.trim())
-												}
+												onChange={(v) => setReqHoursPassword(v.target.value)}
 											/>
 											<input
 												type="text"
 												placeholder="Event Name"
 												value={reqHoursEventName}
-												onChange={(v) =>
-													setReqHoursEventName(v.target.value.trim())
-												}
+												onChange={(v) => setReqHoursEventName(v.target.value)}
 											/>
 											<input
 												type="text"
 												placeholder="Arrival Time"
 												value={reqHoursArriveTime}
-												onChange={(v) =>
-													setReqHoursArriveTime(v.target.value.trim())
-												}
+												onChange={(v) => setReqHoursArriveTime(v.target.value)}
 											/>
 											<input
 												type="text"
 												placeholder="Departure Time"
 												value={reqHoursLeaveTime}
-												onChange={(v) =>
-													setReqHoursLeaveTime(v.target.value.trim())
-												}
+												onChange={(v) => setReqHoursLeaveTime(v.target.value)}
 											/>
 											<p className="mb-2">Total hours attended</p>
 											{!reqHoursIsTutoring ? (
@@ -463,7 +449,7 @@ export default function Home() {
 													value={reqHoursVolunteerHours}
 													onChange={(v) =>
 														setReqHoursVolunteerHours(
-															v.target.value.trim() as unknown as number
+															v.target.value as unknown as number
 														)
 													}
 												/>
@@ -474,7 +460,7 @@ export default function Home() {
 													value={reqHoursTutorHours}
 													onChange={(v) =>
 														setReqHoursTutorHours(
-															v.target.value.trim() as unknown as number
+															v.target.value as unknown as number
 														)
 													}
 												/>
@@ -548,20 +534,20 @@ export default function Home() {
 											type="email"
 											placeholder="Email"
 											value={email}
-											onChange={(v) => setEmail(v.target.value.trim())}
+											onChange={(v) => setEmail(v.target.value)}
 										/>
 										<input
 											type="password"
 											placeholder="Password"
 											value={password}
-											onChange={(v) => setPassword(v.target.value.trim())}
+											onChange={(v) => setPassword(v.target.value)}
 										/>
 										<p className="mb-2">Volunteering or tutoring?</p>
 										<select
 											value={signUpModalDesicion}
 											onChange={(v) => {
-												if (v.target.value.trim().length > 0) {
-													setSignUpModalDesicion(v.target.value.trim());
+												if (v.target.value.length > 0) {
+													setSignUpModalDesicion(v.target.value);
 												} else {
 													setSignUpModalDesicion("Volunteering");
 												}
@@ -574,12 +560,12 @@ export default function Home() {
 										<select
 											value={eventInput}
 											onChange={(v) => {
-												if (v.target.value.trim().length > 0) {
-													setEventInput(v.target.value.trim());
+												if (v.target.value.length > 0) {
+													setEventInput(v.target.value);
 												} else {
 													setEventInput("");
 												}
-												console.log(v.target.value.trim());
+												console.log(v.target.value);
 											}}
 										>
 											<>
@@ -666,20 +652,20 @@ export default function Home() {
 											type="email"
 											placeholder="Email"
 											value={email}
-											onChange={(v) => setEmail(v.target.value.trim())}
+											onChange={(v) => setEmail(v.target.value)}
 										/>
 										<input
 											type="password"
 											placeholder="Password"
 											value={password}
-											onChange={(v) => setPassword(v.target.value.trim())}
+											onChange={(v) => setPassword(v.target.value)}
 										/>
 										<p className="mb-2">Volunteering or tutoring?</p>
 										<select
 											value={leaveEventModalDesicion}
 											onChange={(v) => {
-												if (v.target.value.trim().length > 0) {
-													setLeaveEventModalDesicion(v.target.value.trim());
+												if (v.target.value.length > 0) {
+													setLeaveEventModalDesicion(v.target.value);
 												} else {
 													setLeaveEventModalDesicion("Volunteering");
 												}
@@ -692,12 +678,12 @@ export default function Home() {
 										<select
 											value={eventInput}
 											onChange={(v) => {
-												if (v.target.value.trim().length > 0) {
-													setEventInput(v.target.value.trim());
+												if (v.target.value.length > 0) {
+													setEventInput(v.target.value);
 												} else {
 													setEventInput("");
 												}
-												console.log(v.target.value.trim());
+												console.log(v.target.value);
 											}}
 										>
 											<>
