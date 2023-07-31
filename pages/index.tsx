@@ -211,11 +211,8 @@ export default function Home() {
 					<section id={`${styles.AboutUs}`} className="container-lg">
 						<h1 className="mb-0">About</h1>
 						<p className="mt-0 container">
-							Lyman NHS is a club that focuses on community service and
-							leadership. We are a group of students who are passionate about
-							helping others and making a difference in our community. We
-							provide opportunities for students to get involved in the
-							community and to make a difference in the lives of others.
+							Lyman NHS is a club that focuses... yeah no one gives a shit about
+							this, be fr
 						</p>
 						<hr></hr>
 						<p>Members are required to have...</p>
