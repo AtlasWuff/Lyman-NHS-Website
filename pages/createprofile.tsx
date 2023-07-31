@@ -179,6 +179,7 @@ export default function CreateAccount() {
 									</button>
 								</div>
 								<p
+									className="hoverUnderlineAnim"
 									onClick={() => {
 										alert(
 											"make a new account, dont email me. we'll verify you again. just re-request your hours otherwise do it again"
