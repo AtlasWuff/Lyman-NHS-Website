@@ -536,10 +536,6 @@ export default function Admin() {
 									<span className="LoadButton-edge"></span>
 									<span className="LoadButton-front text">Refresh Items</span>
 								</button>
-								<p>
-									<b>Note: </b>Use "_" or "-" instead of spaces for anything you
-									can't put spaces in
-								</p>
 								<div className="row">
 									<div
 										className="col-lg-6 d-flex align-items-center flex-column"

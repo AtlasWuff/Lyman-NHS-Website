@@ -456,23 +456,23 @@ export const addEvent = async ({
 	return new Promise<any>(async (resolve, reject) => {
 		try {
 			// for every parameter replace all _ with spaces
-			eventName = eventName.replaceAll("_", " ");
-			location = location.replaceAll("_", " ");
-			startTime = startTime.replaceAll("_", " ");
-			endTime = endTime.replaceAll("_", " ");
-			tutorHost = tutorHost.replaceAll("_", " ");
-			teachers = teachers.replaceAll("_", " ");
-			eventName = eventName.replaceAll("-", " ");
-			location = location.replaceAll("-", " ");
-			tutorHost = tutorHost.replaceAll("-", " ");
-			teachers = teachers.replaceAll("-", " ");
-			// Add a space to every paramerer that has a capital letter so RedBlue becomes Red Blue and RedBluGreen becomes Red Blu Green
-			eventName = addSpaceBeforeCapitalLetters(eventName);
-			location = addSpaceBeforeCapitalLetters(location);
-			//startTime = addSpaceBeforeCapitalLetters(startTime);
-			//endTime = addSpaceBeforeCapitalLetters(endTime);
-			tutorHost = addSpaceBeforeCapitalLetters(tutorHost);
-			teachers = addSpaceBeforeCapitalLetters(teachers);
+			// eventName = eventName.replaceAll("_", " ");
+			// location = location.replaceAll("_", " ");
+			// startTime = startTime.replaceAll("_", " ");
+			// endTime = endTime.replaceAll("_", " ");
+			// tutorHost = tutorHost.replaceAll("_", " ");
+			// teachers = teachers.replaceAll("_", " ");
+			// eventName = eventName.replaceAll("-", " ");
+			// location = location.replaceAll("-", " ");
+			// tutorHost = tutorHost.replaceAll("-", " ");
+			// teachers = teachers.replaceAll("-", " ");
+			// // Add a space to every paramerer that has a capital letter so RedBlue becomes Red Blue and RedBluGreen becomes Red Blu Green
+			// eventName = addSpaceBeforeCapitalLetters(eventName);
+			// location = addSpaceBeforeCapitalLetters(location);
+			// //startTime = addSpaceBeforeCapitalLetters(startTime);
+			// //endTime = addSpaceBeforeCapitalLetters(endTime);
+			// tutorHost = addSpaceBeforeCapitalLetters(tutorHost);
+			// teachers = addSpaceBeforeCapitalLetters(teachers);
 
 			eventName = eventName == undefined ? "" : eventName;
 			date = date == undefined ? "" : date;
