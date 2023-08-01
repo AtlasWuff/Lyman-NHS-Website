@@ -133,6 +133,7 @@ export default function Admin() {
 			let res = await checkAdmin({ email, password });
 			setIsUserAdmin(res);
 			setShowLoading(false);
+			alert("You can use spaces now btw");
 		}
 	};
 
