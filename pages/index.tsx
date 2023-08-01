@@ -914,7 +914,10 @@ export default function Home() {
 																					<p>
 																						<b>Volunteers Needed</b>
 																					</p>
-																					<p>{e.volunteersNeeded}</p>
+																					<p>
+																						{e.volunteersNeeded} (
+																						{e.volunteers.length} currently)
+																					</p>
 																				</div>
 																				<div className="">
 																					<p>
