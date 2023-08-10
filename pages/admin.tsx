@@ -1221,10 +1221,7 @@ export default function Admin() {
 																			<b>Volunteers Needed: </b>
 																			{event.volunteersNeeded}
 																		</p>
-																		<p>
-																			<b>Volunteers: </b>
-																			{event.volunteers}
-																		</p>
+																		
 																	</Collapsable>
 																</div>
 																<div
