@@ -1147,7 +1147,7 @@ export const approveHoursRequest = async (name: string, eventName: string) => {
 						await deleteDoc(
 							doc(db, "Hours Requests", name + " - " + eventName)
 						);
-						alert("Hours Request Approved");
+						//alert("Hours Request Approved");
 
 						resolve();
 					}
