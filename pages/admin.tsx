@@ -1221,7 +1221,6 @@ export default function Admin() {
 																			<b>Volunteers Needed: </b>
 																			{event.volunteersNeeded}
 																		</p>
-																		
 																	</Collapsable>
 																</div>
 																<div
@@ -1382,95 +1381,6 @@ export default function Admin() {
 										className="col-lg-6 d-flex align-items-center flex-column"
 										id={`${styles.pendingMembers}`}
 									>
-										<h2>New Messages</h2>
-										<p>
-											Messages from members whether that be unable to attend a
-											meeting or just a general message show up here. Im not
-											coding a response function so just message them on groupme
-											or something
-										</p>
-										<motion.div
-											animate={secondControls}
-											ref={secondRef}
-											transition={{
-												duration: 0.5,
-												ease: [0.5, 0.01, -0.05, 0.9],
-											}}
-											initial={{ scale: 0 }}
-											variants={{
-												visible: { scale: 1 },
-											}}
-											className="w-100 d-flex align-items-center justify-content-center flex-column container"
-										>
-											<Table maxHeight={"80vh"} minHeight={"20vh"} useArrow>
-												{messages.messages.length > 0 ? (
-													<>
-														<div className="d-flex flex-row align-items-center w-100">
-															{messages.messages.map((message, index) => {
-																return (
-																	<div
-																		key={index}
-																		className={`${styles.pendingMember} w-100`}
-																	>
-																		<div className="d-flex justify-content-between w-100 flex-row">
-																			<div
-																				className={`${styles.MemberItemText}`}
-																			>
-																				<Collapsable
-																					initText={message.name}
-																					className={`w-100 ${styles.memberItemThing}`}
-																				>
-																					<div className="d-flex flex-column">
-																						<p className="mb-0">
-																							{message.text}
-																						</p>
-																					</div>
-																				</Collapsable>
-																			</div>
-																			<div
-																				className="d-flex align-items-center justify-content-center flex-row"
-																				id={`${styles.eventDeleteButtonDiv}`}
-																			>
-																				<button
-																					className="DenyButton-pushable"
-																					onClick={() => {
-																						deleteMessageRefresh(message.name);
-																					}}
-																				>
-																					<span className="DenyButton-shadow"></span>
-																					<span className="DenyButton-edge"></span>
-
-																					<span className="DenyButton-front text">
-																						Delete
-																					</span>
-																				</button>
-																			</div>
-																		</div>
-																	</div>
-																);
-															})}
-														</div>
-													</>
-												) : (
-													<div className="w-100 d-flex justify-content-center align-items-center">
-														<p className="text-center">
-															<b>No messages to show</b>
-														</p>
-													</div>
-												)}
-											</Table>
-										</motion.div>
-									</div>
-								</div>
-							</section>
-							<section
-								className={`${styles.adminSection} container-sm text-center`}
-							>
-								<div className="row justify-content-center">
-									<div
-										className="col-lg-6 d-flex align-items-center flex-column"
-										id={`${styles.pendingMembers}`}
-									>
 										<h2>Hour Requests</h2>
 										<p>
 											Members send requests that require approval before their
@@ -1614,6 +1524,11 @@ export default function Admin() {
 										</motion.div>
 									</div>
 								</div>
+							</section>
+							<section
+								className={`${styles.adminSection} container-sm text-center`}
+							>
+								<div className="row justify-content-center"></div>
 							</section>
 						</div>
 					</motion.div>
