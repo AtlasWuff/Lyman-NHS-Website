@@ -281,7 +281,7 @@ export default function Home() {
 
 						<hr></hr>
 						<div className="row align-items-center justify-content-center container-md px-md-5">
-							<div className="col-md-6 col-12">
+{/* 							<div className="col-md-6 col-12">
 								<p className="mb-md-0 mb-2">
 									Unable to attend a meeting or have any other problems? Send a
 									message below
@@ -354,7 +354,7 @@ export default function Home() {
 								) : (
 									<></>
 								)}
-							</div>
+							</div> */}
 							<div className="col-md-6 col-12">
 								<p className="mb-md-0 mb-2">
 									Just attended an event? Click the button to request hours
