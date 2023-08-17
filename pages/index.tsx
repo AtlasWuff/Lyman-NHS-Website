@@ -531,6 +531,9 @@ export default function Home() {
 										<h1>Sign Up</h1>
 										{!showFormContent ? (
 											<>
+												<p>
+													This must be filled out for <b>every</b> event
+												</p>
 												<iframe
 													src="https://docs.google.com/forms/d/e/1FAIpQLSd5gZ8Yy2M9k1t6m9G6zXc5t1ZiLZfWQXbJ1Q8hVQZQw8T5Uw/viewform?embedded=true"
 													// width="auto"
