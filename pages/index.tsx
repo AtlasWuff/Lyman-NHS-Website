@@ -532,12 +532,19 @@ export default function Home() {
 										{!showFormContent ? (
 											<>
 												<p>
-													This must be filled out for <b>every</b> event
+													<a
+														href="https://docs.google.com/forms/d/e/1FAIpQLSdUN1kvl_CVSYNKcQy5ZVe_qpjw2wZYg_eSsHzTjl02uk8DTQ/viewform?embedded=true"
+														className="hoverUnderlineAnim"
+													>
+														This
+													</a>{" "}
+													must be filled out for <b>every</b> event
 												</p>
 												<iframe
-													src="https://docs.google.com/forms/d/1mb5mxUxJq-fuQ5ICJGFn4R8YcPFaLeS0ISak_v6L5gc/viewform?embedded=true"
+													src="https://docs.google.com/forms/d/e/1FAIpQLSdUN1kvl_CVSYNKcQy5ZVe_qpjw2wZYg_eSsHzTjl02uk8DTQ/viewform?embedded=true"
 													// width="auto"
 													height="400"
+													className="mt-2"
 													frameBorder="0"
 													marginHeight={0}
 													marginWidth={0}
