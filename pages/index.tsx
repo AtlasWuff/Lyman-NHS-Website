@@ -535,7 +535,7 @@ export default function Home() {
 													This must be filled out for <b>every</b> event
 												</p>
 												<iframe
-													src="https://docs.google.com/forms/d/e/1FAIpQLSd5gZ8Yy2M9k1t6m9G6zXc5t1ZiLZfWQXbJ1Q8hVQZQw8T5Uw/viewform?embedded=true"
+													src="https://docs.google.com/forms/d/1mb5mxUxJq-fuQ5ICJGFn4R8YcPFaLeS0ISak_v6L5gc/viewform?embedded=true"
 													// width="auto"
 													height="400"
 													frameBorder="0"
