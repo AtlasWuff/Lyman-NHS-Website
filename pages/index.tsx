@@ -185,6 +185,8 @@ export default function Home() {
 	const [reqHoursTutorHours, setReqHoursTutorHours] = useState<number>(0);
 	const [reqHoursIsTutoring, setReqHoursIsTutoring] = useState<boolean>(false);
 
+	const [showFormContent, setShowFormContent] = useState<boolean>(false);
+
 	return (
 		<SecLayout>
 			{/* Meta tags */}
@@ -281,7 +283,7 @@ export default function Home() {
 
 						<hr></hr>
 						<div className="row align-items-center justify-content-center container-md px-md-5">
-{/* 							<div className="col-md-6 col-12">
+							{/* 							<div className="col-md-6 col-12">
 								<p className="mb-md-0 mb-2">
 									Unable to attend a meeting or have any other problems? Send a
 									message below
@@ -495,7 +497,10 @@ export default function Home() {
 							<div className="d-flex flex-row align-items-center justify-content-center">
 								<button
 									className="ApproveButton-pushable mb-3 mt-3 me-3"
-									onClick={(a) => displayModal()}
+									onClick={(a) => {
+										displayModal();
+										setShowFormContent(false);
+									}}
 								>
 									<span className="ApproveButton-shadow"></span>
 									<span className="ApproveButton-edge"></span>
@@ -524,105 +529,128 @@ export default function Home() {
 											alt="Close modal"
 										/>
 										<h1>Sign Up</h1>
-										<p className="mb-2">
-											Enter email & password for member verification
-										</p>
-										<input
-											type="email"
-											placeholder="Email"
-											value={email}
-											onChange={(v) => setEmail(v.target.value)}
-										/>
-										<input
-											type="password"
-											placeholder="Password"
-											value={password}
-											onChange={(v) => setPassword(v.target.value)}
-										/>
-										<p className="mb-2">Volunteering or tutoring?</p>
-										<select
-											value={signUpModalDesicion}
-											onChange={(v) => {
-												if (v.target.value.length > 0) {
-													setSignUpModalDesicion(v.target.value);
-												} else {
-													setSignUpModalDesicion("Volunteering");
-												}
-											}}
-										>
-											<option>Volunteering</option>
-											<option>Tutoring</option>
-										</select>
-										<p className="mb-2">Select event to sign up for</p>
-										<select
-											value={eventInput}
-											onChange={(v) => {
-												if (v.target.value.length > 0) {
-													setEventInput(v.target.value);
-												} else {
-													setEventInput("");
-												}
-												console.log(v.target.value);
-											}}
-										>
+										{!showFormContent ? (
 											<>
-												{signUpModalDesicion == "Volunteering" ? (
-													<>
-														<option value="">Select an event</option>
-														{events
-															.filter((thing) => thing.isTutoring == false)
-															.filter(
-																(thing) =>
-																	new Date(
-																		parseInt(thing.date.split("-")[0]),
-																		parseInt(thing.date.split("-")[1]) - 1,
-																		parseInt(thing.date.split("-")[2])
-																	).getTime() >=
-																	new Date().getTime() - 86400000
-															)
-															.map((e) => (
-																<option
-																	value={e.eventName}
-																	key={events.indexOf(e) + "di"}
-																>
-																	{e.eventName}
-																</option>
-															))}
-													</>
-												) : (
-													<>
-														<option value="">Select an event</option>
-														{events
-															.filter((thing) => thing.isTutoring == true)
-															.filter(
-																(thing) =>
-																	new Date(
-																		parseInt(thing.date.split("-")[0]),
-																		parseInt(thing.date.split("-")[1]) - 1,
-																		parseInt(thing.date.split("-")[2])
-																	).getTime() >=
-																	new Date().getTime() - 86400000
-															)
-															.map((e) => (
-																<option
-																	value={e.eventName}
-																	key={events.indexOf(e) + "di"}
-																>
-																	{e.eventName + " - " + e.date}
-																</option>
-															))}
-													</>
-												)}
+												<iframe
+													src="https://docs.google.com/forms/d/e/1FAIpQLSd5gZ8Yy2M9k1t6m9G6zXc5t1ZiLZfWQXbJ1Q8hVQZQw8T5Uw/viewform?embedded=true"
+													// width="auto"
+													height="400"
+													frameBorder="0"
+													marginHeight={0}
+													marginWidth={0}
+												/>
+												<button
+													className="LoadButton-pushable mb-2 mt-3"
+													onClick={() => setShowFormContent(true)}
+												>
+													<span className="LoadButton-shadow"></span>
+													<span className="LoadButton-edge"></span>
+													<span className="LoadButton-front text">Next</span>
+												</button>
 											</>
-										</select>
-										<button
-											className="LoadButton-pushable my-2"
-											onClick={() => addVolunteerDb()}
-										>
-											<span className="LoadButton-shadow"></span>
-											<span className="LoadButton-edge"></span>
-											<span className="LoadButton-front text">Submit</span>
-										</button>
+										) : (
+											<>
+												<p className="mb-2">
+													Enter email & password for member verification
+												</p>
+												<input
+													type="email"
+													placeholder="Email"
+													value={email}
+													onChange={(v) => setEmail(v.target.value)}
+												/>
+												<input
+													type="password"
+													placeholder="Password"
+													value={password}
+													onChange={(v) => setPassword(v.target.value)}
+												/>
+												<p className="mb-2">Volunteering or tutoring?</p>
+												<select
+													value={signUpModalDesicion}
+													onChange={(v) => {
+														if (v.target.value.length > 0) {
+															setSignUpModalDesicion(v.target.value);
+														} else {
+															setSignUpModalDesicion("Volunteering");
+														}
+													}}
+												>
+													<option>Volunteering</option>
+													<option>Tutoring</option>
+												</select>
+												<p className="mb-2">Select event to sign up for</p>
+												<select
+													value={eventInput}
+													onChange={(v) => {
+														if (v.target.value.length > 0) {
+															setEventInput(v.target.value);
+														} else {
+															setEventInput("");
+														}
+														console.log(v.target.value);
+													}}
+												>
+													<>
+														{signUpModalDesicion == "Volunteering" ? (
+															<>
+																<option value="">Select an event</option>
+																{events
+																	.filter((thing) => thing.isTutoring == false)
+																	.filter(
+																		(thing) =>
+																			new Date(
+																				parseInt(thing.date.split("-")[0]),
+																				parseInt(thing.date.split("-")[1]) - 1,
+																				parseInt(thing.date.split("-")[2])
+																			).getTime() >=
+																			new Date().getTime() - 86400000
+																	)
+																	.map((e) => (
+																		<option
+																			value={e.eventName}
+																			key={events.indexOf(e) + "di"}
+																		>
+																			{e.eventName}
+																		</option>
+																	))}
+															</>
+														) : (
+															<>
+																<option value="">Select an event</option>
+																{events
+																	.filter((thing) => thing.isTutoring == true)
+																	.filter(
+																		(thing) =>
+																			new Date(
+																				parseInt(thing.date.split("-")[0]),
+																				parseInt(thing.date.split("-")[1]) - 1,
+																				parseInt(thing.date.split("-")[2])
+																			).getTime() >=
+																			new Date().getTime() - 86400000
+																	)
+																	.map((e) => (
+																		<option
+																			value={e.eventName}
+																			key={events.indexOf(e) + "di"}
+																		>
+																			{e.eventName + " - " + e.date}
+																		</option>
+																	))}
+															</>
+														)}
+													</>
+												</select>
+												<button
+													className="LoadButton-pushable my-2"
+													onClick={() => addVolunteerDb()}
+												>
+													<span className="LoadButton-shadow"></span>
+													<span className="LoadButton-edge"></span>
+													<span className="LoadButton-front text">Submit</span>
+												</button>
+											</>
+										)}
 									</div>
 								</div>
 							) : (
