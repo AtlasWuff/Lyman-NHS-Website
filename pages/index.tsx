@@ -212,10 +212,10 @@ export default function Home() {
 				<div id={`${styles.notTitle}`}>
 					<section id={`${styles.AboutUs}`} className="container-lg">
 						<h1 className="mb-0">About</h1>
-						<p className="mt-0 container">
+{/* 						<p className="mt-0 container">
 							Lyman NHS
 						</p>
-						<hr></hr>
+						<hr></hr> */}
 						<p>Members are required to have...</p>
 						<div
 							className="row align-items-center justify-content-center container-md px-md-5"
