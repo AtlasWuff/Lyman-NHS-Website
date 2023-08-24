@@ -213,7 +213,7 @@ export default function Home() {
 					<section id={`${styles.AboutUs}`} className="container-lg">
 						<h1 className="mb-0">About</h1>
 						<p className="mt-0 container">
-							Lyman NHS is a club that focuses... yeah no one gives a shit about
+							Lyman NHS is a club that focuses... yeah no one cares about
 							this, be fr
 						</p>
 						<hr></hr>
