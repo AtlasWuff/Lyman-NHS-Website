@@ -1,6 +1,7 @@
 // Imports
 import Head from "next/head";
 import Script from "next/script";
+import Image from "next/image";
 import * as React from "react";
 
 // Component imports
@@ -52,7 +53,7 @@ export default function Layout({ children }: Props) {
 
 {/* 			<Navbar />
 			{children} */}
-			<React.Image
+			<Image
 						src={`https://uploads-ssl.webflow.com/646218c67da47160c64a84d5/646342ac52ad093eec746d55_30.png`}
 						
 						alt=""
