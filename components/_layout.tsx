@@ -55,7 +55,7 @@ export default function Layout({ children }: Props) {
 			{children} */}
 			<Image
 						src={`https://uploads-ssl.webflow.com/646218c67da47160c64a84d5/646342ac52ad093eec746d55_30.png`}
-						
+						fill
 						alt=""
 						draggable={false}
 						className=""
