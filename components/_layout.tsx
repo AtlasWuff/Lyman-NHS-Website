@@ -53,10 +53,10 @@ export default function Layout({ children }: Props) {
 
 {/* 			<Navbar />
 			{children} */}
-			<Image
+			<img
 						src={`https://s.yimg.com/uu/api/res/1.2/mTt8v2paYgsktEP85jhhjg--~B/aD0xODAwO3c9MTgwMDtzbT0xO2FwcGlkPXl0YWNoeW9u/http://media.zenfs.com/en-US/homerun/people_218/ddeaf5d430f4cc7b679ea3c9c0be05df
 `}
-						fill
+						
 						alt=""
 						draggable={false}
 						className=""
